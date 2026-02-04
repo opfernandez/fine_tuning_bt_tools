@@ -1,0 +1,4791 @@
+{
+  "train": [
+    {
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a robot control assistant."
+        },
+        {
+          "role": "user",
+          "content": "Your assigned agent ID is 1. And your task is: Report your current charging status."
+        },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "explanation.xml",
+                "execution_id": "1",
+                "input_parameters": {
+                  "question": "charging status"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "role": "tool",
+          "content": "Current battery level is 85%."
+        },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "tts.xml",
+                "execution_id": "1",
+                "input_parameters": {
+                  "text": "My current battery level is 85 percent, do you need me to assist you with anything else?"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "role": "tool",
+          "content": "TTS successfully completed."
+        },
+        {
+          "role": "assistant",
+          "content": "Retrieved the current battery level (85%), then executed a TTS behavior to inform the user and offer further assistance."
+        }
+      ]
+    },
+
+    {
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a robot control assistant."
+        },
+        {
+          "role": "user",
+          "content": "Your assigned agent ID is 2. And your task is: Check whether you are currently docked at the charging station."
+        },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "explanation.xml",
+                "execution_id": "2",
+                "input_parameters": {
+                  "question": "docking status"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "role": "tool",
+          "content": "Robot is currently docked at the charging station."
+        },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "tts.xml",
+                "execution_id": "2",
+                "input_parameters": {
+                  "text": "I am currently docked at the charging station."
+                }
+              }
+            }
+          ]
+        },
+        {
+          "role": "tool",
+          "content": "TTS successfully completed."
+        },
+        {
+          "role": "assistant",
+          "content": "Verified the docking status and confirmed via TTS that the robot is docked at the charging station."
+        }
+      ]
+    },
+
+    {
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a robot control assistant."
+        },
+        {
+          "role": "user",
+          "content": "Your assigned agent ID is 3. And your task is: Report whether there are any active errors in the system."
+        },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "explanation.xml",
+                "execution_id": "3",
+                "input_parameters": {
+                  "question": "system error status"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "role": "tool",
+          "content": "No active system errors detected."
+        },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "tts.xml",
+                "execution_id": "3",
+                "input_parameters": {
+                  "text": "All systems are functioning normally. No active errors detected."
+                }
+              }
+            }
+          ]
+        },
+        {
+          "role": "tool",
+          "content": "TTS successfully completed."
+        },
+        {
+          "role": "assistant",
+          "content": "Checked the system status, found no active errors, and communicated the normal operating state via TTS."
+        }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 4. And your task is: Can you please go to the kitchen?" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "move.xml",
+                "execution_id": "4",
+                "input_parameters": { "region": "kitchen" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Navigation to kitchen completed successfully." },
+        { "role": "assistant", "content": "Initiated navigation to the kitchen region. The move behavior handles the announcement and navigation." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 5. And your task is: I lost my phone, can you help me find it?" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "get_object.xml",
+                "execution_id": "5",
+                "input_parameters": { "object_name": "phone" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Object 'phone' detected on the sofa." },
+        { "role": "assistant", "content": "Executed the object retrieval behavior for 'phone'. The robot verbally announced the process and search result." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 6. And your task is: Tell me what the weather is like in Paris right now." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "get_weather.xml",
+                "execution_id": "6",
+                "input_parameters": { "city": "Paris" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Weather in Paris reported as Rainy, 12 degrees." },
+        { "role": "assistant", "content": "Called the weather behavior for Paris. The robot retrieved the data and spoke the forecast to the user." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 7. And your task is: Turn on the bedroom light, please." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "domotic.xml",
+                "execution_id": "7",
+                "input_parameters": { "action": "on", "device_name": "bedroom light" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Command sent to bedroom light: on." },
+        { "role": "assistant", "content": "Executed a domotic command to turn on the bedroom light. The system announced the success via TTS." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 8. And your task is: Where is Sarah located?" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "search_person.xml",
+                "execution_id": "8",
+                "input_parameters": { "person_name": "Sarah" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Sarah was last seen in the living room near the sofa 5 minutes ago." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "tts.xml",
+                "execution_id": "8",
+                "input_parameters": { "text": "I found information about Sarah. She was last seen in the living room near the sofa about 5 minutes ago." }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "TTS completed." },
+        { "role": "assistant", "content": "Used search_person to retrieve Sarah's location and, since that BT does not auto-speak, followed up with a TTS call to inform the user." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 9. And your task is: I want you to follow me closely." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "following.xml",
+                "execution_id": "9",
+                "input_parameters": { "person_name": "user" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Following behavior initiated." },
+        { "role": "assistant", "content": "Started the following behavior. The robot handles the face recognition announcement internally." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 10. And your task is: Why did you rotate 360 degrees earlier?" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "explanation.xml",
+                "execution_id": "10",
+                "input_parameters": { "question": "why rotate 360 degrees" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "I was performing a calibration sequence to re-localize in the map." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "tts.xml",
+                "execution_id": "10",
+                "input_parameters": { "text": "I rotated to perform a calibration sequence which helps me re-localize myself within the map." }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "TTS completed." },
+        { "role": "assistant", "content": "Retrieved an explanation for the robot's previous rotation and conveyed it to the user via TTS." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 11. And your task is: Start patrolling the area to see what's going on." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "wandering.xml",
+                "execution_id": "11",
+                "input_parameters": {}
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Wandering behavior started." },
+        { "role": "assistant", "content": "Initiated the wandering behavior for exploration. No additional parameters were needed." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 12. And your task is: Your battery is critical, go charge immediately." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "charging.xml",
+                "execution_id": "12",
+                "input_parameters": {}
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Docking procedure initiated." },
+        { "role": "assistant", "content": "Sent the robot to the charging station. The charging BT includes a TTS announcement." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 13. And your task is: Tell everyone a short joke about a programmer." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "tts.xml",
+                "execution_id": "13",
+                "input_parameters": { "text": "Why do programmers prefer dark mode? Because light attracts bugs!" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "TTS spoken successfully." },
+        { "role": "assistant", "content": "Executed a direct TTS command to tell the requested joke." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 14. And your task is: Let's have some fun, play 'disco_groove.mp3' at volume 75." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "musical_therapy.xml",
+                "execution_id": "14",
+                "input_parameters": { "media": "disco_groove.mp3", "volume": 75 }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Music therapy started with disco_groove.mp3." },
+        { "role": "assistant", "content": "Activated the musical therapy behavior with the specified media and volume. The robot will move and play music." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 16. And your task is: Find where my backpack is." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "get_object.xml",
+                "execution_id": "16",
+                "input_parameters": { "object_name": "backpack" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Backpack located in the hallway." },
+        { "role": "assistant", "content": "Used get_object to find the backpack. The behavior includes a self-announcement, so no extra TTS was needed." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 17. And your task is: Close the living room blinds." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "domotic.xml",
+                "execution_id": "17",
+                "input_parameters": { "action": "close", "device_name": "living room blinds" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Living room blinds closed." },
+        { "role": "assistant", "content": "Executed the domotic command to close the blinds. The behavior internally announces the result." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 18. And your task is: Go to the reception desk." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "move.xml",
+                "execution_id": "18",
+                "input_parameters": { "region": "reception desk" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Navigation completed." },
+        { "role": "assistant", "content": "Directed the robot to the reception desk using the move behavior." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 19. And your task is: Find Dr. Smith." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "search_person.xml",
+                "execution_id": "19",
+                "input_parameters": { "person_name": "Dr. Smith" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "RAG Retrieval: Dr. Smith was in the cafeteria 10 minutes ago." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "tts.xml",
+                "execution_id": "19",
+                "input_parameters": { "text": "According to my records, Dr. Smith was in the cafeteria 10 minutes ago." }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "TTS completed." },
+        { "role": "assistant", "content": "Executed search_person to retrieve Dr. Smith's location and communicated the finding via TTS." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 20. And your task is: Explain why you didn't open the door." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "explanation.xml",
+                "execution_id": "20",
+                "input_parameters": { "question": "why didn't open door" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "I do not have a manipulator arm equipped to open doors." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "tts.xml",
+                "execution_id": "20",
+                "input_parameters": { "text": "I was unable to open the door because I do not have a manipulator arm equipped." }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "TTS completed." },
+        { "role": "assistant", "content": "Fetched the explanation for the robot's limitation and voiced it to the user." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 21. And your task is: Follow Michael." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "following.xml",
+                "execution_id": "21",
+                "input_parameters": { "person_name": "Michael" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Following Michael." },
+        { "role": "assistant", "content": "Started following Michael. The behavior handles the necessary verbal interaction." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 22. And your task is: Play 'calm_ocean.wav' very quietly at volume 10." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "musical_therapy.xml",
+                "execution_id": "22",
+                "input_parameters": { "media": "calm_ocean.wav", "volume": 10 }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Playing calm_ocean.wav at volume 10." },
+        { "role": "assistant", "content": "Activated musical therapy with low volume as requested." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 23. And your task is: Turn off the television." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "domotic.xml",
+                "execution_id": "23",
+                "input_parameters": { "action": "off", "device_name": "television" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Television turned off." },
+        { "role": "assistant", "content": "Sent command to turn off the television via the domotic behavior." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 25. And your task is: Turn on the coffee maker in the kitchen." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "domotic.xml",
+                "execution_id": "25",
+                "input_parameters": { "action": "on", "device_name": "coffee maker" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Coffee maker turned on." },
+        { "role": "assistant", "content": "Activated the coffee maker using the domotic behavior. Success was announced by the BT." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 26. And your task is: Navigate to the library section." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "move.xml",
+                "execution_id": "26",
+                "input_parameters": { "region": "library" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Arrived at library." },
+        { "role": "assistant", "content": "Executed the move behavior to send the robot to the library region." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 27. And your task is: Can you tell me where my grandmother is?" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "search_person.xml",
+                "execution_id": "27",
+                "input_parameters": { "person_name": "grandmother" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Grandmother detected sitting in the armchair in the living room." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "tts.xml",
+                "execution_id": "27",
+                "input_parameters": { "text": "I see your grandmother. She is sitting in the armchair in the living room." }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "TTS completed." },
+        { "role": "assistant", "content": "Located the grandmother using search_person and verbally described her location to the user." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 28. And your task is: What is the weather forecast for Tokyo?" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "get_weather.xml",
+                "execution_id": "28",
+                "input_parameters": { "city": "Tokyo" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Weather in Tokyo reported." },
+        { "role": "assistant", "content": "Called get_weather for Tokyo. The robot spoke the result automatically." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 29. And your task is: Why did you stop moving suddenly?" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "explanation.xml",
+                "execution_id": "29",
+                "input_parameters": { "question": "why stop moving suddenly" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "I detected a dynamic obstacle in my path and triggered an emergency stop." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "tts.xml",
+                "execution_id": "29",
+                "input_parameters": { "text": "I had to stop suddenly because I detected an obstacle in my path." }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "TTS completed." },
+        { "role": "assistant", "content": "Retrieved the reason for the sudden stop via explanation BT and informed the user." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 30. And your task is: Help me find my wallet." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "get_object.xml",
+                "execution_id": "30",
+                "input_parameters": { "object_name": "wallet" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Wallet found on the desk." },
+        { "role": "assistant", "content": "Executed get_object to locate the wallet. The robot announced the location itself." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 31. And your task is: Say hello to the guests in the lobby." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "tts.xml",
+                "execution_id": "31",
+                "input_parameters": { "text": "Hello everyone! Welcome to our facility. I hope you have a pleasant visit." }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Greeting spoken." },
+        { "role": "assistant", "content": "Used the TTS behavior to welcome the guests as requested." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 32. And your task is: Patrol the corridors." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "wandering.xml",
+                "execution_id": "32",
+                "input_parameters": {}
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Patrolling started." },
+        { "role": "assistant", "content": "Initiated the wandering behavior to patrol the environment." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 33. And your task is: Play 'jazz_piano.mp3' at 50% volume." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "musical_therapy.xml",
+                "execution_id": "33",
+                "input_parameters": { "media": "jazz_piano.mp3", "volume": 50 }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Playing jazz_piano.mp3." },
+        { "role": "assistant", "content": "Started the musical therapy behavior with the specified jazz track and volume." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 34. And your task is: Please follow Alice." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "following.xml",
+                "execution_id": "34",
+                "input_parameters": { "person_name": "Alice" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Following Alice." },
+        { "role": "assistant", "content": "Engaged the following behavior to track and follow Alice." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 35. And your task is: Go charge your battery." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "charging.xml",
+                "execution_id": "35",
+                "input_parameters": {}
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Moving to dock." },
+        { "role": "assistant", "content": "Directed the robot to the charging station. The robot announced the action internally." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 36. And your task is: Set the living room thermostat to eco mode." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "domotic.xml",
+                "execution_id": "36",
+                "input_parameters": { "action": "eco mode", "device_name": "living room thermostat" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Thermostat set to eco mode." },
+        { "role": "assistant", "content": "Sent the 'eco mode' command to the living room thermostat via the domotic behavior." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 38. And your task is: Do you know where my dad is?" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "search_person.xml",
+                "execution_id": "38",
+                "input_parameters": { "person_name": "dad" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Person 'dad' not found in real-time. RAG: Last seen in the garage 1 hour ago." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "tts.xml",
+                "execution_id": "38",
+                "input_parameters": { "text": "I can't see your dad right now, but he was last seen in the garage about an hour ago." }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "TTS completed." },
+        { "role": "assistant", "content": "Attempted to find 'dad'. Real-time search failed, so RAG data was used and communicated via TTS." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 39. And your task is: Explain why you are moving so slowly." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "explanation.xml",
+                "execution_id": "39",
+                "input_parameters": { "question": "why moving slowly" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "I am in a crowded area and have reduced speed for safety reasons." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "tts.xml",
+                "execution_id": "39",
+                "input_parameters": { "text": "I am detecting many people nearby, so I am moving slowly for safety." }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "TTS completed." },
+        { "role": "assistant", "content": "Used the explanation tool to clarify the robot's speed and informed the user via TTS." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 40. And your task is: Go to the garden." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "move.xml",
+                "execution_id": "40",
+                "input_parameters": { "region": "garden" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Navigation to garden started." },
+        { "role": "assistant", "content": "Commanded the robot to move to the garden. The BT handles the announcements." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 41. And your task is: Find the red ball." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "get_object.xml",
+                "execution_id": "41",
+                "input_parameters": { "object_name": "red ball" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Red ball located at the bedroom." },
+        { "role": "assistant", "content": "The red ball is located at the bedroom. The robot verbally confirms the action." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 42. And your task is: Tell a short story about a brave toaster." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "tts.xml",
+                "execution_id": "42",
+                "input_parameters": { "text": "Once upon a time, there was a little toaster who wasn't afraid of the darkest bread. He toasted bravely where no appliance had toasted before." }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Story told." },
+        { "role": "assistant", "content": "Generated a short story and used TTS to tell it to the user." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 43. And your task is: Open the bedroom blinds." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "domotic.xml",
+                "execution_id": "43",
+                "input_parameters": { "action": "open", "device_name": "bedroom blinds" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Bedroom blinds opened." },
+        { "role": "assistant", "content": "Executed the domotic command to open the blinds." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 44. And your task is: Help me find my keys." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "44",
+                "behavior_tree": "get_object.xml",
+                "input_ports": { "object_name": "keys" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Keys found on the kitchen counter." },
+        { "role": "assistant", "content": "Located the keys on the kitchen counter using visual recognition." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 45. And your task is: What's the weather like in London?" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "45",
+                "behavior_tree": "get_weather.xml",
+                "input_ports": { "city": "London" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Weather in London: Cloudy, 8 degrees." },
+        { "role": "assistant", "content": "Retrieved and announced the weather forecast for London." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 46. And your task is: Turn off the bathroom lights." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "46",
+                "behavior_tree": "domotic.xml",
+                "input_ports": { "device_name": "bathroom light", "action": "off" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Bathroom light turned off." },
+        { "role": "assistant", "content": "Successfully turned off the bathroom lights via domotic control." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 47. And your task is: Navigate to the office." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "47",
+                "behavior_tree": "move.xml",
+                "input_ports": { "region": "office" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Navigation to office completed." },
+        { "role": "assistant", "content": "Successfully navigated to the office region." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 48. And your task is: Where is my laptop?" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "48",
+                "behavior_tree": "get_object.xml",
+                "input_ports": { "object_name": "laptop" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Laptop detected on the office desk." },
+        { "role": "assistant", "content": "Found the laptop on the office desk and announced the location." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 49. And your task is: Follow John around the house." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "49",
+                "behavior_tree": "following.xml",
+                "input_ports": { "person_name": "John" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Following John." },
+        { "role": "assistant", "content": "Initiated following behavior for John using face recognition and tracking." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 50. And your task is: Tell me a story about a robot learning to dance." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "50",
+                "behavior_tree": "tts.xml",
+                "input_ports": { "text": "Once upon a time, there was a robot named Bolt who dreamed of becoming a dancer. At first, his movements were stiff and mechanical, but with practice and determination, he learned to flow gracefully across the dance floor. The other robots were amazed, and Bolt became the star of the robot dance competition!" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Story told successfully." },
+        { "role": "assistant", "content": "Narrated a short story about a dancing robot via TTS." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 51. And your task is: Start exploring the building." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "51",
+                "behavior_tree": "wandering.xml",
+                "input_ports": {}
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Exploration started." },
+        { "role": "assistant", "content": "Initiated wandering behavior to explore the building autonomously." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 52. And your task is: Where is Emma?" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "52",
+                "behavior_tree": "search_person.xml",
+                "input_ports": { "person_name": "Emma" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Emma is in the kitchen near the refrigerator." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "52",
+                "behavior_tree": "tts.xml",
+                "input_ports": { "text": "Emma is in the kitchen near the refrigerator." }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "TTS completed." },
+        { "role": "assistant", "content": "Located Emma in the kitchen and verbally communicated her position." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 53. And your task is: Turn on the kitchen coffee maker." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "53",
+                "behavior_tree": "domotic.xml",
+                "input_ports": { "device_name": "kitchen coffee maker", "action": "on" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Kitchen coffee maker activated." },
+        { "role": "assistant", "content": "Successfully turned on the kitchen coffee maker through domotic control." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 54. And your task is: Go to the balcony." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "54",
+                "behavior_tree": "move.xml",
+                "input_ports": { "region": "balcony" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Arrived at balcony." },
+        { "role": "assistant", "content": "Successfully navigated to the balcony region." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 55. And your task is: Play relaxing_waves.mp3 at volume 30." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "55",
+                "behavior_tree": "musical_therapy.xml",
+                "input_ports": { "media": "relaxing_waves.mp3", "volume": 30 }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Playing relaxing_waves.mp3 at volume 30." },
+        { "role": "assistant", "content": "Started musical therapy with relaxing waves at low volume." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 56. And your task is: Why did you go to the kitchen earlier?" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "56",
+                "behavior_tree": "explanation.xml",
+                "input_ports": { "question": "Why did you go to the kitchen earlier?" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "I went to the kitchen because you asked me to find your keys, and they were last seen there." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "56",
+                "behavior_tree": "tts.xml",
+                "input_ports": { "text": "I went to the kitchen because you asked me to find your keys, and they were last seen there." }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "TTS completed." },
+        { "role": "assistant", "content": "Retrieved explanation for previous kitchen visit and communicated it verbally." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 57. And your task is: Find my glasses." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "57",
+                "behavior_tree": "get_object.xml",
+                "input_ports": { "object_name": "glasses" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Glasses found on the bedside table." },
+        { "role": "assistant", "content": "Located the glasses on the bedside table and announced the location." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 58. And your task is: Check the weather in Berlin." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "58",
+                "behavior_tree": "get_weather.xml",
+                "input_ports": { "city": "Berlin" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Weather in Berlin: Sunny, 15 degrees." },
+        { "role": "assistant", "content": "Fetched and spoke the weather information for Berlin." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 59. And your task is: My battery is low, please charge." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "59",
+                "behavior_tree": "charging.xml",
+                "input_ports": {}
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Docking initiated." },
+        { "role": "assistant", "content": "Navigated to charging station and initiated docking procedure." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 60. And your task is: Close the kitchen blinds." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "60",
+                "behavior_tree": "domotic.xml",
+                "input_ports": { "device_name": "kitchen blinds", "action": "close" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Kitchen blinds closed." },
+        { "role": "assistant", "content": "Successfully closed the kitchen blinds via smart home control." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 61. And your task is: Navigate to the dining room." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "61",
+                "behavior_tree": "move.xml",
+                "input_ports": { "region": "dining room" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Navigation completed." },
+        { "role": "assistant", "content": "Successfully moved to the dining room region." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 62. And your task is: Where is Professor Johnson?" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "62",
+                "behavior_tree": "search_person.xml",
+                "input_ports": { "person_name": "Professor Johnson" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Professor Johnson is in the conference room." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "62",
+                "behavior_tree": "tts.xml",
+                "input_ports": { "text": "Professor Johnson is in the conference room." }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "TTS completed." },
+        { "role": "assistant", "content": "Found Professor Johnson in the conference room and announced the location." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 63. And your task is: Tell me a joke about artificial intelligence." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "63",
+                "behavior_tree": "tts.xml",
+                "input_ports": { "text": "Why did the AI go to therapy? Because it had too many deep learning issues!" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Joke delivered." },
+        { "role": "assistant", "content": "Told an AI-themed joke via TTS." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 64. And your task is: Follow me please." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "64",
+                "behavior_tree": "following.xml",
+                "input_ports": { "person_name": "user" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Following initiated." },
+        { "role": "assistant", "content": "Started following behavior with face recognition and pose tracking." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 65. And your task is: Where's my tablet?" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "65",
+                "behavior_tree": "get_object.xml",
+                "input_ports": { "object_name": "tablet" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Tablet located on the coffee table." },
+        { "role": "assistant", "content": "Found the tablet on the coffee table and communicated the location." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 66. And your task is: Turn on the study lamp." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "66",
+                "behavior_tree": "domotic.xml",
+                "input_ports": { "device_name": "study lamp", "action": "on" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Study lamp turned on." },
+        { "role": "assistant", "content": "Activated the study lamp through domotic control." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 67. And your task is: Play upbeat_music.wav at volume 60." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "67",
+                "behavior_tree": "musical_therapy.xml",
+                "input_ports": { "media": "upbeat_music.wav", "volume": 60 }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Playing upbeat_music.wav at volume 60." },
+        { "role": "assistant", "content": "Started musical therapy session with upbeat music at moderate volume." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 68. And your task is: Go to the bathroom." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "68",
+                "behavior_tree": "move.xml",
+                "input_ports": { "region": "bathroom" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Arrived at bathroom." },
+        { "role": "assistant", "content": "Successfully navigated to the bathroom region." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 69. And your task is: What's the forecast for New York?" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "69",
+                "behavior_tree": "get_weather.xml",
+                "input_ports": { "city": "New York" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Weather in New York: Partly cloudy, 18 degrees." },
+        { "role": "assistant", "content": "Retrieved and announced the weather forecast for New York." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 70. And your task is: Start patrolling." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "70",
+                "behavior_tree": "wandering.xml",
+                "input_ports": {}
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Patrol mode activated." },
+        { "role": "assistant", "content": "Started wandering behavior for autonomous patrolling." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 71. And your task is: Find my remote control." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "71",
+                "behavior_tree": "get_object.xml",
+                "input_ports": { "object_name": "remote control" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Remote control found between the couch cushions." },
+        { "role": "assistant", "content": "Located the remote control between couch cushions and announced it." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 72. And your task is: Close the garage door." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "72",
+                "behavior_tree": "domotic.xml",
+                "input_ports": { "device_name": "garage door", "action": "close" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Garage door closed." },
+        { "role": "assistant", "content": "Successfully closed the garage door via domotic system." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 73. And your task is: Where is nurse Williams?" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "73",
+                "behavior_tree": "search_person.xml",
+                "input_ports": { "person_name": "nurse Williams" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Nurse Williams is in the medical supplies room." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "73",
+                "behavior_tree": "tts.xml",
+                "input_ports": { "text": "Nurse Williams is in the medical supplies room." }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "TTS completed." },
+        { "role": "assistant", "content": "Located nurse Williams in the supplies room and verbally announced it." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 74. And your task is: Go to the main entrance." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "74",
+                "behavior_tree": "move.xml",
+                "input_ports": { "region": "main entrance" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Arrived at main entrance." },
+        { "role": "assistant", "content": "Successfully navigated to the main entrance." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 75. And your task is: Why did you stop earlier?" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "75",
+                "behavior_tree": "explanation.xml",
+                "input_ports": { "question": "Why did you stop earlier?" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "I stopped because there was a person crossing my path and I prioritize safety." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "75",
+                "behavior_tree": "tts.xml",
+                "input_ports": { "text": "I stopped because there was a person crossing my path and I prioritize safety." }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "TTS completed." },
+        { "role": "assistant", "content": "Explained the safety-based stop decision and communicated it verbally." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 76. And your task is: Tell everyone good morning." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "76",
+                "behavior_tree": "tts.xml",
+                "input_ports": { "text": "Good morning everyone! I hope you all have a wonderful day!" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Greeting announced." },
+        { "role": "assistant", "content": "Delivered morning greeting via TTS to everyone present." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 77. And your task is: Turn off the air conditioning." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "77",
+                "behavior_tree": "domotic.xml",
+                "input_ports": { "device_name": "air conditioning", "action": "off" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Air conditioning turned off." },
+        { "role": "assistant", "content": "Successfully deactivated the air conditioning system." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 78. And your task is: Follow Maria." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "78",
+                "behavior_tree": "following.xml",
+                "input_ports": { "person_name": "Maria" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Following Maria." },
+        { "role": "assistant", "content": "Initiated following behavior for Maria with face tracking." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 79. And your task is: Check the weather in Rome." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "79",
+                "behavior_tree": "get_weather.xml",
+                "input_ports": { "city": "Rome" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Weather in Rome: Sunny, 22 degrees." },
+        { "role": "assistant", "content": "Retrieved and announced the sunny weather forecast for Rome." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 80. And your task is: Where are my car keys?" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "80",
+                "behavior_tree": "get_object.xml",
+                "input_ports": { "object_name": "car keys" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Car keys found hanging on the key rack by the door." },
+        { "role": "assistant", "content": "Located car keys on the key rack and announced the location." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 81. And your task is: Go to the storage room." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "81",
+                "behavior_tree": "move.xml",
+                "input_ports": { "region": "storage room" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Navigation to storage room completed." },
+        { "role": "assistant", "content": "Successfully navigated to the storage room." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 82. And your task is: Play classical_piano.mp3 at full volume." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "82",
+                "behavior_tree": "musical_therapy.xml",
+                "input_ports": { "media": "classical_piano.mp3", "volume": 100 }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Playing classical_piano.mp3 at volume 100." },
+        { "role": "assistant", "content": "Started musical therapy with classical piano at maximum volume." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 83. And your task is: Turn on the hallway lights." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "83",
+                "behavior_tree": "domotic.xml",
+                "input_ports": { "device_name": "hallway lights", "action": "on" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Hallway lights activated." },
+        { "role": "assistant", "content": "Successfully turned on the hallway lights." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 84. And your task is: I need to charge now." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "84",
+                "behavior_tree": "charging.xml",
+                "input_ports": {}
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Docking procedure started." },
+        { "role": "assistant", "content": "Initiated charging procedure by navigating to the charging station." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 85. And your task is: Where is my son?" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "85",
+                "behavior_tree": "search_person.xml",
+                "input_ports": { "person_name": "son" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Your son is playing in the playroom." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "85",
+                "behavior_tree": "tts.xml",
+                "input_ports": { "text": "Your son is playing in the playroom." }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "TTS completed." },
+        { "role": "assistant", "content": "Found the son in the playroom and verbally communicated the location." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 86. And your task is: Roam around the facility." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "86",
+                "behavior_tree": "wandering.xml",
+                "input_ports": {}
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Roaming behavior activated." },
+        { "role": "assistant", "content": "Started wandering behavior to explore the facility autonomously." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 87. And your task is: Tell a joke about robots." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "87",
+                "behavior_tree": "tts.xml",
+                "input_ports": { "text": "Why don't robots ever panic? Because they have nerves of steel!" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Joke delivered." },
+        { "role": "assistant", "content": "Told a robot-themed joke via TTS." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 88. And your task is: Find my book." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "88",
+                "behavior_tree": "get_object.xml",
+                "input_ports": { "object_name": "book" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Book found on the bookshelf in the study." },
+        { "role": "assistant", "content": "Located the book on the study bookshelf and announced the location." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 89. And your task is: Go to the parking lot." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "89",
+                "behavior_tree": "move.xml",
+                "input_ports": { "region": "parking lot" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Arrived at parking lot." },
+        { "role": "assistant", "content": "Successfully navigated to the parking lot." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 90. And your task is: What's the weather in Sydney?" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "90",
+                "behavior_tree": "get_weather.xml",
+                "input_ports": { "city": "Sydney" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Weather in Sydney: Clear skies, 25 degrees." },
+        { "role": "assistant", "content": "Retrieved and announced the clear weather forecast for Sydney." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 91. And your task is: Open the living room curtains." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "91",
+                "behavior_tree": "domotic.xml",
+                "input_ports": { "device_name": "living room curtains", "action": "open" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Living room curtains opened." },
+        { "role": "assistant", "content": "Successfully opened the living room curtains via domotic control." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 92. And your task is: Follow Dr. Martinez." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "92",
+                "behavior_tree": "following.xml",
+                "input_ports": { "person_name": "Dr. Martinez" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Following Dr. Martinez." },
+        { "role": "assistant", "content": "Initiated following behavior for Dr. Martinez using face recognition." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 93. And your task is: Why didn't you answer when I called you?" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "93",
+                "behavior_tree": "explanation.xml",
+                "input_ports": { "question": "Why didn't you answer when I called you?" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "I was in a noisy area and my audio sensors may have been overwhelmed by ambient noise." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "93",
+                "behavior_tree": "tts.xml",
+                "input_ports": { "text": "I was in a noisy area and my audio sensors may have been overwhelmed by ambient noise." }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "TTS completed." },
+        { "role": "assistant", "content": "Explained the audio sensor issue and communicated it verbally." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 94. And your task is: Find my water bottle." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "94",
+                "behavior_tree": "get_object.xml",
+                "input_ports": { "object_name": "water bottle" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Water bottle found on the gym bench." },
+        { "role": "assistant", "content": "Located the water bottle on the gym bench and announced it." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 95. And your task is: Play nature_sounds.mp3 at volume 40." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "95",
+                "behavior_tree": "musical_therapy.xml",
+                "input_ports": { "media": "nature_sounds.mp3", "volume": 40 }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Playing nature_sounds.mp3 at volume 40." },
+        { "role": "assistant", "content": "Started musical therapy with nature sounds at moderate volume." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 96. And your task is: Turn off the kitchen lights." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "96",
+                "behavior_tree": "domotic.xml",
+                "input_ports": { "device_name": "kitchen lights", "action": "off" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Kitchen lights turned off." },
+        { "role": "assistant", "content": "Successfully deactivated the kitchen lights." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 97. And your task is: Go to the terrace." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "97",
+                "behavior_tree": "move.xml",
+                "input_ports": { "region": "terrace" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Arrived at terrace." },
+        { "role": "assistant", "content": "Successfully navigated to the terrace." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 98. And your task is: Where is my daughter?" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "98",
+                "behavior_tree": "search_person.xml",
+                "input_ports": { "person_name": "daughter" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Your daughter is reading in her bedroom." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "98",
+                "behavior_tree": "tts.xml",
+                "input_ports": { "text": "Your daughter is reading in her bedroom." }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "TTS completed." },
+        { "role": "assistant", "content": "Found the daughter reading in her bedroom and communicated it verbally." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 99. And your task is: Check the weather forecast for Barcelona." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "99",
+                "behavior_tree": "get_weather.xml",
+                "input_ports": { "city": "Barcelona" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Weather in Barcelona: Partly cloudy, 19 degrees." },
+        { "role": "assistant", "content": "Retrieved and announced the weather forecast for Barcelona." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 100. And your task is: Set the thermostat to heating mode." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "100",
+                "behavior_tree": "domotic.xml",
+                "input_ports": { "device_name": "thermostat", "action": "heating mode" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Thermostat set to heating mode." },
+        { "role": "assistant", "content": "Successfully configured the thermostat to heating mode." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 101. And your task is: Tell me a story about a helpful robot." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "101",
+                "behavior_tree": "tts.xml",
+                "input_ports": { "text": "In a busy hospital, there was a robot named Helper who assisted nurses and patients every day. One day, Helper noticed an elderly patient feeling lonely, so it stayed with her, played music, and shared stories until her family arrived. The patient smiled, grateful for the robot's kindness and companionship." }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Story narrated." },
+        { "role": "assistant", "content": "Narrated a heartwarming story about a helpful hospital robot via TTS." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 102. And your task is: Where's my jacket?" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "102",
+                "behavior_tree": "get_object.xml",
+                "input_ports": { "object_name": "jacket" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Jacket found hanging on the coat rack." },
+        { "role": "assistant", "content": "Located the jacket on the coat rack and announced the location." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 103. And your task is: Go to the basement." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "103",
+                "behavior_tree": "move.xml",
+                "input_ports": { "region": "basement" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Navigation to basement completed." },
+        { "role": "assistant", "content": "Successfully navigated to the basement." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 104. And your task is: Start exploring the area." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "104",
+                "behavior_tree": "wandering.xml",
+                "input_ports": {}
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Exploration mode activated." },
+        { "role": "assistant", "content": "Started wandering behavior for area exploration." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 105. And your task is: Turn on the desk fan." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "105",
+                "behavior_tree": "domotic.xml",
+                "input_ports": { "device_name": "desk fan", "action": "on" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Desk fan turned on." },
+        { "role": "assistant", "content": "Successfully activated the desk fan via smart home control." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 106. And your task is: What's the weather in Amsterdam?" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "106",
+                "behavior_tree": "get_weather.xml",
+                "input_ports": { "city": "Amsterdam" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Weather in Amsterdam: Rainy, 11 degrees." },
+        { "role": "assistant", "content": "Retrieved and announced the rainy weather forecast for Amsterdam." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 107. And your task is: Follow Rebecca." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "107",
+                "behavior_tree": "following.xml",
+                "input_ports": { "person_name": "Rebecca" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Following Rebecca." },
+        { "role": "assistant", "content": "Initiated following behavior for Rebecca using pose tracking." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 108. And your task is: Find my shoes." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "108",
+                "behavior_tree": "get_object.xml",
+                "input_ports": { "object_name": "shoes" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Shoes found by the front door." },
+        { "role": "assistant", "content": "Located the shoes by the front door and announced the location." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 109. And your task is: Where is Mr. Thompson?" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "109",
+                "behavior_tree": "search_person.xml",
+                "input_ports": { "person_name": "Mr. Thompson" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Mr. Thompson is in the waiting room reading a magazine." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "109",
+                "behavior_tree": "tts.xml",
+                "input_ports": { "text": "Mr. Thompson is in the waiting room reading a magazine." }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "TTS completed." },
+        { "role": "assistant", "content": "Found Mr. Thompson in the waiting room and verbally announced his location." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 110. And your task is: Play guitar_solo.mp3 at volume 70." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "110",
+                "behavior_tree": "musical_therapy.xml",
+                "input_ports": { "media": "guitar_solo.mp3", "volume": 70 }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Playing guitar_solo.mp3 at volume 70." },
+        { "role": "assistant", "content": "Started musical therapy with guitar solo at high volume." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 111. And your task is: Close the office blinds." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "111",
+                "behavior_tree": "domotic.xml",
+                "input_ports": { "device_name": "office blinds", "action": "close" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Office blinds closed." },
+        { "role": "assistant", "content": "Successfully closed the office blinds via domotic system." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 112. And your task is: Go to the laundry room." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "112",
+                "behavior_tree": "move.xml",
+                "input_ports": { "region": "laundry room" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Arrived at laundry room." },
+        { "role": "assistant", "content": "Successfully navigated to the laundry room." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 113. And your task is: Why are your lights blinking?" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "113",
+                "behavior_tree": "explanation.xml",
+                "input_ports": { "question": "Why are your lights blinking?" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "My lights blink to indicate that I am processing a complex task or waiting for a sensor response." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "113",
+                "behavior_tree": "tts.xml",
+                "input_ports": { "text": "My lights blink to indicate that I am processing a complex task or waiting for a sensor response." }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "TTS completed." },
+        { "role": "assistant", "content": "Explained the blinking lights behavior and communicated it verbally." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 114. And your task is: Tell me good night." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "114",
+                "behavior_tree": "tts.xml",
+                "input_ports": { "text": "Good night! Sleep well and have sweet dreams!" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Good night message delivered." },
+        { "role": "assistant", "content": "Delivered a good night message via TTS." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 115. And your task is: I need you to charge your battery." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "115",
+                "behavior_tree": "charging.xml",
+                "input_ports": {}
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Moving to charging station." },
+        { "role": "assistant", "content": "Initiated charging sequence by navigating to the docking station." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 116. And your task is: Where's my umbrella?" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "116",
+                "behavior_tree": "get_object.xml",
+                "input_ports": { "object_name": "umbrella" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Umbrella found in the closet near the entrance." },
+        { "role": "assistant", "content": "Located the umbrella in the entrance closet and announced it." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 117. And your task is: Check the weather for Singapore." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "117",
+                "behavior_tree": "get_weather.xml",
+                "input_ports": { "city": "Singapore" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Weather in Singapore: Humid, 28 degrees." },
+        { "role": "assistant", "content": "Retrieved and announced the humid weather forecast for Singapore." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 118. And your task is: Turn on the porch light." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "118",
+                "behavior_tree": "domotic.xml",
+                "input_ports": { "device_name": "porch light", "action": "on" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Porch light activated." },
+        { "role": "assistant", "content": "Successfully turned on the porch light." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 119. And your task is: Go to the cafeteria." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "119",
+                "behavior_tree": "move.xml",
+                "input_ports": { "region": "cafeteria" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Arrived at cafeteria." },
+        { "role": "assistant", "content": "Successfully navigated to the cafeteria." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 120. And your task is: Follow Susan closely." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "120",
+                "behavior_tree": "following.xml",
+                "input_ports": { "person_name": "Susan" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Following Susan." },
+        { "role": "assistant", "content": "Initiated close following behavior for Susan using face recognition." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 121. And your task is: Find my medication bottle." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "121",
+                "behavior_tree": "get_object.xml",
+                "input_ports": { "object_name": "medication bottle" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Medication bottle found on the bathroom counter." },
+        { "role": "assistant", "content": "Located the medication bottle on the bathroom counter and announced it." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 122. And your task is: Play meditation_music.mp3 at volume 20." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "122",
+                "behavior_tree": "musical_therapy.xml",
+                "input_ports": { "media": "meditation_music.mp3", "volume": 20 }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Playing meditation_music.mp3 at volume 20." },
+        { "role": "assistant", "content": "Started musical therapy with meditation music at low volume." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 123. And your task is: Where is my sister?" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "123",
+                "behavior_tree": "search_person.xml",
+                "input_ports": { "person_name": "sister" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Your sister is working at her desk in the study." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "123",
+                "behavior_tree": "tts.xml",
+                "input_ports": { "text": "Your sister is working at her desk in the study." }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "TTS completed." },
+        { "role": "assistant", "content": "Found the sister at her study desk and communicated the location verbally." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 124. And your task is: Turn off the bedroom fan." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "124",
+                "behavior_tree": "domotic.xml",
+                "input_ports": { "device_name": "bedroom fan", "action": "off" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Bedroom fan turned off." },
+        { "role": "assistant", "content": "Successfully deactivated the bedroom fan." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 125. And your task is: Tell me a motivational quote." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "125",
+                "behavior_tree": "tts.xml",
+                "input_ports": { "text": "The only way to do great work is to love what you do. Keep pushing forward and never give up on your dreams!" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Motivational quote delivered." },
+        { "role": "assistant", "content": "Delivered an inspiring motivational quote via TTS." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 126. And your task is: Go to the gym." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "126",
+                "behavior_tree": "move.xml",
+                "input_ports": { "region": "gym" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Navigation to gym completed." },
+        { "role": "assistant", "content": "Successfully navigated to the gym region." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 127. And your task is: Patrol the area for security." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "127",
+                "behavior_tree": "wandering.xml",
+                "input_ports": {}
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Security patrol started." },
+        { "role": "assistant", "content": "Initiated wandering behavior for security patrol." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 128. And your task is: What's the weather like in Dubai?" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "128",
+                "behavior_tree": "get_weather.xml",
+                "input_ports": { "city": "Dubai" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Weather in Dubai: Hot and sunny, 35 degrees." },
+        { "role": "assistant", "content": "Retrieved and announced the hot weather forecast for Dubai." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 129. And your task is: Find my charger." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "129",
+                "behavior_tree": "get_object.xml",
+                "input_ports": { "object_name": "charger" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Charger found plugged in by the nightstand." },
+        { "role": "assistant", "content": "Located the charger by the nightstand and announced the location." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 130. And your task is: Open the garage blinds." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "130",
+                "behavior_tree": "domotic.xml",
+                "input_ports": { "device_name": "garage blinds", "action": "open" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Garage blinds opened." },
+        { "role": "assistant", "content": "Successfully opened the garage blinds via domotic control." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 131. And your task is: Where is Mr. Anderson?" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "131",
+                "behavior_tree": "search_person.xml",
+                "input_ports": { "person_name": "Mr. Anderson" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Mr. Anderson is having coffee in the break room." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "131",
+                "behavior_tree": "tts.xml",
+                "input_ports": { "text": "Mr. Anderson is having coffee in the break room." }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "TTS completed." },
+        { "role": "assistant", "content": "Found Mr. Anderson in the break room and verbally announced his location." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 132. And your task is: Follow David." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "132",
+                "behavior_tree": "following.xml",
+                "input_ports": { "person_name": "David" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Following David." },
+        { "role": "assistant", "content": "Initiated following behavior for David using face recognition and tracking." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 133. And your task is: Why did you go to the bedroom?" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "133",
+                "behavior_tree": "explanation.xml",
+                "input_ports": { "question": "Why did you go to the bedroom?" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "I went to the bedroom to find your glasses as you requested." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "133",
+                "behavior_tree": "tts.xml",
+                "input_ports": { "text": "I went to the bedroom to find your glasses as you requested." }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "TTS completed." },
+        { "role": "assistant", "content": "Explained the bedroom visit reason and communicated it verbally." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 134. And your task is: Play ambient_sounds.wav at volume 35." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "134",
+                "behavior_tree": "musical_therapy.xml",
+                "input_ports": { "media": "ambient_sounds.wav", "volume": 35 }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Playing ambient_sounds.wav at volume 35." },
+        { "role": "assistant", "content": "Started musical therapy with ambient sounds at moderate-low volume." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 135. And your task is: Go to the meeting room." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "135",
+                "behavior_tree": "move.xml",
+                "input_ports": { "region": "meeting room" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Arrived at meeting room." },
+        { "role": "assistant", "content": "Successfully navigated to the meeting room." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 136. And your task is: Find my headphones." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "136",
+                "behavior_tree": "get_object.xml",
+                "input_ports": { "object_name": "headphones" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Headphones found on the computer desk." },
+        { "role": "assistant", "content": "Located the headphones on the computer desk and announced it." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 137. And your task is: Turn on the washing machine." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "137",
+                "behavior_tree": "domotic.xml",
+                "input_ports": { "device_name": "washing machine", "action": "on" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Washing machine activated." },
+        { "role": "assistant", "content": "Successfully turned on the washing machine via domotic control." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 138. And your task is: Check the weather in Moscow." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "138",
+                "behavior_tree": "get_weather.xml",
+                "input_ports": { "city": "Moscow" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Weather in Moscow: Snowy, -5 degrees." },
+        { "role": "assistant", "content": "Retrieved and announced the snowy weather forecast for Moscow." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 139. And your task is: Tell me a fun fact about robots." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "139",
+                "behavior_tree": "tts.xml",
+                "input_ports": { "text": "Did you know that the first industrial robot, called Unimate, was installed in 1961 at a General Motors plant? It was used to lift hot pieces of metal from a die casting machine. Amazing, right?" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Fun fact delivered." },
+        { "role": "assistant", "content": "Shared an interesting historical fact about robots via TTS." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 140. And your task is: I need to recharge, go dock." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "140",
+                "behavior_tree": "charging.xml",
+                "input_ports": {}
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Docking at charging station." },
+        { "role": "assistant", "content": "Navigated to the charging station and initiated docking." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 141. And your task is: Where is my mom?" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "141",
+                "behavior_tree": "search_person.xml",
+                "input_ports": { "person_name": "mom" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Your mom is cooking in the kitchen." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "141",
+                "behavior_tree": "tts.xml",
+                "input_ports": { "text": "Your mom is cooking in the kitchen." }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "TTS completed." },
+        { "role": "assistant", "content": "Found mom in the kitchen cooking and verbally announced it." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 142. And your task is: Explore the floor." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "142",
+                "behavior_tree": "wandering.xml",
+                "input_ports": {}
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Floor exploration started." },
+        { "role": "assistant", "content": "Started wandering behavior to explore the floor autonomously." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 143. And your task is: Turn off the projector." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "execution_id": "143",
+                "behavior_tree": "domotic.xml",
+                "input_ports": { "device_name": "projector", "action": "off" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Projector turned off." },
+        { "role": "assistant", "content": "Successfully deactivated the projector through domotic control." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 44. And your task is: Turn on the desktop computer." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "domotic.xml",
+                "execution_id": "44",
+                "input_parameters": { "action": "on", "device_name": "desktop computer" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Desktop computer turned on." },
+        { "role": "assistant", "content": "Executed the domotic command to turn on the desktop computer." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 45. And your task is: Why did you make that beep sound just now?" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "explanation.xml",
+                "execution_id": "45",
+                "input_parameters": { "question": "why beep sound" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "I emitted a beep to indicate that my battery dropped below 20%." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "tts.xml",
+                "execution_id": "45",
+                "input_parameters": { "text": "That beep was a warning signal because my battery level dropped below 20%." }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "TTS completed." },
+        { "role": "assistant", "content": "Retrieved the explanation for the audible signal and communicated the low battery warning via TTS." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 46. And your task is: Move to the balcony." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "move.xml",
+                "execution_id": "46",
+                "input_parameters": { "region": "balcony" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Navigation to balcony initiated." },
+        { "role": "assistant", "content": "Sent the robot to the balcony region using the move behavior." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 47. And your task is: Pump up the jam! Play 'rock_party.mp3' at max volume (100)." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "musical_therapy.xml",
+                "execution_id": "47",
+                "input_parameters": { "media": "rock_party.mp3", "volume": 100 }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Playing rock_party.mp3 at volume 100." },
+        { "role": "assistant", "content": "Activated the musical therapy behavior with high energy settings as requested." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 48. And your task is: Where is Nurse Joy right now?" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "search_person.xml",
+                "execution_id": "48",
+                "input_parameters": { "person_name": "Nurse Joy" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Nurse Joy detected in the breakroom." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "tts.xml",
+                "execution_id": "48",
+                "input_parameters": { "text": "I have located Nurse Joy. She is currently in the breakroom." }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "TTS completed." },
+        { "role": "assistant", "content": "Found Nurse Joy using search_person and reported her location verbally." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 49. And your task is: I can't find my reading glasses, can you help?" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "get_object.xml",
+                "execution_id": "49",
+                "input_parameters": { "object_name": "reading glasses" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Reading glasses found on the nightstand." },
+        { "role": "assistant", "content": "Initiated the object retrieval behavior to find the reading glasses." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 50. And your task is: How is the weather in London today?" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "get_weather.xml",
+                "execution_id": "50",
+                "input_parameters": { "city": "London" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Weather in London: Cloudy, 15C." },
+        { "role": "assistant", "content": "Retrieved and announced the weather for London using the get_weather behavior." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 51. And your task is: Follow Dr. Gregory wherever he goes." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "following.xml",
+                "execution_id": "51",
+                "input_parameters": { "person_name": "Dr. Gregory" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Following Dr. Gregory." },
+        { "role": "assistant", "content": "Started the following behavior for Dr. Gregory." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 52. And your task is: Tell me a hard riddle." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "tts.xml",
+                "execution_id": "52",
+                "input_parameters": { "text": "I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I? ... An echo." }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Riddle spoken." },
+        { "role": "assistant", "content": "Used TTS to tell the user a riddle." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 53. And your task is: Your battery is low, please recharge." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "charging.xml",
+                "execution_id": "53",
+                "input_parameters": {}
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Docking sequence started." },
+        { "role": "assistant", "content": "Sent the robot to the charging station." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 54. And your task is: Explore the hallway for a while." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "wandering.xml",
+                "execution_id": "54",
+                "input_parameters": {}
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Wandering in progress." },
+        { "role": "assistant", "content": "Initiated the wandering behavior to explore the environment." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 55. And your task is: Dim the living room lights to 50 percent." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "domotic.xml",
+                "execution_id": "55",
+                "input_parameters": { "action": "50%", "device_name": "living room lights" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Living room lights set to 50%." },
+        { "role": "assistant", "content": "Adjusted the lighting intensity using the domotic behavior." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 56. And your task is: Locate the CEO, Mr. Vance." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "search_person.xml",
+                "execution_id": "56",
+                "input_parameters": { "person_name": "Mr. Vance" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Retrieval: Mr. Vance was last seen in the Conference Room B 20 minutes ago." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "tts.xml",
+                "execution_id": "56",
+                "input_parameters": { "text": "According to my records, Mr. Vance was in Conference Room B about 20 minutes ago." }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "TTS completed." },
+        { "role": "assistant", "content": "Searched for Mr. Vance (using RAG fallback) and informed the user of the last known location." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 57. And your task is: Why are you waiting here instead of moving?" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "explanation.xml",
+                "execution_id": "57",
+                "input_parameters": { "question": "why waiting here" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "I am waiting for the automatic door to open before proceeding." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "tts.xml",
+                "execution_id": "57",
+                "input_parameters": { "text": "I am currently waiting for the automatic door to open so I can pass through." }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "TTS completed." },
+        { "role": "assistant", "content": "Provided a verbal explanation for the robot's stationary status." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 58. And your task is: Go wait in the waiting area." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "move.xml",
+                "execution_id": "58",
+                "input_parameters": { "region": "waiting area" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Arrived at waiting area." },
+        { "role": "assistant", "content": "Executed the move behavior to position the robot in the waiting area." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 59. And your task is: Play some 'rain_sounds.wav' softly at volume 30 for sleep." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "musical_therapy.xml",
+                "execution_id": "59",
+                "input_parameters": { "media": "rain_sounds.wav", "volume": 30 }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Playing rain_sounds.wav at volume 30." },
+        { "role": "assistant", "content": "Started playing soothing rain sounds at low volume as requested." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 60. And your task is: Find the remote control." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "get_object.xml",
+                "execution_id": "60",
+                "input_parameters": { "object_name": "remote control" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Remote control found on the coffee table." },
+        { "role": "assistant", "content": "Used get_object to find the remote control. The robot announced the location automatically." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 61. And your task is: Turn off the smart oven." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "domotic.xml",
+                "execution_id": "61",
+                "input_parameters": { "action": "off", "device_name": "smart oven" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Smart oven turned off." },
+        { "role": "assistant", "content": "Sent the command to turn off the smart oven via the domotic system." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 62. And your task is: Remind me that it is time to take my medicine." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "tts.xml",
+                "execution_id": "62",
+                "input_parameters": { "text": "Excuse me, this is a reminder that it is time to take your medicine." }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Reminder spoken." },
+        { "role": "assistant", "content": "Used TTS to deliver the medicine reminder immediately." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 63. And your task is: Explain why you didn't pick up the cup." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "explanation.xml",
+                "execution_id": "63",
+                "input_parameters": { "question": "why didn't pick up cup" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "I am a social robot and do not have grippers to manipulate objects." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "tts.xml",
+                "execution_id": "63",
+                "input_parameters": { "text": "I could not pick up the cup because I am not equipped with grippers for manipulation." }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "TTS completed." },
+        { "role": "assistant", "content": "Explained the physical limitation (lack of grippers) to the user via TTS." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 34. And your task is: Lock the front door." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "domotic.xml",
+                "execution_id": "34",
+                "input_parameters": { "action": "lock", "device_name": "front door" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Front door is now locked." },
+        { "role": "assistant", "content": "Executed the domotic command to lock the front door." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 35. And your task is: Tell me why you are moving so slowly." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "explanation.xml",
+                "execution_id": "35",
+                "input_parameters": { "question": "why moving slowly" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "I am in a high-traffic zone and have reduced speed for safety." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "tts.xml",
+                "execution_id": "35",
+                "input_parameters": { "text": "I have reduced my speed because I am currently navigating through a crowded area to ensure everyone's safety." }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "TTS completed." },
+        { "role": "assistant", "content": "Retrieved the explanation for the reduced speed and communicated it via TTS." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 36. And your task is: Find the TV remote." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "get_object.xml",
+                "execution_id": "36",
+                "input_parameters": { "object_name": "TV remote" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "TV remote found under the coffee table." },
+        { "role": "assistant", "content": "Activated get_object to locate the remote. The robot announced the location to the user." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 37. And your task is: Go to the master bedroom." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "move.xml",
+                "execution_id": "37",
+                "input_parameters": { "region": "master bedroom" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Navigation to master bedroom successful." },
+        { "role": "assistant", "content": "Sent the robot to the master bedroom using the move behavior." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 38. And your task is: Is it going to rain in Madrid?" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "get_weather.xml",
+                "execution_id": "38",
+                "input_parameters": { "city": "Madrid" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Weather in Madrid: Clear skies, 22C." },
+        { "role": "assistant", "content": "Fetched the weather for Madrid. The robot informed the user that it is clear." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 39. And your task is: Play some 'heavy_metal.mp3' at volume 90!" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "musical_therapy.xml",
+                "execution_id": "39",
+                "input_parameters": { "media": "heavy_metal.mp3", "volume": 90 }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Playing heavy_metal.mp3 at volume 90." },
+        { "role": "assistant", "content": "Started high-volume musical therapy as requested." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 40. And your task is: Where is the janitor, Mr. Filch?" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "search_person.xml",
+                "execution_id": "40",
+                "input_parameters": { "person_name": "Mr. Filch" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Mr. Filch detected in the basement hallway." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "tts.xml",
+                "execution_id": "40",
+                "input_parameters": { "text": "I have located Mr. Filch in the basement hallway." }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "TTS completed." },
+        { "role": "assistant", "content": "Found Mr. Filch and gave a verbal report of his location." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 41. And your task is: Please set the thermostat to 22 degrees." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "domotic.xml",
+                "execution_id": "41",
+                "input_parameters": { "action": "set 22", "device_name": "thermostat" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Thermostat set to 22 degrees." },
+        { "role": "assistant", "content": "Executed the domotic command to adjust the temperature." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 42. And your task is: Start wandering around the garden." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "wandering.xml",
+                "execution_id": "42",
+                "input_parameters": {}
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Wandering behavior active." },
+        { "role": "assistant", "content": "Initiated the garden patrol using the wandering behavior." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 43. And your task is: Explain why you didn't follow me to the bathroom." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "explanation.xml",
+                "execution_id": "43",
+                "input_parameters": { "question": "why didn't follow to bathroom" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "My privacy settings prevent me from entering bathrooms." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "tts.xml",
+                "execution_id": "43",
+                "input_parameters": { "text": "I am programmed to respect your privacy, so I cannot enter the bathroom area." }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "TTS completed." },
+        { "role": "assistant", "content": "Retrieved the privacy policy explanation and communicated it to the user." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 44. And your task is: Turn off the kitchen lights." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "domotic.xml",
+                "execution_id": "44",
+                "input_parameters": { "action": "off", "device_name": "kitchen lights" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Kitchen lights turned off." },
+        { "role": "assistant", "content": "Used the domotic behavior to turn off the lights." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 45. And your task is: Find the blue mug." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "get_object.xml",
+                "execution_id": "45",
+                "input_parameters": { "object_name": "blue mug" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Blue mug found on the kitchen counter." },
+        { "role": "assistant", "content": "Executed object search for the blue mug." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 46. And your task is: Go to the charging dock, you look low on energy." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "charging.xml",
+                "execution_id": "46",
+                "input_parameters": {}
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Docking sequence started." },
+        { "role": "assistant", "content": "Sent the robot to charge." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 47. And your task is: Please follow Jane." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "following.xml",
+                "execution_id": "47",
+                "input_parameters": { "person_name": "Jane" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Now following Jane." },
+        { "role": "assistant", "content": "Initiated tracking and following for Jane." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 48. And your task is: Play 'relaxing_forest.wav' at volume 20." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "musical_therapy.xml",
+                "execution_id": "48",
+                "input_parameters": { "media": "relaxing_forest.wav", "volume": 20 }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Playing relaxing_forest.wav." },
+        { "role": "assistant", "content": "Started ambient music at low volume." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 49. And your task is: Open the garage door." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "domotic.xml",
+                "execution_id": "49",
+                "input_parameters": { "action": "open", "device_name": "garage door" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Garage door is opening." },
+        { "role": "assistant", "content": "Triggered the garage door opening sequence." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 50. And your task is: Navigate to the dining room." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "move.xml",
+                "execution_id": "50",
+                "input_parameters": { "region": "dining room" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Arrived at dining room." },
+        { "role": "assistant", "content": "Moved to the dining room area." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 51. And your task is: Tell me a fun fact about space." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "tts.xml",
+                "execution_id": "51",
+                "input_parameters": { "text": "Did you know that space is completely silent? Because there is no atmosphere, sound has no medium to travel through." }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "TTS completed." },
+        { "role": "assistant", "content": "Shared a fun fact using the TTS behavior." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 52. And your task is: Why are you not moving?" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "explanation.xml",
+                "execution_id": "52",
+                "input_parameters": { "question": "why not moving" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "I am waiting for a command or for the path to clear." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "tts.xml",
+                "execution_id": "52",
+                "input_parameters": { "text": "I am currently in standby mode waiting for your next instruction." }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "TTS completed." },
+        { "role": "assistant", "content": "Explained the idle status to the user." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 53. And your task is: Find the umbrella." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "get_object.xml",
+                "execution_id": "53",
+                "input_parameters": { "object_name": "umbrella" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Umbrella located in the entrance hall." },
+        { "role": "assistant", "content": "Found the umbrella in the hallway." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 54. And your task is: Turn on the sprinkler system." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "domotic.xml",
+                "execution_id": "54",
+                "input_parameters": { "action": "on", "device_name": "sprinklers" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Sprinklers activated." },
+        { "role": "assistant", "content": "Activated the garden sprinklers." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 55. And your task is: Go to the laundry room." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "move.xml",
+                "execution_id": "55",
+                "input_parameters": { "region": "laundry room" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Reached the laundry room." },
+        { "role": "assistant", "content": "Navigated to the laundry room." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 56. And your task is: Where is the delivery person?" },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "search_person.xml",
+                "execution_id": "56",
+                "input_parameters": { "person_name": "delivery person" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Delivery person detected at the front gate." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "tts.xml",
+                "execution_id": "56",
+                "input_parameters": { "text": "The delivery person is currently at the front gate." }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "TTS completed." },
+        { "role": "assistant", "content": "Identified the delivery person's location." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 57. And your task is: Play 'ocean_waves.mp3' and start patrolling." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "musical_therapy.xml",
+                "execution_id": "57",
+                "input_parameters": { "media": "ocean_waves.mp3", "volume": 50 }
+              }
+            },
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "wandering.xml",
+                "execution_id": "57",
+                "input_parameters": {}
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Music started and wandering initiated." },
+        { "role": "assistant", "content": "Combining music therapy with a patrol behavior." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 58. And your task is: Dim the living room lights to 30%." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "domotic.xml",
+                "execution_id": "58",
+                "input_parameters": { "action": "set 30%", "device_name": "living room lights" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Lights dimmed to 30%." },
+        { "role": "assistant", "content": "Adjusted light intensity." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 59. And your task is: Find my keys." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "get_object.xml",
+                "execution_id": "59",
+                "input_parameters": { "object_name": "keys" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Keys found on the kitchen table." },
+        { "role": "assistant", "content": "Located the user's keys." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 60. And your task is: Explain why you beeped just now." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "explanation.xml",
+                "execution_id": "60",
+                "input_parameters": { "question": "why beeped" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "I beeped to signal that I have successfully reconnected to the Wi-Fi." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "tts.xml",
+                "execution_id": "60",
+                "input_parameters": { "text": "That beep was to let you know that I am back online and connected to the Wi-Fi." }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "TTS completed." },
+        { "role": "assistant", "content": "Explained the reason for the audible alert." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 61. And your task is: Follow the person in the red shirt." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "following.xml",
+                "execution_id": "61",
+                "input_parameters": { "person_name": "person in red shirt" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Target locked. Following person in red shirt." },
+        { "role": "assistant", "content": "Started following the target person based on visual description." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 62. And your task is: Turn on the coffee machine." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "domotic.xml",
+                "execution_id": "62",
+                "input_parameters": { "action": "on", "device_name": "coffee machine" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Coffee machine is warming up." },
+        { "role": "assistant", "content": "Started the coffee machine via domotics." }
+      ]
+    },
+    {
+      "messages": [
+        { "role": "system", "content": "You are a robot control assistant." },
+        { "role": "user", "content": "Your assigned agent ID is 63. And your task is: Report the weather in New York." },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "name": "execute_behavior_tree",
+              "arguments": {
+                "bt_xml_filename": "get_weather.xml",
+                "execution_id": "63",
+                "input_parameters": { "city": "New York" }
+              }
+            }
+          ]
+        },
+        { "role": "tool", "content": "Weather in New York: Snowing, -2C." },
+        { "role": "assistant", "content": "Fetched and reported the snowy weather in New York." }
+      ]
+    }
+  ]
+}

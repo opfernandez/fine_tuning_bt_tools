@@ -1,0 +1,142 @@
+[
+  {
+    "name": "following",
+    "description": "Follows a detected person using face recognition and pose tracking. Executes: Activates face recognition, announces via TTS in Spanish 'Por favor, ponte delante para que te identifique' asking user to stand in front, waits 5 seconds, gets person pose from perception topic /people, republishes to /detected_dynamic_pose, and follows the person continuously using FollowObject action. Can loop through multiple people in queue. When to use: When user requests to follow them or another specific person.",
+    "input_ports": [
+      {
+        "name": "person_name",
+        "type": "string",
+        "description": "The name of the person to follow"
+      }
+    ]
+  },
+  {
+    "name": "get_object",
+    "description": "Detects and retrieves the location of a specified object using visual recognition or retrieval from past experiences (RAG). Executes: Annoinces via TTS 'Understood, let me see where it is', then, first attempts to detect object in real-time using perception system, if not found then calls RAG service /retrieve_documents to retrieve object location from past observations and experiences. Returns either detected pose or RAG documents about object location and communicates the result to the user via TTS. When to use: When user asks about object location or wants to find an item.",
+    "input_ports": [
+      {
+        "name": "object_name",
+        "type": "string",
+        "description": "The name of the object to detect and retrieve"
+      }
+    ]
+  },
+  {
+    "name": "get_weather",
+    "description": "Gets the weather for a specific city and speaks it via audio. Executes: Announces via TTS 'Understood, let me check the weather', calls GetWeather action to fetch weather information for the specified city, then speaks the weather information via TTS to the user. When to use: When user asks about weather conditions, temperature, or climate for any city.",
+    "input_ports": [
+      {
+        "name": "city",
+        "type": "string",
+        "description": "The name of the city to get weather for"
+      }
+    ]
+  },
+  {
+    "name": "move",
+    "description": "Generates a goal to a specific region and navigates to it. Executes: Announces via TTS 'Understood, let me try to move there', lists all available regions using ListAllRegions service, validates that requested region exists (if invalid returns list of valid regions), generates a random goal within the region using GenerateRandomGoals service, navigates to the goal using NavigateThroughPoses action with up to 5 retry attempts, announces success via TTS 'I finished my way!' or failure via TTS 'I am stuck, please help me!'. When to use: When user requests to go to a specific named location or region. Do NOT use for following people or wandering.",
+    "input_ports": [
+      {
+        "name": "region",
+        "type": "string",
+        "description": "The region or location to navigate to"
+      }
+    ]
+  },
+  {
+    "name": "wandering",
+    "description": "Wanders around the environment, exploring and looking for interesting objects or opportunities to interact. Executes: Continuously loops getting random region using GetRandomRegion service, generates random goal within that region using GenerateRandomGoals service, navigates to the goal using NavigateThroughPoses action. Repeats indefinitely with up to 10 retry attempts per navigation. When to use: When user asks to explore, patrol, or move around without specific destination.",
+    "input_ports": []
+  },
+  {
+    "name": "search_person",
+    "description": "Searches for a specific person from past experiences (RAG) or by using face recognition around the environment. Executes: First attempts to get person pose from perception using GetPersonPose action on /people topic, if person not detected in real-time then calls RAG service /retrieve_documents with person name to retrieve documents about their last known location from past experiences (retrieves top 5 results). Returns either pose or retrieved documents. When to use: When user asks where someone is or needs to find a person's location.",
+    "input_ports": [
+      {
+        "name": "person_name",
+        "type": "string",
+        "description": "The name of the person to search for"
+      }
+    ]
+  },
+  {
+    "name": "tts",
+    "description": "Converts input text to speech and plays it via audio output. Executes: Speaks the provided text via TTS action using /say service. When to use: ALWAYS use this to communicate ANY information verbally to the user (for example a joke, a story, an explanation about previous actions, etc). This is the primary method for robot speech.",
+    "input_ports": [
+      {
+        "name": "text",
+        "type": "string",
+        "description": "The text to convert to speech"
+      }
+    ]
+  },
+  {
+    "name": "domotic",
+    "description": "Controls smart home devices such us lights, dispositives, blinds, etc. from the flat. Executes: Sends command to Domotic action which publishes MQTT message to device at mqtt://homelai-pi.local:1883 on topic homelai/intent/{device_name}, announces success via TTS 'I have finished the domotic task!' or failure via TTS 'I can not do this domotic task, sorry!'. When to use: When user requests to control any smart home device (lights, appliances, blinds, thermostat, television, computer, etc.). This is the ONLY way to interact with home automation.",
+    "input_ports": [
+      {
+        "name": "action",
+        "type": "string",
+        "description": "The action to perform on the device (e.g., 'on', 'off')"
+      },
+      {
+        "name": "device_name",
+        "type": "string",
+        "description": "The name of the smart home device to control (e.g., 'living room light', 'kitchen light', 'computer', 'bedroom blinds', 'thermostat', 'television', etc.)"
+      }
+    ]
+  },
+  {
+    "name": "explanation",
+    "description": "Provides an explanation about the past robot's actions or decisions when requested by a user. Executes: Calls RAG service /retrieve_documents with the user's question, retrieves top 5 relevant documents from past experiences with enable_refinement=true which generates a refined natural language explanation based on retrieved context, returns the refinement as explanation. When to use: When user asks 'why' questions about robot behavior, requests explanations of past actions, or wants to understand previous robot decisions.",
+    "input_ports": [
+      {
+        "name": "question",
+        "type": "string",
+        "description": "The question about the robot's actions or decisions"
+      }
+    ]
+  },
+  {
+    "name": "charging",
+    "description": "Navigates to the charging station and docks to recharge the robot's batteries. Executes: Announces via TTS 'I have to go and charge my battery!', attempts to dock at charging station 'wall_dock' using DockRobot action with dock type 'scitos_dock', retries up to 8 times if docking fails. When to use: When battery is low or user requests charging.",
+    "input_ports": []
+  },
+  {
+    "name": "call_agent",
+    "description": "Calls an other agent to process a query when this agent is unable to handle it. Executes: Sends query to CallAgent service at /agent_service with specified query and response_needed flag, optionally waits for and receives response from the called agent. When to use: When current agent cannot handle request or needs to delegate to specialized sub-agent.",
+    "input_ports": [
+      {
+        "name": "service_name",
+        "type": "string",
+        "description": "The name of the agent server to call"
+      },
+      {
+        "name": "query",
+        "type": "string",
+        "description": "The query or request to send to the agent"
+      },
+      {
+        "name": "response_needed",
+        "type": "bool",
+        "description": "Whether a response is expected from the agent thus, waiting and blocking until receiving it"
+      }
+    ]
+  },
+  {
+    "name": "musical_therapy",
+    "description": "Plays a specified media file while the robot moves around creating an interactive experience. Executes: First navigates to 'north' region using GenerateRandomGoals and NavigateThroughPoses (retries up to 8 times), announces via TTS 'Let's go dance!', then plays media file using Play action at specified volume while simultaneously navigating continuously around north region generating random goals indefinitely. When to use: For entertainment, therapy sessions, or when user requests music with robot movement/dancing.",
+    "input_ports": [
+      {
+        "name": "media",
+        "type": "string",
+        "description": "The name of the media file to play (must be added with the extension and should be located in the resources folder)"
+      },
+      {
+        "name": "volume",
+        "type": "uint16",
+        "description": "The volume level to play the media at (0 to 100)"
+      }
+    ]
+  }
+]
