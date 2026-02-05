@@ -1,13 +1,13 @@
 import torch
 import wandb
-from transformers import TrainingArguments, AutoModelForCausalLM
+from transformers import TrainingArguments, AutoModelForCausalLM, AutoProcessor
 from peft import LoraConfig, get_peft_model
-from trl import SFTTrainer
+from trl import SFTTrainer, SFTConfig
 from datasets import load_dataset, Dataset
 import argparse
 import json
 from typing import Dict, List
-from .eval import evaluate_tool_calling_accuracy
+from eval import evaluate_tool_calling_accuracy
 
 model_id = "Qwen/Qwen3-8B"
 
@@ -33,7 +33,7 @@ def replace_system_prompt(messages: List[Dict], new_system_prompt: str) -> List[
 def prepare_dataset(
     json_path: str,
     system_prompt_path: str,
-    tokenizer,
+    processor: AutoProcessor,
     train_split: float = 0.8
 ):
     """
@@ -42,7 +42,7 @@ def prepare_dataset(
     Args:
         json_path: Path to the JSON with the data
         system_prompt_path: Path to the .txt with the system prompt
-        tokenizer: Tokenizer of the model
+        processor: Processor of the model
         train_split: Proportion for train (0.8 = 80% train, 20% eval)
     
     Returns:
@@ -56,59 +56,48 @@ def prepare_dataset(
     # Load data
     with open(json_path, 'r', encoding='utf-8') as f:
         data = json.load(f)
+        data = data["train"]  # assuming the JSON has a top-level "train" key
     
     print(f"\nData loaded: {len(data)} examples")
     
-    # Process each example
+    # Process each example - keep messages structure for assistant_only_loss
     processed_data = []
     
     for idx, example in enumerate(data):
-        # Replace system prompt
+        # Replace system prompt and store the messages structure
         messages = replace_system_prompt(example["messages"], custom_system_prompt)
-        
-        # Apply model's chat template
-        # IMPORTANT: add_generation_prompt=False to include the assistant's response
-        try:
-            formatted_text = tokenizer.apply_chat_template(
-                messages,
-                tokenize=False,
-                add_generation_prompt=False
-            )
-            
-            processed_data.append({
-                "text": formatted_text,
-                "original_messages": messages  # saved for evaluation
-            })
-        except Exception as e:
-            print(f"Error processing example {idx}: {e}")
-            continue
+        processed_data.append(messages)
     
     print(f"Examples processed successfully: {len(processed_data)}")
     
     # Verify an example
     print("\n" + "="*60)
-    print("FORMATTED TEXT EXAMPLE:")
+    print("MESSAGES STRUCTURE EXAMPLE:")
     print("="*60)
-    print(processed_data[0]["text"][:800])
-    print("...")
+    for msg in processed_data[0]:
+        print(f"Role: {msg['role']}")
+        content_preview = msg['content'][:100] if len(msg['content']) > 100 else msg['content']
+        print(f"Content: {content_preview}...")
+        print("-" * 40)
     print("="*60 + "\n")
     
     # Split train/eval
     split_idx = int(len(processed_data) * train_split)
-    train_data = processed_data[:split_idx]
-    eval_data = processed_data[split_idx:]
+    train_data = {"messages": processed_data[:split_idx]}
+    eval_data = {"messages": processed_data[split_idx:]}
     
-    print(f"Split: {len(train_data)} train, {len(eval_data)} eval")
+    print(f"Split: {len(train_data['messages'])} train, {len(eval_data['messages'])} eval")
     
     # Convert to HuggingFace Dataset
-    train_dataset = Dataset.from_list(train_data)
-    eval_dataset = Dataset.from_list(eval_data)
+    train_dataset = Dataset.from_dict(train_data)
+    eval_dataset = Dataset.from_dict(eval_data)
     
     return train_dataset, eval_dataset
 
 # ==================== TRAINING FUNCTION ====================
 
 def train():
+    """Main training function with wandb sweep integration"""
     # Initialize wandb sweep
     wandb.init()
     config = wandb.config  # get sweep hyperparameters
@@ -121,23 +110,26 @@ def train():
     print("="*60 + "\n")
 
     # Load tokenizer
-    tokenizer = AutoTokenizer.from_pretrained(model_id)
-    if tokenizer.pad_token is None:
-        tokenizer.pad_token = tokenizer.eos_token
-
+    processor = AutoProcessor.from_pretrained(model_id)
+    # if processor.tokenizer.pad_token is None:
+    #     processor.tokenizer.pad_token = processor.tokenizer.eos_token
+    # Load custom chat template from .jinja file
+    with open("../templates/qwen3.jinja", "r", encoding="utf-8") as f:
+        custom_template = f.read()
+    processor.chat_template = custom_template
     # Prepare dataset
     train_dataset, eval_dataset = prepare_dataset(
         json_path="../data/train_dataset.json",  
         system_prompt_path="../data/system_prompt.txt",  
-        tokenizer=tokenizer,
+        processor=processor,
         train_split=0.8
     )
 
     model = AutoModelForCausalLM.from_pretrained(
         model_id,
-        torch_dtype=torch.bfloat16,
+        dtype=torch.bfloat16,
         device_map="auto",
-        attn_implementation="flash_attention_2"
+        # attn_implementation="flash_attention_2"
     )
     
     # LoRA config with sweep hyperparameters
@@ -155,10 +147,10 @@ def train():
     model.print_trainable_parameters()
     
     # Training arguments with sweep hyperparameters
-    training_args = TrainingArguments(
+    training_args = SFTConfig(
         output_dir=f"../results/{wandb.run.name}",
         num_train_epochs=config.num_train_epochs,
-        per_device_train_batch_size=config.per_device_train_batch_size,
+        per_device_train_batch_size=1,  # Keep this fixed to 1 and use gradient accumulation so vram does not explode
         gradient_accumulation_steps=config.gradient_accumulation_steps,
         learning_rate=config.learning_rate,
         warmup_ratio=config.warmup_ratio,
@@ -167,7 +159,7 @@ def train():
         eval_strategy="steps",
         eval_steps=20,
         save_strategy="steps",
-        save_steps=50,
+        save_steps=20,
         load_best_model_at_end=True,
         metric_for_best_model="eval_loss",
         report_to="wandb",
@@ -176,17 +168,20 @@ def train():
         optim="adamw_torch_fused",
         weight_decay=0.01,
         max_grad_norm=1.0,
+        # dataset_text_field="messages",
+        assistant_only_loss=True,
+        packing=False,
     )
     
     # Trainer
+    print("\n Setting up trainer...")
+    print(train_dataset)
     trainer = SFTTrainer(
         model=model,
         args=training_args,
         train_dataset=train_dataset,
         eval_dataset=eval_dataset,
-        dataset_text_field="text",
-        max_seq_length=2048,
-        tokenizer=tokenizer,
+        processing_class=processor,
     )
     
     # Train
@@ -198,7 +193,7 @@ def train():
     eval_results = evaluate_tool_calling_accuracy(
         trainer.model, 
         eval_dataset,
-        tokenizer
+        processor
     )
     
     # Log custom metrics
