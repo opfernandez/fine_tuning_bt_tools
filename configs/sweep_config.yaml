@@ -1,9 +1,11 @@
 # sweep_config.yaml
 program: fine_tuning.py
-method: bayes  # bayes, random, o grid
+method: random  # bayes, random, o grid
 metric:
   name: eval/loss
   goal: minimize
+
+name: qwen-toolcalling-lora
 
 parameters:
   # Learning rate 
@@ -37,7 +39,4 @@ parameters:
   warmup_ratio:
     values: [0.05, 0.1, 0.15]
 
-# Opcional: early termination para parar runs malos
-early_terminate:
-  type: hyperband
-  min_iter: 3
+run_cap: 20

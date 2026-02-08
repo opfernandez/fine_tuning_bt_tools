@@ -71,7 +71,7 @@
                 {{- '}\n</tool_call>' }}
             {%- endfor %}
         {%- endif %}
-        {{- '<|im_end|>\n' }}
+        {{- '<|im_end|>' }}
         {% endgeneration %}
     {%- elif message.role == "tool" %}
         {%- if loop.first or (messages[loop.index0 - 1].role != "tool") %}

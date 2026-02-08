@@ -25,7 +25,7 @@ def extract_tool_calls_from_text(text: str) -> List[Dict]:
     
     return tool_calls
 
-def evaluate_tool_calling_accuracy(model, eval_dataset, tokenizer) -> Dict:
+def evaluate_tool_calling_accuracy(model, eval_dataset, processor) -> Dict:
     """
     Evaluates tool calling accuracy
     
@@ -47,7 +47,7 @@ def evaluate_tool_calling_accuracy(model, eval_dataset, tokenizer) -> Dict:
     
     for idx, example in enumerate(eval_dataset):
         # Extract the context (up to the last user message before the assistant)
-        messages = example["original_messages"]
+        messages = example["messages"]
         
         # Find where the assistant should respond
         context_messages = []
@@ -65,13 +65,13 @@ def evaluate_tool_calling_accuracy(model, eval_dataset, tokenizer) -> Dict:
             continue
         
         # Generate model response
-        context_text = tokenizer.apply_chat_template(
+        context_text = processor.apply_chat_template(
             context_messages,
             tokenize=False,
             add_generation_prompt=True
         )
         
-        inputs = tokenizer(context_text, return_tensors="pt").to(model.device)
+        inputs = processor(context_text, return_tensors="pt").to(model.device)
         
         with torch.no_grad():
             outputs = model.generate(
@@ -81,7 +81,7 @@ def evaluate_tool_calling_accuracy(model, eval_dataset, tokenizer) -> Dict:
                 do_sample=False
             )
         
-        generated_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
+        generated_text = processor.decode(outputs[0], skip_special_tokens=True)
         
         # Extract generated tool calls
         predicted_tool_calls = extract_tool_calls_from_text(generated_text)
