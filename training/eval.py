@@ -45,10 +45,7 @@ def evaluate_tool_calling_accuracy(model, eval_dataset, processor) -> Dict:
     print("EVALUATING TOOL CALLING ACCURACY")
     print("="*60)
     
-    for idx, example in enumerate(eval_dataset):
-        # Extract the context (up to the last user message before the assistant)
-        messages = example["messages"]
-        
+    for idx, messages in enumerate(eval_dataset):   
         # Find where the assistant should respond
         context_messages = []
         expected_tool_calls = []
@@ -104,8 +101,10 @@ def evaluate_tool_calling_accuracy(model, eval_dataset, processor) -> Dict:
                     correct_tool_names += 1
                     
                     # Check arguments
-                    if pred_args == expected_args:
+                    if validate_tool_args(pred_args, expected_args):
                         exact_arg_matches += 1
+                    else:
+                        print(f"Expected arguments:\n{expected_args}\nGenerated:\n{pred_args}")
                     
                     # Check valid JSON
                     try:
@@ -139,3 +138,30 @@ def evaluate_tool_calling_accuracy(model, eval_dataset, processor) -> Dict:
     print("="*60 + "\n")
     
     return results
+
+
+def validate_tool_args(generated_args: Dict, expected_args: Dict) -> bool:
+    """Validates if the generated arguments match the expected arguments.
+    By checking dict keys and values recursively.
+    """
+    # iterate over generated args keys and values
+    for key, gen_value in generated_args.items():
+        exp_value = expected_args.get(key, None)
+        
+        # If key is missing in expected, it's a mismatch
+        if exp_value is None:
+            print(f"Unexpected argument: {key}")
+            return False
+        
+        # If values are dicts, compare recursively
+        if isinstance(gen_value, dict) and isinstance(exp_value, dict):
+            if not validate_tool_args(gen_value, exp_value):
+                print(f"Mismatch in nested argument: {key}")
+                return False
+        else:
+            # For non-dict values, check for exact match
+            if gen_value != exp_value:
+                print(f"Argument value mismatch for '{key}': expected '{exp_value}', got '{gen_value}'")
+                return False
+    
+    return True

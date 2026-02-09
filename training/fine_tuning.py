@@ -11,7 +11,7 @@ from typing import Dict, List
 from eval import evaluate_tool_calling_accuracy
 
 model_id = "Qwen/Qwen3-0.6B"
-os.environ["HF_TOKEN"] = "hf_xxxxxxx"  # Set your Hugging Face token here or ensure it's set in your environment variables
+os.environ["HF_TOKEN"] = "REMOVED_HF_TOKEN"  # Set your Hugging Face token here or ensure it's set in your environment variables
 
 # ==================== DATASET PREPARATION ====================
 
@@ -112,22 +112,24 @@ def prepare_dataset(
     """
     # Load custom system prompt
     custom_system_prompt = load_custom_system_prompt(system_prompt_path)
-    print(f"System prompt loaded from {system_prompt_path}")
-    print(f"Preview: {custom_system_prompt[:100]}...")
+    # print(f"System prompt loaded from {system_prompt_path}")
+    # print(f"Preview: {custom_system_prompt[:100]}...")
     
     # Load data
     with open(json_path, 'r', encoding='utf-8') as f:
         data = json.load(f)
         data = data["train"]  # assuming the JSON has a top-level "train" key
     
-    print(f"\nData loaded: {len(data)} examples")
+    # print(f"\nData loaded: {len(data)} examples")
     
     # Process and tokenize each example manually
     tokenized_data = []
+    processed_data = []  # To keep the raw eval data for custom evaluation later
     
     for idx, example in enumerate(data):
         # Replace system prompt and store the messages structure
         messages = replace_system_prompt(example["messages"], custom_system_prompt)
+        processed_data.append(messages)
         # Apply chat template manualmente para este ejemplo
         tokenized = processor.apply_chat_template(
             messages,  
@@ -162,19 +164,19 @@ def prepare_dataset(
     print(f"\nTokenization complete!")
     
     # Verify first example
-    print("\n" + "="*60)
-    print("TOKENIZED EXAMPLE:")
-    print("="*60)
-    print(f"Input IDs example: {tokenized_data[0]['input_ids']}")
-    print(f"Labels example: {tokenized_data[0]['labels']}")
-    print(f"Decoded text preview:\n{processor.decode(tokenized_data[0]['input_ids'])}")
-    print("="*60 + "\n")
+    # print("\n" + "="*60)
+    # print("TOKENIZED EXAMPLE:")
+    # print("="*60)
+    # print(f"Input IDs example: {tokenized_data[0]['input_ids']}")
+    # print(f"Labels example: {tokenized_data[0]['labels']}")
+    # print(f"Decoded text preview:\n{processor.decode(tokenized_data[0]['input_ids'])}")
+    # print("="*60 + "\n")
     
     # Split train/eval
     split_idx = int(len(tokenized_data) * train_split)
     train_data = tokenized_data[:split_idx]  
     eval_data = tokenized_data[split_idx:]
-    raw_eval_data = data[split_idx:]  # Keep the raw eval data for custom evaluation later
+    raw_eval_data = processed_data[split_idx:]  # Keep the raw eval data for custom evaluation later
     
     print(f"Split: {len(train_data)} train, {len(eval_data)} eval")
     
@@ -233,7 +235,7 @@ def train():
         device_map="auto",
         # attn_implementation="flash_attention_2"
     )
-    print(f"\nModel loaded: {model}")
+    # print(f"\nModel loaded: {model}")
     # LoRA config with sweep hyperparameters
     lora_config = LoraConfig(
         r=config.lora_r,
@@ -285,7 +287,7 @@ def train():
         pad_to_multiple_of=8
     )
     # Trainer
-    print("\n Setting up trainer...")
+    # print("\n Setting up trainer...")
     # print(train_dataset)
     trainer = Trainer(
         model=model,
@@ -301,7 +303,7 @@ def train():
     trainer.train()
     
     # Custom evaluation for tool calling accuracy
-    print("\n Evaluating tool calling accuracy...")
+    # print("\n Evaluating tool calling accuracy...")
     eval_results = evaluate_tool_calling_accuracy(
         trainer.model, 
         raw_eval_data,
