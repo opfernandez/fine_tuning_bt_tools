@@ -1116,8 +1116,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "44",
-                "behavior_tree": "get_object.xml",
-                "input_ports": { "object_name": "keys" }
+                "bt_xml_filename": "get_object.xml",
+                "input_parameters": { "object_name": "keys" }
               }
             }
           ]
@@ -1138,8 +1138,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "45",
-                "behavior_tree": "get_weather.xml",
-                "input_ports": { "city": "London" }
+                "bt_xml_filename": "get_weather.xml",
+                "input_parameters": { "city": "London" }
               }
             }
           ]
@@ -1160,8 +1160,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "46",
-                "behavior_tree": "domotic.xml",
-                "input_ports": { "device_name": "bathroom light", "action": "off" }
+                "bt_xml_filename": "domotic.xml",
+                "input_parameters": { "device_name": "bathroom light", "action": "off" }
               }
             }
           ]
@@ -1182,8 +1182,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "47",
-                "behavior_tree": "move.xml",
-                "input_ports": { "region": "office" }
+                "bt_xml_filename": "move.xml",
+                "input_parameters": { "region": "office" }
               }
             }
           ]
@@ -1204,8 +1204,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "48",
-                "behavior_tree": "get_object.xml",
-                "input_ports": { "object_name": "laptop" }
+                "bt_xml_filename": "get_object.xml",
+                "input_parameters": { "object_name": "laptop" }
               }
             }
           ]
@@ -1226,8 +1226,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "49",
-                "behavior_tree": "following.xml",
-                "input_ports": { "person_name": "John" }
+                "bt_xml_filename": "following.xml",
+                "input_parameters": { "person_name": "John" }
               }
             }
           ]
@@ -1248,8 +1248,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "50",
-                "behavior_tree": "tts.xml",
-                "input_ports": { "text": "Once upon a time, there was a robot named Bolt who dreamed of becoming a dancer. At first, his movements were stiff and mechanical, but with practice and determination, he learned to flow gracefully across the dance floor. The other robots were amazed, and Bolt became the star of the robot dance competition!" }
+                "bt_xml_filename": "tts.xml",
+                "input_parameters": { "text": "Once upon a time, there was a robot named Bolt who dreamed of becoming a dancer. At first, his movements were stiff and mechanical, but with practice and determination, he learned to flow gracefully across the dance floor. The other robots were amazed, and Bolt became the star of the robot dance competition!" }
               }
             }
           ]
@@ -1270,8 +1270,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "51",
-                "behavior_tree": "wandering.xml",
-                "input_ports": {}
+                "bt_xml_filename": "wandering.xml",
+                "input_parameters": {}
               }
             }
           ]
@@ -1292,8 +1292,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "52",
-                "behavior_tree": "search_person.xml",
-                "input_ports": { "person_name": "Emma" }
+                "bt_xml_filename": "search_person.xml",
+                "input_parameters": { "person_name": "Emma" }
               }
             }
           ]
@@ -1307,8 +1307,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "52",
-                "behavior_tree": "tts.xml",
-                "input_ports": { "text": "Emma is in the kitchen near the refrigerator." }
+                "bt_xml_filename": "tts.xml",
+                "input_parameters": { "text": "Emma is in the kitchen near the refrigerator." }
               }
             }
           ]
@@ -1329,8 +1329,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "53",
-                "behavior_tree": "domotic.xml",
-                "input_ports": { "device_name": "kitchen coffee maker", "action": "on" }
+                "bt_xml_filename": "domotic.xml",
+                "input_parameters": { "device_name": "kitchen coffee maker", "action": "on" }
               }
             }
           ]
@@ -1351,8 +1351,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "54",
-                "behavior_tree": "move.xml",
-                "input_ports": { "region": "balcony" }
+                "bt_xml_filename": "move.xml",
+                "input_parameters": { "region": "balcony" }
               }
             }
           ]
@@ -1373,8 +1373,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "55",
-                "behavior_tree": "musical_therapy.xml",
-                "input_ports": { "media": "relaxing_waves.mp3", "volume": 30 }
+                "bt_xml_filename": "musical_therapy.xml",
+                "input_parameters": { "media": "relaxing_waves.mp3", "volume": 30 }
               }
             }
           ]
@@ -1395,8 +1395,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "56",
-                "behavior_tree": "explanation.xml",
-                "input_ports": { "question": "Why did you go to the kitchen earlier?" }
+                "bt_xml_filename": "explanation.xml",
+                "input_parameters": { "question": "Why did you go to the kitchen earlier?" }
               }
             }
           ]
@@ -1410,8 +1410,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "56",
-                "behavior_tree": "tts.xml",
-                "input_ports": { "text": "I went to the kitchen because you asked me to find your keys, and they were last seen there." }
+                "bt_xml_filename": "tts.xml",
+                "input_parameters": { "text": "I went to the kitchen because you asked me to find your keys, and they were last seen there." }
               }
             }
           ]
@@ -1432,8 +1432,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "57",
-                "behavior_tree": "get_object.xml",
-                "input_ports": { "object_name": "glasses" }
+                "bt_xml_filename": "get_object.xml",
+                "input_parameters": { "object_name": "glasses" }
               }
             }
           ]
@@ -1454,8 +1454,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "58",
-                "behavior_tree": "get_weather.xml",
-                "input_ports": { "city": "Berlin" }
+                "bt_xml_filename": "get_weather.xml",
+                "input_parameters": { "city": "Berlin" }
               }
             }
           ]
@@ -1476,8 +1476,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "59",
-                "behavior_tree": "charging.xml",
-                "input_ports": {}
+                "bt_xml_filename": "charging.xml",
+                "input_parameters": {}
               }
             }
           ]
@@ -1498,8 +1498,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "60",
-                "behavior_tree": "domotic.xml",
-                "input_ports": { "device_name": "kitchen blinds", "action": "close" }
+                "bt_xml_filename": "domotic.xml",
+                "input_parameters": { "device_name": "kitchen blinds", "action": "close" }
               }
             }
           ]
@@ -1520,8 +1520,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "61",
-                "behavior_tree": "move.xml",
-                "input_ports": { "region": "dining room" }
+                "bt_xml_filename": "move.xml",
+                "input_parameters": { "region": "dining room" }
               }
             }
           ]
@@ -1542,8 +1542,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "62",
-                "behavior_tree": "search_person.xml",
-                "input_ports": { "person_name": "Professor Johnson" }
+                "bt_xml_filename": "search_person.xml",
+                "input_parameters": { "person_name": "Professor Johnson" }
               }
             }
           ]
@@ -1557,8 +1557,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "62",
-                "behavior_tree": "tts.xml",
-                "input_ports": { "text": "Professor Johnson is in the conference room." }
+                "bt_xml_filename": "tts.xml",
+                "input_parameters": { "text": "Professor Johnson is in the conference room." }
               }
             }
           ]
@@ -1579,8 +1579,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "63",
-                "behavior_tree": "tts.xml",
-                "input_ports": { "text": "Why did the AI go to therapy? Because it had too many deep learning issues!" }
+                "bt_xml_filename": "tts.xml",
+                "input_parameters": { "text": "Why did the AI go to therapy? Because it had too many deep learning issues!" }
               }
             }
           ]
@@ -1601,8 +1601,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "64",
-                "behavior_tree": "following.xml",
-                "input_ports": { "person_name": "user" }
+                "bt_xml_filename": "following.xml",
+                "input_parameters": { "person_name": "user" }
               }
             }
           ]
@@ -1623,8 +1623,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "65",
-                "behavior_tree": "get_object.xml",
-                "input_ports": { "object_name": "tablet" }
+                "bt_xml_filename": "get_object.xml",
+                "input_parameters": { "object_name": "tablet" }
               }
             }
           ]
@@ -1645,8 +1645,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "66",
-                "behavior_tree": "domotic.xml",
-                "input_ports": { "device_name": "study lamp", "action": "on" }
+                "bt_xml_filename": "domotic.xml",
+                "input_parameters": { "device_name": "study lamp", "action": "on" }
               }
             }
           ]
@@ -1667,8 +1667,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "67",
-                "behavior_tree": "musical_therapy.xml",
-                "input_ports": { "media": "upbeat_music.wav", "volume": 60 }
+                "bt_xml_filename": "musical_therapy.xml",
+                "input_parameters": { "media": "upbeat_music.wav", "volume": 60 }
               }
             }
           ]
@@ -1689,8 +1689,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "68",
-                "behavior_tree": "move.xml",
-                "input_ports": { "region": "bathroom" }
+                "bt_xml_filename": "move.xml",
+                "input_parameters": { "region": "bathroom" }
               }
             }
           ]
@@ -1711,8 +1711,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "69",
-                "behavior_tree": "get_weather.xml",
-                "input_ports": { "city": "New York" }
+                "bt_xml_filename": "get_weather.xml",
+                "input_parameters": { "city": "New York" }
               }
             }
           ]
@@ -1733,8 +1733,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "70",
-                "behavior_tree": "wandering.xml",
-                "input_ports": {}
+                "bt_xml_filename": "wandering.xml",
+                "input_parameters": {}
               }
             }
           ]
@@ -1755,8 +1755,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "71",
-                "behavior_tree": "get_object.xml",
-                "input_ports": { "object_name": "remote control" }
+                "bt_xml_filename": "get_object.xml",
+                "input_parameters": { "object_name": "remote control" }
               }
             }
           ]
@@ -1777,8 +1777,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "72",
-                "behavior_tree": "domotic.xml",
-                "input_ports": { "device_name": "garage door", "action": "close" }
+                "bt_xml_filename": "domotic.xml",
+                "input_parameters": { "device_name": "garage door", "action": "close" }
               }
             }
           ]
@@ -1799,8 +1799,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "73",
-                "behavior_tree": "search_person.xml",
-                "input_ports": { "person_name": "nurse Williams" }
+                "bt_xml_filename": "search_person.xml",
+                "input_parameters": { "person_name": "nurse Williams" }
               }
             }
           ]
@@ -1814,8 +1814,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "73",
-                "behavior_tree": "tts.xml",
-                "input_ports": { "text": "Nurse Williams is in the medical supplies room." }
+                "bt_xml_filename": "tts.xml",
+                "input_parameters": { "text": "Nurse Williams is in the medical supplies room." }
               }
             }
           ]
@@ -1836,8 +1836,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "74",
-                "behavior_tree": "move.xml",
-                "input_ports": { "region": "main entrance" }
+                "bt_xml_filename": "move.xml",
+                "input_parameters": { "region": "main entrance" }
               }
             }
           ]
@@ -1858,8 +1858,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "75",
-                "behavior_tree": "explanation.xml",
-                "input_ports": { "question": "Why did you stop earlier?" }
+                "bt_xml_filename": "explanation.xml",
+                "input_parameters": { "question": "Why did you stop earlier?" }
               }
             }
           ]
@@ -1873,8 +1873,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "75",
-                "behavior_tree": "tts.xml",
-                "input_ports": { "text": "I stopped because there was a person crossing my path and I prioritize safety." }
+                "bt_xml_filename": "tts.xml",
+                "input_parameters": { "text": "I stopped because there was a person crossing my path and I prioritize safety." }
               }
             }
           ]
@@ -1895,8 +1895,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "76",
-                "behavior_tree": "tts.xml",
-                "input_ports": { "text": "Good morning everyone! I hope you all have a wonderful day!" }
+                "bt_xml_filename": "tts.xml",
+                "input_parameters": { "text": "Good morning everyone! I hope you all have a wonderful day!" }
               }
             }
           ]
@@ -1917,8 +1917,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "77",
-                "behavior_tree": "domotic.xml",
-                "input_ports": { "device_name": "air conditioning", "action": "off" }
+                "bt_xml_filename": "domotic.xml",
+                "input_parameters": { "device_name": "air conditioning", "action": "off" }
               }
             }
           ]
@@ -1939,8 +1939,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "78",
-                "behavior_tree": "following.xml",
-                "input_ports": { "person_name": "Maria" }
+                "bt_xml_filename": "following.xml",
+                "input_parameters": { "person_name": "Maria" }
               }
             }
           ]
@@ -1961,8 +1961,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "79",
-                "behavior_tree": "get_weather.xml",
-                "input_ports": { "city": "Rome" }
+                "bt_xml_filename": "get_weather.xml",
+                "input_parameters": { "city": "Rome" }
               }
             }
           ]
@@ -1983,8 +1983,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "80",
-                "behavior_tree": "get_object.xml",
-                "input_ports": { "object_name": "car keys" }
+                "bt_xml_filename": "get_object.xml",
+                "input_parameters": { "object_name": "car keys" }
               }
             }
           ]
@@ -2005,8 +2005,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "81",
-                "behavior_tree": "move.xml",
-                "input_ports": { "region": "storage room" }
+                "bt_xml_filename": "move.xml",
+                "input_parameters": { "region": "storage room" }
               }
             }
           ]
@@ -2027,8 +2027,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "82",
-                "behavior_tree": "musical_therapy.xml",
-                "input_ports": { "media": "classical_piano.mp3", "volume": 100 }
+                "bt_xml_filename": "musical_therapy.xml",
+                "input_parameters": { "media": "classical_piano.mp3", "volume": 100 }
               }
             }
           ]
@@ -2049,8 +2049,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "83",
-                "behavior_tree": "domotic.xml",
-                "input_ports": { "device_name": "hallway lights", "action": "on" }
+                "bt_xml_filename": "domotic.xml",
+                "input_parameters": { "device_name": "hallway lights", "action": "on" }
               }
             }
           ]
@@ -2071,8 +2071,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "84",
-                "behavior_tree": "charging.xml",
-                "input_ports": {}
+                "bt_xml_filename": "charging.xml",
+                "input_parameters": {}
               }
             }
           ]
@@ -2093,8 +2093,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "85",
-                "behavior_tree": "search_person.xml",
-                "input_ports": { "person_name": "son" }
+                "bt_xml_filename": "search_person.xml",
+                "input_parameters": { "person_name": "son" }
               }
             }
           ]
@@ -2108,8 +2108,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "85",
-                "behavior_tree": "tts.xml",
-                "input_ports": { "text": "Your son is playing in the playroom." }
+                "bt_xml_filename": "tts.xml",
+                "input_parameters": { "text": "Your son is playing in the playroom." }
               }
             }
           ]
@@ -2130,8 +2130,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "86",
-                "behavior_tree": "wandering.xml",
-                "input_ports": {}
+                "bt_xml_filename": "wandering.xml",
+                "input_parameters": {}
               }
             }
           ]
@@ -2152,8 +2152,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "87",
-                "behavior_tree": "tts.xml",
-                "input_ports": { "text": "Why don't robots ever panic? Because they have nerves of steel!" }
+                "bt_xml_filename": "tts.xml",
+                "input_parameters": { "text": "Why don't robots ever panic? Because they have nerves of steel!" }
               }
             }
           ]
@@ -2174,8 +2174,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "88",
-                "behavior_tree": "get_object.xml",
-                "input_ports": { "object_name": "book" }
+                "bt_xml_filename": "get_object.xml",
+                "input_parameters": { "object_name": "book" }
               }
             }
           ]
@@ -2196,8 +2196,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "89",
-                "behavior_tree": "move.xml",
-                "input_ports": { "region": "parking lot" }
+                "bt_xml_filename": "move.xml",
+                "input_parameters": { "region": "parking lot" }
               }
             }
           ]
@@ -2218,8 +2218,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "90",
-                "behavior_tree": "get_weather.xml",
-                "input_ports": { "city": "Sydney" }
+                "bt_xml_filename": "get_weather.xml",
+                "input_parameters": { "city": "Sydney" }
               }
             }
           ]
@@ -2240,8 +2240,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "91",
-                "behavior_tree": "domotic.xml",
-                "input_ports": { "device_name": "living room curtains", "action": "open" }
+                "bt_xml_filename": "domotic.xml",
+                "input_parameters": { "device_name": "living room curtains", "action": "open" }
               }
             }
           ]
@@ -2262,8 +2262,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "92",
-                "behavior_tree": "following.xml",
-                "input_ports": { "person_name": "Dr. Martinez" }
+                "bt_xml_filename": "following.xml",
+                "input_parameters": { "person_name": "Dr. Martinez" }
               }
             }
           ]
@@ -2284,8 +2284,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "93",
-                "behavior_tree": "explanation.xml",
-                "input_ports": { "question": "Why didn't you answer when I called you?" }
+                "bt_xml_filename": "explanation.xml",
+                "input_parameters": { "question": "Why didn't you answer when I called you?" }
               }
             }
           ]
@@ -2299,8 +2299,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "93",
-                "behavior_tree": "tts.xml",
-                "input_ports": { "text": "I was in a noisy area and my audio sensors may have been overwhelmed by ambient noise." }
+                "bt_xml_filename": "tts.xml",
+                "input_parameters": { "text": "I was in a noisy area and my audio sensors may have been overwhelmed by ambient noise." }
               }
             }
           ]
@@ -2321,8 +2321,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "94",
-                "behavior_tree": "get_object.xml",
-                "input_ports": { "object_name": "water bottle" }
+                "bt_xml_filename": "get_object.xml",
+                "input_parameters": { "object_name": "water bottle" }
               }
             }
           ]
@@ -2343,8 +2343,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "95",
-                "behavior_tree": "musical_therapy.xml",
-                "input_ports": { "media": "nature_sounds.mp3", "volume": 40 }
+                "bt_xml_filename": "musical_therapy.xml",
+                "input_parameters": { "media": "nature_sounds.mp3", "volume": 40 }
               }
             }
           ]
@@ -2365,8 +2365,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "96",
-                "behavior_tree": "domotic.xml",
-                "input_ports": { "device_name": "kitchen lights", "action": "off" }
+                "bt_xml_filename": "domotic.xml",
+                "input_parameters": { "device_name": "kitchen lights", "action": "off" }
               }
             }
           ]
@@ -2387,8 +2387,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "97",
-                "behavior_tree": "move.xml",
-                "input_ports": { "region": "terrace" }
+                "bt_xml_filename": "move.xml",
+                "input_parameters": { "region": "terrace" }
               }
             }
           ]
@@ -2409,8 +2409,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "98",
-                "behavior_tree": "search_person.xml",
-                "input_ports": { "person_name": "daughter" }
+                "bt_xml_filename": "search_person.xml",
+                "input_parameters": { "person_name": "daughter" }
               }
             }
           ]
@@ -2424,8 +2424,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "98",
-                "behavior_tree": "tts.xml",
-                "input_ports": { "text": "Your daughter is reading in her bedroom." }
+                "bt_xml_filename": "tts.xml",
+                "input_parameters": { "text": "Your daughter is reading in her bedroom." }
               }
             }
           ]
@@ -2446,8 +2446,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "99",
-                "behavior_tree": "get_weather.xml",
-                "input_ports": { "city": "Barcelona" }
+                "bt_xml_filename": "get_weather.xml",
+                "input_parameters": { "city": "Barcelona" }
               }
             }
           ]
@@ -2468,8 +2468,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "100",
-                "behavior_tree": "domotic.xml",
-                "input_ports": { "device_name": "thermostat", "action": "heating mode" }
+                "bt_xml_filename": "domotic.xml",
+                "input_parameters": { "device_name": "thermostat", "action": "heating mode" }
               }
             }
           ]
@@ -2490,8 +2490,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "101",
-                "behavior_tree": "tts.xml",
-                "input_ports": { "text": "In a busy hospital, there was a robot named Helper who assisted nurses and patients every day. One day, Helper noticed an elderly patient feeling lonely, so it stayed with her, played music, and shared stories until her family arrived. The patient smiled, grateful for the robot's kindness and companionship." }
+                "bt_xml_filename": "tts.xml",
+                "input_parameters": { "text": "In a busy hospital, there was a robot named Helper who assisted nurses and patients every day. One day, Helper noticed an elderly patient feeling lonely, so it stayed with her, played music, and shared stories until her family arrived. The patient smiled, grateful for the robot's kindness and companionship." }
               }
             }
           ]
@@ -2512,8 +2512,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "102",
-                "behavior_tree": "get_object.xml",
-                "input_ports": { "object_name": "jacket" }
+                "bt_xml_filename": "get_object.xml",
+                "input_parameters": { "object_name": "jacket" }
               }
             }
           ]
@@ -2534,8 +2534,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "103",
-                "behavior_tree": "move.xml",
-                "input_ports": { "region": "basement" }
+                "bt_xml_filename": "move.xml",
+                "input_parameters": { "region": "basement" }
               }
             }
           ]
@@ -2556,8 +2556,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "104",
-                "behavior_tree": "wandering.xml",
-                "input_ports": {}
+                "bt_xml_filename": "wandering.xml",
+                "input_parameters": {}
               }
             }
           ]
@@ -2578,8 +2578,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "105",
-                "behavior_tree": "domotic.xml",
-                "input_ports": { "device_name": "desk fan", "action": "on" }
+                "bt_xml_filename": "domotic.xml",
+                "input_parameters": { "device_name": "desk fan", "action": "on" }
               }
             }
           ]
@@ -2600,8 +2600,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "106",
-                "behavior_tree": "get_weather.xml",
-                "input_ports": { "city": "Amsterdam" }
+                "bt_xml_filename": "get_weather.xml",
+                "input_parameters": { "city": "Amsterdam" }
               }
             }
           ]
@@ -2622,8 +2622,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "107",
-                "behavior_tree": "following.xml",
-                "input_ports": { "person_name": "Rebecca" }
+                "bt_xml_filename": "following.xml",
+                "input_parameters": { "person_name": "Rebecca" }
               }
             }
           ]
@@ -2644,8 +2644,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "108",
-                "behavior_tree": "get_object.xml",
-                "input_ports": { "object_name": "shoes" }
+                "bt_xml_filename": "get_object.xml",
+                "input_parameters": { "object_name": "shoes" }
               }
             }
           ]
@@ -2666,8 +2666,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "109",
-                "behavior_tree": "search_person.xml",
-                "input_ports": { "person_name": "Mr. Thompson" }
+                "bt_xml_filename": "search_person.xml",
+                "input_parameters": { "person_name": "Mr. Thompson" }
               }
             }
           ]
@@ -2681,8 +2681,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "109",
-                "behavior_tree": "tts.xml",
-                "input_ports": { "text": "Mr. Thompson is in the waiting room reading a magazine." }
+                "bt_xml_filename": "tts.xml",
+                "input_parameters": { "text": "Mr. Thompson is in the waiting room reading a magazine." }
               }
             }
           ]
@@ -2703,8 +2703,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "110",
-                "behavior_tree": "musical_therapy.xml",
-                "input_ports": { "media": "guitar_solo.mp3", "volume": 70 }
+                "bt_xml_filename": "musical_therapy.xml",
+                "input_parameters": { "media": "guitar_solo.mp3", "volume": 70 }
               }
             }
           ]
@@ -2725,8 +2725,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "111",
-                "behavior_tree": "domotic.xml",
-                "input_ports": { "device_name": "office blinds", "action": "close" }
+                "bt_xml_filename": "domotic.xml",
+                "input_parameters": { "device_name": "office blinds", "action": "close" }
               }
             }
           ]
@@ -2747,8 +2747,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "112",
-                "behavior_tree": "move.xml",
-                "input_ports": { "region": "laundry room" }
+                "bt_xml_filename": "move.xml",
+                "input_parameters": { "region": "laundry room" }
               }
             }
           ]
@@ -2769,8 +2769,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "113",
-                "behavior_tree": "explanation.xml",
-                "input_ports": { "question": "Why are your lights blinking?" }
+                "bt_xml_filename": "explanation.xml",
+                "input_parameters": { "question": "Why are your lights blinking?" }
               }
             }
           ]
@@ -2784,8 +2784,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "113",
-                "behavior_tree": "tts.xml",
-                "input_ports": { "text": "My lights blink to indicate that I am processing a complex task or waiting for a sensor response." }
+                "bt_xml_filename": "tts.xml",
+                "input_parameters": { "text": "My lights blink to indicate that I am processing a complex task or waiting for a sensor response." }
               }
             }
           ]
@@ -2806,8 +2806,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "114",
-                "behavior_tree": "tts.xml",
-                "input_ports": { "text": "Good night! Sleep well and have sweet dreams!" }
+                "bt_xml_filename": "tts.xml",
+                "input_parameters": { "text": "Good night! Sleep well and have sweet dreams!" }
               }
             }
           ]
@@ -2828,8 +2828,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "115",
-                "behavior_tree": "charging.xml",
-                "input_ports": {}
+                "bt_xml_filename": "charging.xml",
+                "input_parameters": {}
               }
             }
           ]
@@ -2850,8 +2850,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "116",
-                "behavior_tree": "get_object.xml",
-                "input_ports": { "object_name": "umbrella" }
+                "bt_xml_filename": "get_object.xml",
+                "input_parameters": { "object_name": "umbrella" }
               }
             }
           ]
@@ -2872,8 +2872,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "117",
-                "behavior_tree": "get_weather.xml",
-                "input_ports": { "city": "Singapore" }
+                "bt_xml_filename": "get_weather.xml",
+                "input_parameters": { "city": "Singapore" }
               }
             }
           ]
@@ -2894,8 +2894,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "118",
-                "behavior_tree": "domotic.xml",
-                "input_ports": { "device_name": "porch light", "action": "on" }
+                "bt_xml_filename": "domotic.xml",
+                "input_parameters": { "device_name": "porch light", "action": "on" }
               }
             }
           ]
@@ -2916,8 +2916,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "119",
-                "behavior_tree": "move.xml",
-                "input_ports": { "region": "cafeteria" }
+                "bt_xml_filename": "move.xml",
+                "input_parameters": { "region": "cafeteria" }
               }
             }
           ]
@@ -2938,8 +2938,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "120",
-                "behavior_tree": "following.xml",
-                "input_ports": { "person_name": "Susan" }
+                "bt_xml_filename": "following.xml",
+                "input_parameters": { "person_name": "Susan" }
               }
             }
           ]
@@ -2960,8 +2960,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "121",
-                "behavior_tree": "get_object.xml",
-                "input_ports": { "object_name": "medication bottle" }
+                "bt_xml_filename": "get_object.xml",
+                "input_parameters": { "object_name": "medication bottle" }
               }
             }
           ]
@@ -2982,8 +2982,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "122",
-                "behavior_tree": "musical_therapy.xml",
-                "input_ports": { "media": "meditation_music.mp3", "volume": 20 }
+                "bt_xml_filename": "musical_therapy.xml",
+                "input_parameters": { "media": "meditation_music.mp3", "volume": 20 }
               }
             }
           ]
@@ -3004,8 +3004,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "123",
-                "behavior_tree": "search_person.xml",
-                "input_ports": { "person_name": "sister" }
+                "bt_xml_filename": "search_person.xml",
+                "input_parameters": { "person_name": "sister" }
               }
             }
           ]
@@ -3019,8 +3019,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "123",
-                "behavior_tree": "tts.xml",
-                "input_ports": { "text": "Your sister is working at her desk in the study." }
+                "bt_xml_filename": "tts.xml",
+                "input_parameters": { "text": "Your sister is working at her desk in the study." }
               }
             }
           ]
@@ -3041,8 +3041,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "124",
-                "behavior_tree": "domotic.xml",
-                "input_ports": { "device_name": "bedroom fan", "action": "off" }
+                "bt_xml_filename": "domotic.xml",
+                "input_parameters": { "device_name": "bedroom fan", "action": "off" }
               }
             }
           ]
@@ -3063,8 +3063,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "125",
-                "behavior_tree": "tts.xml",
-                "input_ports": { "text": "The only way to do great work is to love what you do. Keep pushing forward and never give up on your dreams!" }
+                "bt_xml_filename": "tts.xml",
+                "input_parameters": { "text": "The only way to do great work is to love what you do. Keep pushing forward and never give up on your dreams!" }
               }
             }
           ]
@@ -3085,8 +3085,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "126",
-                "behavior_tree": "move.xml",
-                "input_ports": { "region": "gym" }
+                "bt_xml_filename": "move.xml",
+                "input_parameters": { "region": "gym" }
               }
             }
           ]
@@ -3107,8 +3107,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "127",
-                "behavior_tree": "wandering.xml",
-                "input_ports": {}
+                "bt_xml_filename": "wandering.xml",
+                "input_parameters": {}
               }
             }
           ]
@@ -3129,8 +3129,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "128",
-                "behavior_tree": "get_weather.xml",
-                "input_ports": { "city": "Dubai" }
+                "bt_xml_filename": "get_weather.xml",
+                "input_parameters": { "city": "Dubai" }
               }
             }
           ]
@@ -3151,8 +3151,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "129",
-                "behavior_tree": "get_object.xml",
-                "input_ports": { "object_name": "charger" }
+                "bt_xml_filename": "get_object.xml",
+                "input_parameters": { "object_name": "charger" }
               }
             }
           ]
@@ -3173,8 +3173,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "130",
-                "behavior_tree": "domotic.xml",
-                "input_ports": { "device_name": "garage blinds", "action": "open" }
+                "bt_xml_filename": "domotic.xml",
+                "input_parameters": { "device_name": "garage blinds", "action": "open" }
               }
             }
           ]
@@ -3195,8 +3195,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "131",
-                "behavior_tree": "search_person.xml",
-                "input_ports": { "person_name": "Mr. Anderson" }
+                "bt_xml_filename": "search_person.xml",
+                "input_parameters": { "person_name": "Mr. Anderson" }
               }
             }
           ]
@@ -3210,8 +3210,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "131",
-                "behavior_tree": "tts.xml",
-                "input_ports": { "text": "Mr. Anderson is having coffee in the break room." }
+                "bt_xml_filename": "tts.xml",
+                "input_parameters": { "text": "Mr. Anderson is having coffee in the break room." }
               }
             }
           ]
@@ -3232,8 +3232,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "132",
-                "behavior_tree": "following.xml",
-                "input_ports": { "person_name": "David" }
+                "bt_xml_filename": "following.xml",
+                "input_parameters": { "person_name": "David" }
               }
             }
           ]
@@ -3254,8 +3254,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "133",
-                "behavior_tree": "explanation.xml",
-                "input_ports": { "question": "Why did you go to the bedroom?" }
+                "bt_xml_filename": "explanation.xml",
+                "input_parameters": { "question": "Why did you go to the bedroom?" }
               }
             }
           ]
@@ -3269,8 +3269,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "133",
-                "behavior_tree": "tts.xml",
-                "input_ports": { "text": "I went to the bedroom to find your glasses as you requested." }
+                "bt_xml_filename": "tts.xml",
+                "input_parameters": { "text": "I went to the bedroom to find your glasses as you requested." }
               }
             }
           ]
@@ -3291,8 +3291,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "134",
-                "behavior_tree": "musical_therapy.xml",
-                "input_ports": { "media": "ambient_sounds.wav", "volume": 35 }
+                "bt_xml_filename": "musical_therapy.xml",
+                "input_parameters": { "media": "ambient_sounds.wav", "volume": 35 }
               }
             }
           ]
@@ -3313,8 +3313,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "135",
-                "behavior_tree": "move.xml",
-                "input_ports": { "region": "meeting room" }
+                "bt_xml_filename": "move.xml",
+                "input_parameters": { "region": "meeting room" }
               }
             }
           ]
@@ -3335,8 +3335,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "136",
-                "behavior_tree": "get_object.xml",
-                "input_ports": { "object_name": "headphones" }
+                "bt_xml_filename": "get_object.xml",
+                "input_parameters": { "object_name": "headphones" }
               }
             }
           ]
@@ -3357,8 +3357,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "137",
-                "behavior_tree": "domotic.xml",
-                "input_ports": { "device_name": "washing machine", "action": "on" }
+                "bt_xml_filename": "domotic.xml",
+                "input_parameters": { "device_name": "washing machine", "action": "on" }
               }
             }
           ]
@@ -3379,8 +3379,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "138",
-                "behavior_tree": "get_weather.xml",
-                "input_ports": { "city": "Moscow" }
+                "bt_xml_filename": "get_weather.xml",
+                "input_parameters": { "city": "Moscow" }
               }
             }
           ]
@@ -3401,8 +3401,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "139",
-                "behavior_tree": "tts.xml",
-                "input_ports": { "text": "Did you know that the first industrial robot, called Unimate, was installed in 1961 at a General Motors plant? It was used to lift hot pieces of metal from a die casting machine. Amazing, right?" }
+                "bt_xml_filename": "tts.xml",
+                "input_parameters": { "text": "Did you know that the first industrial robot, called Unimate, was installed in 1961 at a General Motors plant? It was used to lift hot pieces of metal from a die casting machine. Amazing, right?" }
               }
             }
           ]
@@ -3423,8 +3423,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "140",
-                "behavior_tree": "charging.xml",
-                "input_ports": {}
+                "bt_xml_filename": "charging.xml",
+                "input_parameters": {}
               }
             }
           ]
@@ -3445,8 +3445,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "141",
-                "behavior_tree": "search_person.xml",
-                "input_ports": { "person_name": "mom" }
+                "bt_xml_filename": "search_person.xml",
+                "input_parameters": { "person_name": "mom" }
               }
             }
           ]
@@ -3460,8 +3460,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "141",
-                "behavior_tree": "tts.xml",
-                "input_ports": { "text": "Your mom is cooking in the kitchen." }
+                "bt_xml_filename": "tts.xml",
+                "input_parameters": { "text": "Your mom is cooking in the kitchen." }
               }
             }
           ]
@@ -3482,8 +3482,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "142",
-                "behavior_tree": "wandering.xml",
-                "input_ports": {}
+                "bt_xml_filename": "wandering.xml",
+                "input_parameters": {}
               }
             }
           ]
@@ -3504,8 +3504,8 @@
               "name": "execute_behavior_tree",
               "arguments": {
                 "execution_id": "143",
-                "behavior_tree": "domotic.xml",
-                "input_ports": { "device_name": "projector", "action": "off" }
+                "bt_xml_filename": "domotic.xml",
+                "input_parameters": { "device_name": "projector", "action": "off" }
               }
             }
           ]
