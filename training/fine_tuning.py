@@ -90,7 +90,7 @@ def train():
     
     # Training arguments with sweep hyperparameters
     training_args = TrainingArguments(
-        output_dir=f"../results/{wandb.run.name}",
+        output_dir=f"../checkpoints/{wandb.run.name}",
         num_train_epochs=config.num_train_epochs,
         per_device_train_batch_size=1,  # Keep this fixed to lower value and use gradient accumulation so vram does not explode
         per_device_eval_batch_size=1,
@@ -100,9 +100,9 @@ def train():
         lr_scheduler_type="cosine",
         logging_steps=1,
         eval_strategy="steps",
-        eval_steps=5,
+        eval_steps=3,
         save_strategy="steps",
-        save_steps=20,
+        save_steps=3,
         load_best_model_at_end=True,
         metric_for_best_model="eval_loss",
         report_to="wandb",
@@ -157,7 +157,7 @@ def train():
     })
     
     # Save the best model
-    best_model_path = f"../models/{wandb.run.name}_best"
+    best_model_path = f"../adapters/{wandb.run.name}_best"
     trainer.save_model(best_model_path)
     print(f"\n Best model saved at: {best_model_path}")
     
