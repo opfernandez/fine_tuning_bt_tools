@@ -38,7 +38,11 @@ ENV/
 *.ipynb
 
 # Models 
-models/*
-!models/.gitkeep
+adapters/*
+checkpoints/*
+convert_model_to_gguf/merged_models/*
+!convert_model_to_gguf/merged_models/.gitkeep
+!adapters/.gitkeep
+!checkpoints/.gitkeep
 results/*
 training/wandb/*
