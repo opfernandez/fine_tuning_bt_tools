@@ -4938,7 +4938,7 @@
     {
       "messages": [
         { "role": "system", "content": "You are a robot control assistant." },
-        { "role": "user", "content": "Your assigned agent ID is 45. And your task is: Help the user find his keyboard using your perception adn navigation skills" },
+        { "role": "user", "content": "Your assigned agent ID is 45. And your task is: Help the user find his table using your perception adn navigation skills" },
         {
           "role": "assistant",
           "content": "",
