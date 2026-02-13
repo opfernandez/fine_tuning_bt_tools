@@ -123,14 +123,14 @@ def prepare_dataset(
         # Replace system prompt and store the messages structure
         messages = replace_system_prompt(example["messages"], custom_system_prompt)
         processed_data.append(messages)
-        # Apply chat template manualmente para este ejemplo
+        # Apply chat template 
         tokenized = processor.apply_chat_template(
             messages,  
             return_assistant_tokens_mask=True,
             return_dict=True,
-            padding=False,  # No padding yet, we'll do it in batches
+            padding=False,  # No padding yet, we'll do it in data collator
             truncation=True,
-            max_length=8192,  # Adjust as needed
+            max_length=8192,  
             add_generation_prompt=False,
         )
         if not "labels" in tokenized:

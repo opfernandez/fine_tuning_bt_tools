@@ -2,13 +2,8 @@ import torch
 import wandb
 import dotenv
 import os
-from dataclasses import dataclass
-from typing import Any, Dict, List
 from transformers import Trainer, TrainingArguments, AutoModelForCausalLM, AutoProcessor
 from peft import LoraConfig, get_peft_model
-from datasets import Dataset
-import json
-from typing import Dict, List
 from eval import evaluate_tool_calling_accuracy
 from data_loader import DataCollatorForChatML, prepare_dataset
 
@@ -24,6 +19,7 @@ def train():
     wandb.init(
         entity=os.getenv("WANDB_ENTITY"),
         project=os.getenv("WANDB_PROJECT"),
+        mode="offline", # Change to "online" when you want to log to the cloud
     )
     config = wandb.config  # get sweep hyperparameters
 
