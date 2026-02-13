@@ -11,6 +11,17 @@ dotenv.load_dotenv()  # Load environment variables from .env file
 os.environ["HF_TOKEN"] = os.getenv("HF_TOKEN") 
 model_id = "Qwen/Qwen3-0.6B"
 
+
+# Define tool schema to be parsed in the chat template
+bt_tool = [{
+            "name": "execute_behavior_tree",
+            "arguments": {
+                "bt_xml_filename": "<selected_bt>.xml",
+                "execution_id": "<your numeric agent id>",
+                "input_parameters": { "arg1": "value1" }
+            }
+        }]
+
 # ==================== TRAINING FUNCTION ====================
 
 def train():
@@ -19,7 +30,7 @@ def train():
     wandb.init(
         entity=os.getenv("WANDB_ENTITY"),
         project=os.getenv("WANDB_PROJECT"),
-        mode="offline", # Change to "online" when you want to log to the cloud
+        mode="online", # Change to "online" when you want to log to the cloud
     )
     config = wandb.config  # get sweep hyperparameters
 
@@ -52,12 +63,13 @@ def train():
         json_path="../data/train_dataset.json",  
         system_prompt_path="../data/system_prompt.txt",  
         processor=processor,
+        tools=bt_tool,
         train_split=0.8
     )
 
     model = AutoModelForCausalLM.from_pretrained(
         model_id,
-        torch_dtype=torch.bfloat16,
+        dtype=torch.bfloat16,
         device_map="auto",
         # attn_implementation="flash_attention_2"
     )
@@ -88,7 +100,7 @@ def train():
         lr_scheduler_type="cosine",
         logging_steps=1,
         eval_strategy="steps",
-        eval_steps=20,
+        eval_steps=5,
         save_strategy="steps",
         save_steps=20,
         load_best_model_at_end=True,
@@ -133,7 +145,8 @@ def train():
     eval_results = evaluate_tool_calling_accuracy(
         trainer.model, 
         raw_eval_data,
-        processor
+        processor,
+        tools=bt_tool
     )
     
     # Log custom metrics

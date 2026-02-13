@@ -89,6 +89,7 @@ def prepare_dataset(
     json_path: str,
     system_prompt_path: str,
     processor: AutoProcessor,
+    tools: List,
     train_split: float = 0.8
 ):
     """
@@ -132,6 +133,8 @@ def prepare_dataset(
             truncation=True,
             max_length=8192,  
             add_generation_prompt=False,
+            tools=tools,
+            continue_final_message=False
         )
         if not "labels" in tokenized:
             if tokenized["assistant_masks"] is not None:

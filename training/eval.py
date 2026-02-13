@@ -25,7 +25,7 @@ def extract_tool_calls_from_text(text: str) -> List[Dict]:
     
     return tool_calls
 
-def evaluate_tool_calling_accuracy(model, eval_dataset, processor) -> Dict:
+def evaluate_tool_calling_accuracy(model, eval_dataset, processor, tools) -> Dict:
     """
     Evaluates tool calling accuracy
     
@@ -65,7 +65,9 @@ def evaluate_tool_calling_accuracy(model, eval_dataset, processor) -> Dict:
         context_text = processor.apply_chat_template(
             context_messages,
             tokenize=False,
-            add_generation_prompt=True
+            tools=tools,
+            add_generation_prompt=False,
+            continue_final_message=False,
         )
         
         inputs = processor(context_text, return_tensors="pt").to(model.device)
