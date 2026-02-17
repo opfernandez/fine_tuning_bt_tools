@@ -49,10 +49,23 @@ fine_tuning_bt_tools/
 
 ## Installation
 
-### Requirements
+### Option 1: Using pip with requirements.txt
 
 ```bash
-pip install torch transformers peft datasets wandb python-dotenv
+pip install -r requirements.txt
+```
+
+### Option 2: Using uv (recommended for faster installation)
+
+```bash
+# Install uv if you don't have it
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Install dependencies
+uv sync
+
+# Or for development with Jupyter notebook support
+uv sync --extra dev
 ```
 
 ### Environment Setup
@@ -119,6 +132,10 @@ The training data follows the ChatML format with tool calls. Each example is a c
 ```
 
 ## W&B Sweeps
+
+![W&B Sweep Results](doc/w&b.png)
+
+*Visualization of hyperparameter sweep results showing the relationship between different configurations and model performance.*
 
 ### Sweep Configuration
 
