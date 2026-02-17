@@ -1,3 +1,4 @@
+import random
 import torch
 from dataclasses import dataclass
 from typing import Any, Dict, List
@@ -170,6 +171,13 @@ def prepare_dataset(
     
     # Split train/eval
     split_idx = int(len(tokenized_data) * train_split)
+    # Apply shuffle to tokenized_data and processed_data
+    indices = list(range(len(tokenized_data)))
+    random.seed(42) # for reproducibility
+    random.shuffle(indices)
+    tokenized_data = [tokenized_data[i] for i in indices]
+    processed_data = [processed_data[i] for i in indices]
+    # Apply split
     train_data = tokenized_data[:split_idx]  
     eval_data = tokenized_data[split_idx:]
     raw_eval_data = processed_data[split_idx:]  # Keep the raw eval data for custom evaluation later
