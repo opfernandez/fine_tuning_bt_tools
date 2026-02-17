@@ -1,0 +1,32 @@
+[project]
+name = "fine-tuning-bt-tools"
+version = "0.1.0"
+description = "Fine-tuning LLMs for Behavior Tree Tool Calling"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "torch>=2.10.0",
+    "transformers>=5.0.0",
+    "peft>=0.18.0",
+    "datasets>=4.2.0",
+    "wandb>=0.24.0",
+    "python-dotenv>=1.1.0",
+    "accelerate>=1.10.0",
+    "bitsandbytes>=0.48.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "jupyter>=1.0.0",
+    "ipykernel>=6.29.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv]
+dev-dependencies = [
+    "jupyter>=1.0.0",
+    "ipykernel>=6.29.0",
+]

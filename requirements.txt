@@ -1,0 +1,8 @@
+torch>=2.10.0
+transformers>=5.0.0
+peft>=0.18.0
+datasets>=4.2.0
+wandb>=0.24.0
+python-dotenv>=1.1.0
+accelerate>=1.10.0
+bitsandbytes>=0.48.0
