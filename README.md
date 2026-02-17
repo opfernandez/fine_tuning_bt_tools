@@ -277,12 +277,33 @@ Use `notebooks/try_adapters.ipynb` to interactively test trained adapters:
 3. Run inference and compare with expected outputs
 4. Evaluate tool calling accuracy
 
-## Converting to GGUF
+## Merging LoRA Adapters with Base Model
 
-To convert a trained adapter to GGUF format for use with llama.cpp:
+To merge a trained LoRA adapter with the base model for deployment or further conversion:
+
+1. **Edit the configuration** in `convert_model_to_gguf/merge_model.py`:
+
+```python
+base_model = "Qwen/Qwen3-0.6B"  # Your base model
+lora_checkpoint = "r32_a32_lr2e-04_bs8_best"  # Your trained adapter
+```
+
+2. **Run the merge script**:
 
 ```bash
 cd convert_model_to_gguf
-python merge_model.py --adapter_path ../adapters/r32_a64_lr2e-04_bs8_best
+python merge_model.py
+```
+
+The merged model will be saved in `./merged_models/{lora_checkpoint}_merged/` with both the model weights and tokenizer.
+
+3. **Convert to GGUF** (optional, for llama.cpp):
+
+```bash
+# From the llama.cpp repository
+python convert_hf_to_gguf.py \
+  /path/to/merged_models/r32_a32_lr2e-04_bs8_best_merged \
+  --outfile model.gguf \
+  --outtype q8_0
 ```
 

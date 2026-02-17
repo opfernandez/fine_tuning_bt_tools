@@ -2,8 +2,8 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 from peft import PeftModel
 import torch
 
-base_model = "Qwen/Qwen3-0.6B"
-lora_checkpoint = "r32_a32_lr2e-04_bs8_best"
+base_model = "Qwen/Qwen3-0.6B" # Change this to your actual base model name if different
+lora_checkpoint = "r32_a32_lr2e-04_bs8_best" # Change this to your actual LoRA checkpoint name
 lora_path = "../adapters/" + lora_checkpoint
 
 model = AutoModelForCausalLM.from_pretrained(
