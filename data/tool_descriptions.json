@@ -1,0 +1,11 @@
+[
+  {
+    "name": "execute_behavior_tree",
+    "description": "Loads and executes a Behavior Tree from an XML file. This tool is responsible for initializing the BT engine with the specified XML configuration file and running the tree execution loop. The tree will execute until it reaches a terminal state (SUCCESS, FAILURE, or CANCELED) or until explicitly stopped. Useful for autonomous robot control, task planning, and decision-making workflows.",
+    "arguments": {
+      "bt_xml_filename": "<selected_bt>.xml",
+      "execution_id": "<your numeric agent id>",
+      "input_parameters": { "arg1": "value1" }
+    }
+  }
+]
