@@ -18,7 +18,7 @@ class DataCollatorForChatML:
     """
     processor: AutoProcessor
     padding: bool = True
-    max_length: int = 8192
+    max_length: int = 4096 
     pad_to_multiple_of: int = 8  # for better GPU memory alignment
     
     def __call__(self, features: List[Dict[str, Any]]) -> Dict[str, torch.Tensor]:
@@ -91,7 +91,8 @@ def prepare_dataset(
     system_prompt_path: str,
     processor: AutoProcessor,
     tools: List,
-    train_split: float = 0.8
+    train_split: float = 0.8,
+    max_length: int = 4096
 ):
     """
     Prepares the dataset for training
@@ -100,7 +101,9 @@ def prepare_dataset(
         json_path: Path to the JSON with the data
         system_prompt_path: Path to the .txt with the system prompt
         processor: Processor of the model
+        tools: List of tools to pass to the processor for tokenization
         train_split: Proportion for train (0.8 = 80% train, 20% eval)
+        max_length: Maximum length of the tokenized sequences
     
     Returns:
         train_dataset, eval_dataset
@@ -132,11 +135,21 @@ def prepare_dataset(
             return_dict=True,
             padding=False,  # No padding yet, we'll do it in data collator
             truncation=True,
-            max_length=8192,  
+            max_length=max_length,  # inspect some examples to set this appropriately
             add_generation_prompt=False,
             tools=tools,
             continue_final_message=False
         )
+        if idx == 0:
+            print("\n" + "="*60)
+            print("CHAT TEMPLATE APPLICATION EXAMPLE:")
+            print("="*60)
+            print(f"Original messages:\n{messages}")
+            print(f"\nTokenized input_ids:\n{tokenized['input_ids']}")
+            print(f"\nTokenized assistant_masks:\n{tokenized['assistant_masks']}")
+            print(f"\nTokenized sequence length: {len(tokenized['input_ids'])}")
+
+            print("="*60 + "\n")
         if not "labels" in tokenized:
             if tokenized["assistant_masks"] is not None:
                 labels = [
@@ -155,7 +168,7 @@ def prepare_dataset(
                 continue
         
         # Print progress
-        if idx == 0 or (idx + 1) % 100 == 0:
+        if idx == 0 or (idx + 1) % 50 == 0:
             print(f"Processed {idx + 1}/{len(data)} examples")
     
     print(f"\nTokenization complete!")
@@ -187,5 +200,16 @@ def prepare_dataset(
     # Convert to HuggingFace Dataset
     train_dataset = Dataset.from_list(train_data)
     eval_dataset = Dataset.from_list(eval_data)
-    
+
     return train_dataset, eval_dataset, raw_eval_data
+
+    # if raw_eval_data was not needed a cleaner solution could be:
+    # full_dataset = Dataset.from_list(tokenized_data)
+    # split_datasets = full_dataset.train_test_split(
+    #     test_size=1 - train_split,
+    #     shuffle=True,
+    #     seed=42  # For reproducibility
+    # )
+    
+    # train_dataset = split_datasets['train']
+    # eval_dataset = split_datasets['test']
