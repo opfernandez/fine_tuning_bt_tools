@@ -16,7 +16,7 @@ model_id = "Qwen/Qwen3-0.6B"
 
 # Load tool descriptions from JSON file
 try:
-    with open("../data/tool_descriptions.json", "r", encoding="utf-8") as f:
+    with open(os.path.join("../data", "tool_descriptions.json"), "r", encoding="utf-8") as f:
         bt_tool = json.load(f)
     print(f"Loaded {len(bt_tool)} tool(s) from tool_descriptions.json")
 except FileNotFoundError:
@@ -118,14 +118,14 @@ def train():
     processor = AutoProcessor.from_pretrained(model_id)
 
     # Load custom chat template from .jinja file
-    with open("../templates/qwen3.jinja", "r", encoding="utf-8") as f:
+    with open(os.path.join("../templates", "qwen3.jinja"), "r", encoding="utf-8") as f:
         custom_template = f.read()
     processor.chat_template = custom_template
     
     # Prepare dataset
     train_dataset, eval_dataset, raw_eval_data = prepare_dataset(
-        json_path="../data/train_dataset.json",  
-        system_prompt_path="../data/system_prompt.txt",  
+        json_path=os.path.join("../data", "train_dataset.json"),  
+        system_prompt_path=os.path.join("../data", "system_prompt.txt"),  
         processor=processor,
         tools=bt_tool,
         train_split=0.8,
@@ -153,9 +153,10 @@ def train():
     model = get_peft_model(model, lora_config)
     model.print_trainable_parameters()
     
+    output_dir = os.path.join("../checkpoints", wandb.run.name)
     # Training arguments with sweep hyperparameters
     training_args = TrainingArguments(
-        output_dir=f"../checkpoints/{wandb.run.name}",
+        output_dir=output_dir,
         num_train_epochs=config.num_train_epochs,
         per_device_train_batch_size=1,  # Keep this fixed to lower value and use gradient accumulation so vram does not explode
         per_device_eval_batch_size=1,
@@ -242,9 +243,16 @@ def train():
         })
     
     # Save the best model
-    best_model_path = f"../adapters/{wandb.run.name}_best"
+    best_model_path = os.path.join("../adapters", f"{wandb.run.name}_best")
     trainer.save_model(best_model_path)
     print(f"\n Best model saved at: {best_model_path}")
+    print("Deleting checkpoints to save space ...")
+    try:
+        os.rmdir(output_dir)
+        print("Removed successfully ...")
+    except OSError as error:
+        print(error)
+        print("Folder can not be removed")
     
     wandb.finish()
 
