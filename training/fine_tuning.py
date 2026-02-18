@@ -1,6 +1,7 @@
 import torch
 import wandb
 import dotenv
+import json
 import os
 from transformers import (Trainer, TrainingArguments, AutoModelForCausalLM,
     AutoProcessor, TrainerCallback, TrainerControl, TrainerState)
@@ -13,15 +14,16 @@ os.environ["HF_TOKEN"] = os.getenv("HF_TOKEN")
 model_id = "Qwen/Qwen3-0.6B"
 
 
-# Define tool schema to be parsed in the chat template
-bt_tool = [{
-            "name": "execute_behavior_tree",
-            "arguments": {
-                "bt_xml_filename": "<selected_bt>.xml",
-                "execution_id": "<your numeric agent id>",
-                "input_parameters": { "arg1": "value1" }
-            }
-        }]
+# Load tool descriptions from JSON file
+try:
+    with open("../data/tool_descriptions.json", "r", encoding="utf-8") as f:
+        bt_tool = json.load(f)
+    print(f"Loaded {len(bt_tool)} tool(s) from tool_descriptions.json")
+except FileNotFoundError:
+    raise FileNotFoundError("tool_descriptions.json not found at ../data/tool_descriptions.json. "
+                            "Please create it before running training.")
+except json.JSONDecodeError as e:
+    raise ValueError(f"tool_descriptions.json contains invalid JSON: {e}")
 
 
 class EarlyStoppingCallback(TrainerCallback):

@@ -127,7 +127,6 @@ def prepare_dataset(
     for idx, example in enumerate(data):
         # Replace system prompt and store the messages structure
         messages = replace_system_prompt(example["messages"], custom_system_prompt)
-        processed_data.append(messages)
         # Apply chat template 
         tokenized = processor.apply_chat_template(
             messages,  
@@ -148,7 +147,6 @@ def prepare_dataset(
             print(f"\nTokenized input_ids:\n{tokenized['input_ids']}")
             print(f"\nTokenized assistant_masks:\n{tokenized['assistant_masks']}")
             print(f"\nTokenized sequence length: {len(tokenized['input_ids'])}")
-
             print("="*60 + "\n")
         if not "labels" in tokenized:
             if tokenized["assistant_masks"] is not None:
@@ -156,13 +154,14 @@ def prepare_dataset(
                     input_id if mask else -100 
                     for input_id, mask in zip(tokenized["input_ids"], tokenized["assistant_masks"])
                 ]
-                # Extract tokenized data (they are in lists, take the first element)
+                # Only append to both lists together so they stay in sync
                 tokenized_data.append({
                     "input_ids": tokenized["input_ids"],
                     "attention_mask": tokenized["attention_mask"],
                     "labels": labels,
                     "assistant_masks": tokenized["assistant_masks"]
                 })
+                processed_data.append(messages)
             else:
                 print(Warning("Could not compute labels from input_ids and assistant_masks because one of them is missing. Check the processor output."))
                 continue

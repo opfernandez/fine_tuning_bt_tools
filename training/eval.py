@@ -46,78 +46,78 @@ def evaluate_tool_calling_accuracy(model, eval_dataset, processor, tools) -> Dic
     print("="*60)
     
     for idx, messages in enumerate(eval_dataset):   
-        # Find where the assistant should respond
-        context_messages = []
-        expected_tool_calls = []
-        
-        for i, msg in enumerate(messages):
-            if msg["role"] == "assistant" and "tool_calls" in msg:
-                # This is the point where we want the model to generate
-                context_messages = messages[:i]
-                expected_tool_calls = msg.get("tool_calls", [])
-                break
-            context_messages.append(msg)
-        
-        if not expected_tool_calls:
+        # Find ALL assistant turns with tool_calls in the conversation
+        tool_call_turns = [
+            i for i, msg in enumerate(messages)
+            if msg["role"] == "assistant" and "tool_calls" in msg and msg["tool_calls"]
+        ]
+
+        if not tool_call_turns:
             continue
-        
-        # Generate model response
-        context_text = processor.apply_chat_template(
-            context_messages,
-            tokenize=False,
-            tools=tools,
-            add_generation_prompt=False,
-            continue_final_message=False,
-        )
-        
-        inputs = processor(context_text, return_tensors="pt").to(model.device)
-        
-        with torch.no_grad():
-            outputs = model.generate(
-                **inputs,
-                max_new_tokens=1024,
-                temperature=0.1,  # low for deterministic evaluation
-                do_sample=False
+
+        # Evaluate each tool_call turn independently
+        for turn_idx in tool_call_turns:
+            context_messages = messages[:turn_idx]
+            expected_tool_calls = messages[turn_idx].get("tool_calls", [])
+
+            if not expected_tool_calls:
+                continue
+
+            # Generate model response
+            context_text = processor.apply_chat_template(
+                context_messages,
+                tokenize=False,
+                tools=tools,
+                add_generation_prompt=True,  # Required for inference: adds <|im_start|>assistant\n
+                continue_final_message=False,
             )
-        
-        generated_text = processor.decode(outputs[0], skip_special_tokens=True)
-        
-        # Extract generated tool calls
-        predicted_tool_calls = extract_tool_calls_from_text(generated_text)
-        
-        # Evaluate each expected tool call
-        for expected_tc in expected_tool_calls:
-            total_tool_calls += 1
-            
-            expected_name = expected_tc.get("name", "")
-            expected_args = expected_tc.get("arguments", {})
-            
-            # Search for match in predictions
-            found_match = False
-            for pred_tc in predicted_tool_calls:
-                pred_name = pred_tc.get("name", "")
-                pred_args = pred_tc.get("arguments", {})
+
+            inputs = processor(context_text, return_tensors="pt").to(model.device)
+            input_len = inputs["input_ids"].shape[1]
+
+            with torch.no_grad():
+                outputs = model.generate(
+                    **inputs,
+                    max_new_tokens=1024,
+                    do_sample=False  # greedy decoding
+                )
+
+            # Decode only the newly generated tokens, not the input
+            generated_text = processor.decode(outputs[0][input_len:], skip_special_tokens=True)
+
+            # Extract generated tool calls
+            predicted_tool_calls = extract_tool_calls_from_text(generated_text)
+
+            # Evaluate each expected tool call
+            for expected_tc in expected_tool_calls:
+                total_tool_calls += 1
                 
-                # Check tool name
-                if pred_name == expected_name:
-                    correct_tool_names += 1
+                expected_name = expected_tc.get("name", "")
+                expected_args = expected_tc.get("arguments", {})
+                
+                # Search for match in predictions
+                for pred_tc in predicted_tool_calls:
+                    pred_name = pred_tc.get("name", "")
+                    pred_args = pred_tc.get("arguments", {})
                     
-                    # Check arguments
-                    if validate_tool_args(pred_args, expected_args):
-                        exact_arg_matches += 1
-                    else:
-                        print(f"Expected arguments:\n{expected_args}\nGenerated:\n{pred_args}")
-                    
-                    # Check valid JSON
-                    try:
-                        json.dumps(pred_args)
-                        valid_json_count += 1
-                    except:
-                        pass
-                    
-                    found_match = True
-                    break
-        
+                    # Check tool name
+                    if pred_name == expected_name:
+                        correct_tool_names += 1
+                        
+                        # Check arguments
+                        if validate_tool_args(pred_args, expected_args):
+                            exact_arg_matches += 1
+                        else:
+                            print(f"Expected arguments:\n{expected_args}\nGenerated:\n{pred_args}")
+                        
+                        # Check valid JSON
+                        try:
+                            json.dumps(pred_args)
+                            valid_json_count += 1
+                        except:
+                            pass
+                        break
+
         # Progress indicator
         if (idx + 1) % 10 == 0:
             print(f"Evaluated: {idx + 1}/{len(eval_dataset)}")
