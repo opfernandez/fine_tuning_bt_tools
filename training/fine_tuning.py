@@ -3,6 +3,7 @@ import wandb
 import dotenv
 import json
 import os
+import shutil
 from transformers import (Trainer, TrainingArguments, AutoModelForCausalLM,
     AutoProcessor, TrainerCallback, TrainerControl, TrainerState)
 from peft import LoraConfig, get_peft_model
@@ -248,7 +249,7 @@ def train():
     print(f"\n Best model saved at: {best_model_path}")
     print("Deleting checkpoints to save space ...")
     try:
-        os.rmdir(output_dir)
+        shutil.rmtree(output_dir)
         print("Removed successfully ...")
     except OSError as error:
         print(error)
