@@ -11,7 +11,7 @@ parameters:
   # Learning rate 
   learning_rate:
     distribution: log_uniform_values
-    min: 1e-5
+    min: 1e-4
     max: 1e-3
   
   # LoRA rank 
@@ -32,8 +32,8 @@ parameters:
   # Dropout
   lora_dropout:
     distribution: uniform
-    min: 0.0
-    max: 0.1
+    min: 0.05
+    max: 0.15
   
   # Warmup
   warmup_ratio:

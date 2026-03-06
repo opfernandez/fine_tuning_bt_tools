@@ -137,13 +137,14 @@ def prepare_dataset(
             max_length=max_length,  # inspect some examples to set this appropriately
             add_generation_prompt=False,
             tools=tools,
-            continue_final_message=False
+            continue_final_message=False,
+            enable_thinking=False,
         )
         if idx == 0:
             print("\n" + "="*60)
             print("CHAT TEMPLATE APPLICATION EXAMPLE:")
             print("="*60)
-            print(f"Original messages:\n{messages}")
+            print(f"Original messages:\n{processor.decode(tokenized['input_ids'])}\n")
             print(f"\nTokenized input_ids:\n{tokenized['input_ids']}")
             print(f"\nTokenized assistant_masks:\n{tokenized['assistant_masks']}")
             print(f"\nTokenized sequence length: {len(tokenized['input_ids'])}")

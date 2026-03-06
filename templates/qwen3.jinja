@@ -42,6 +42,9 @@
         {%- endif %}
 
         {{- '<|im_start|>' + message.role }}
+        {%- if enable_thinking is defined and enable_thinking is false and message.role == "assistant" and not loop.last%}
+            {{- '<think>\n\n</think>\n\n' }}
+        {%- endif %}
         {% generation %}
         {%- if loop.index0 > ns.last_query_index %}
             {%- if loop.last or (not loop.last and reasoning_content) %}

@@ -70,6 +70,7 @@ def evaluate_tool_calling_accuracy(model, eval_dataset, processor, tools) -> Dic
                 tools=tools,
                 add_generation_prompt=True,  # Required for inference: adds <|im_start|>assistant\n
                 continue_final_message=False,
+                enable_thinking=False
             )
 
             inputs = processor(context_text, return_tensors="pt").to(model.device)
@@ -84,6 +85,7 @@ def evaluate_tool_calling_accuracy(model, eval_dataset, processor, tools) -> Dic
 
             # Decode only the newly generated tokens, not the input
             generated_text = processor.decode(outputs[0][input_len:], skip_special_tokens=True)
+            # print(f"\nGenerated Text:\n{generated_text}\n")
 
             # Extract generated tool calls
             predicted_tool_calls = extract_tool_calls_from_text(generated_text)
