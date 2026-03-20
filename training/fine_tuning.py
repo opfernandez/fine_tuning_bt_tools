@@ -236,7 +236,8 @@ def train():
             raw_eval_data,
             processor,
             tools=bt_tool,
-            model_type=model_type
+            model_type=model_type,
+            batch_size=32  # Use larger batch size for faster evaluation if VRAM allows
         )
         
         # Log custom metrics

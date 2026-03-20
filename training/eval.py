@@ -3,7 +3,7 @@ import json
 from typing import List, Dict
 import torch
 
-# ==================== VALIDATION ====================
+# ==================== TOOL CALL PARSING ====================
 
 def _qwen3_tool_call_parser(text: str) -> List[Dict]:
     """Parse tool calls from Qwen3 model output.
@@ -86,137 +86,182 @@ def _parse_functiongemma_arguments(args_str: str) -> dict:
             
     return arguments
 
+# ==================== EVALUATION ====================
 
-def evaluate_tool_calling_accuracy(model, eval_dataset, processor, tools, model_type: str) -> Dict:
+def evaluate_tool_calling_accuracy(
+    model,
+    eval_dataset,
+    processor,
+    tools,
+    model_type: str = "qwen3",
+    batch_size: int = 8,
+) -> Dict:
     """
-    Evaluates tool calling accuracy
-    
+    Evaluates tool calling accuracy using batched generation for speed.
+ 
     Metrics:
     - tool_name_acc: % of times it predicts the correct name
     - arg_exact_match: % of times arguments are exact
     - valid_json_rate: % of times it generates valid JSON
     """
-
-
+ 
     if model_type == "qwen3":
         extract_tool_calls_from_text = _qwen3_tool_call_parser
     elif model_type == "functiongemma":
         extract_tool_calls_from_text = _functiongemma_tool_call_parser
     else:
-        raise ValueError(f"Unsupported model type: {model_type}, valid types are ['qwen3', 'functiongemma']")
-
+        raise ValueError(
+            f"Unsupported model type: {model_type}, " 
+            f"valid types are ['qwen3', 'functiongemma']")
+ 
     model.eval()
-    
-    correct_tool_names = 0
-    exact_arg_matches = 0
-    valid_json_count = 0
-    total_tool_calls = 0
-    
-    print("\n" + "="*60)
-    print("EVALUATING TOOL CALLING ACCURACY")
-    print("="*60)
-    
-    for idx, messages in enumerate(eval_dataset):   
-        # Find ALL assistant turns with tool_calls in the conversation
+ 
+    # ------------------------------------------------------------------
+    # 1. Collect ALL (context_text, expected_tool_calls) pairs up front
+    # ------------------------------------------------------------------
+    samples: list[tuple[str, list]] = []  # (prompt_text, expected_tool_calls)
+ 
+    for messages in eval_dataset:
         tool_call_turns = [
-            i for i, msg in enumerate(messages)
-            if msg["role"] == "assistant" and "tool_calls" in msg and msg["tool_calls"]
+            i
+            for i, msg in enumerate(messages)
+            if msg["role"] == "assistant"
+            and "tool_calls" in msg
+            and msg["tool_calls"]
         ]
-
-        if not tool_call_turns:
-            continue
-
-        # Evaluate each tool_call turn independently
+ 
         for turn_idx in tool_call_turns:
             context_messages = messages[:turn_idx]
             expected_tool_calls = messages[turn_idx].get("tool_calls", [])
-
+ 
             if not expected_tool_calls:
                 continue
-
-            # Generate model response
+ 
             context_text = processor.apply_chat_template(
                 context_messages,
                 tokenize=False,
                 tools=tools,
-                add_generation_prompt=True,  # Required for inference: adds <|im_start|>assistant\n
+                add_generation_prompt=True,
                 continue_final_message=False,
-                enable_thinking=False
+                enable_thinking=False,
             )
-
-            inputs = processor(context_text, return_tensors="pt").to(model.device)
-            input_len = inputs["input_ids"].shape[1]
-
-            with torch.no_grad():
-                outputs = model.generate(
-                    **inputs,
-                    max_new_tokens=128,
-                    do_sample=False,  # greedy decoding
-                    max_length=None,  # generation is only controlled by max_new_tokens
-                )
-
-            # Decode only the newly generated tokens, not the input
-            generated_text = processor.decode(outputs[0][input_len:], skip_special_tokens=True)
-            # print(f"\nGenerated Text:\n{generated_text}\n")
-
-            # Extract generated tool calls
-            predicted_tool_calls = extract_tool_calls_from_text(generated_text)
-
-            # Evaluate each expected tool call
-            for expected_tc in expected_tool_calls:
-                total_tool_calls += 1
-                
-                expected_name = expected_tc.get("name", "")
-                expected_args = expected_tc.get("arguments", {})
-                
-                # Search for match in predictions
-                for pred_tc in predicted_tool_calls:
-                    pred_name = pred_tc.get("name", "")
-                    pred_args = pred_tc.get("arguments", {})
-                    
-                    # Check tool name
-                    if pred_name == expected_name:
-                        correct_tool_names += 1
-                        
-                        # Check arguments
-                        if validate_tool_args(pred_args, expected_args):
-                            exact_arg_matches += 1
-                        else:
-                            print(f"Expected arguments:\n{expected_args}\nGenerated:\n{pred_args}")
-                        
-                        # Check valid JSON
-                        try:
-                            json.dumps(pred_args)
-                            valid_json_count += 1
-                        except:
-                            pass
-                        break
-
-        # Progress indicator
-        if (idx + 1) % 10 == 0:
-            print(f"Evaluated: {idx + 1}/{len(eval_dataset)}")
-    
-    # Calculate metrics
+ 
+            samples.append((context_text, expected_tool_calls))
+ 
+    # ------------------------------------------------------------------
+    # 2. Run batched generation
+    # ------------------------------------------------------------------
+    # processor / tokenizer must pad on the LEFT for decoder-only models
+    # so that the last real token of every sample is right-aligned and
+    # the model generates immediately after it.
+    original_padding_side = processor.padding_side
+    processor.padding_side = "left"
+ 
+    all_generated_texts: list[str] = []
+ 
+    print("\n" + "=" * 60)
+    print("EVALUATING TOOL CALLING ACCURACY (batched)")
+    print("=" * 60)
+ 
+    prompts = [s[0] for s in samples]
+ 
+    for batch_start in range(0, len(prompts), batch_size):
+        batch_prompts = prompts[batch_start : batch_start + batch_size]
+ 
+        # Tokenise the whole batch at once (padding handled automatically)
+        inputs = processor(
+            batch_prompts,
+            return_tensors="pt",
+            padding=True,
+            truncation=True,
+        ).to(model.device)
+ 
+        input_lengths = inputs["input_ids"].shape[1]  # same for all after padding
+ 
+        with torch.inference_mode():
+            outputs = model.generate(
+                **inputs,
+                max_new_tokens=128,
+                do_sample=False,
+                pad_token_id=processor.pad_token_id,
+                max_token_length=None,
+            )
+ 
+        # Decode only the newly generated tokens for each item in the batch
+        for i, output_ids in enumerate(outputs):
+            generated_ids = output_ids[input_lengths:]
+            generated_text = processor.decode(generated_ids, skip_special_tokens=True)
+            all_generated_texts.append(generated_text)
+            # print(f"Generated text for sample {batch_start + i + 1}:\n{generated_text}\n{'-'*40}")
+ 
+        batch_end = min(batch_start + batch_size, len(prompts))
+        print(f"Generated: {batch_end}/{len(prompts)}")
+ 
+    # Restore original padding side
+    processor.padding_side = original_padding_side
+ 
+    # ------------------------------------------------------------------
+    # 3. Score predictions
+    # ------------------------------------------------------------------
+    correct_tool_names = 0
+    exact_arg_matches = 0
+    valid_json_count = 0
+    total_tool_calls = 0
+ 
+    for (_, expected_tool_calls), generated_text in zip(samples, all_generated_texts):
+        predicted_tool_calls = extract_tool_calls_from_text(generated_text)
+ 
+        for expected_tc in expected_tool_calls:
+            total_tool_calls += 1
+ 
+            expected_name = expected_tc.get("name", "")
+            expected_args = expected_tc.get("arguments", {})
+ 
+            for pred_tc in predicted_tool_calls:
+                pred_name = pred_tc.get("name", "")
+                pred_args = pred_tc.get("arguments", {})
+ 
+                if pred_name == expected_name:
+                    correct_tool_names += 1
+ 
+                    if _validate_tool_args(pred_args, expected_args):
+                        exact_arg_matches += 1
+                    else:
+                        print(
+                            f"Expected arguments:\n{expected_args}\nGenerated:\n{pred_args}"
+                        )
+ 
+                    try:
+                        json.dumps(pred_args)
+                        valid_json_count += 1
+                    except Exception:
+                        pass
+ 
+                    break
+ 
+    # ------------------------------------------------------------------
+    # 4. Report
+    # ------------------------------------------------------------------
     results = {
         "tool_name_acc": correct_tool_names / total_tool_calls if total_tool_calls > 0 else 0,
         "arg_exact": exact_arg_matches / total_tool_calls if total_tool_calls > 0 else 0,
         "valid_json": valid_json_count / total_tool_calls if total_tool_calls > 0 else 0,
-        "total_evaluated": total_tool_calls
+        "total_evaluated": total_tool_calls,
     }
-    
-    print("\n" + "="*60)
+ 
+    print("\n" + "=" * 60)
     print("EVALUATION RESULTS:")
-    print("="*60)
-    print(f"Tool Name Accuracy: {results['tool_name_acc']:.2%}")
-    print(f"Argument Exact Match: {results['arg_exact']:.2%}")
-    print(f"Valid JSON Rate: {results['valid_json']:.2%}")
+    print("=" * 60)
+    print(f"Tool Name Accuracy:    {results['tool_name_acc']:.2%}")
+    print(f"Argument Exact Match:  {results['arg_exact']:.2%}")
+    print(f"Valid JSON Rate:       {results['valid_json']:.2%}")
     print(f"Total tool calls evaluated: {results['total_evaluated']}")
-    print("="*60 + "\n")
-    
+    print("=" * 60 + "\n")
+ 
     return results
 
 
-def validate_tool_args(generated_args: Dict, expected_args: Dict) -> bool:
+def _validate_tool_args(generated_args: Dict, expected_args: Dict) -> bool:
     """Validates if the generated arguments match the expected arguments.
     By checking dict keys and values recursively.
     """
@@ -231,7 +276,7 @@ def validate_tool_args(generated_args: Dict, expected_args: Dict) -> bool:
         
         # If values are dicts, compare recursively
         if isinstance(gen_value, dict) and isinstance(exp_value, dict):
-            if not validate_tool_args(gen_value, exp_value):
+            if not _validate_tool_args(gen_value, exp_value):
                 print(f"Mismatch in nested argument: {key}")
                 return False
         else:
