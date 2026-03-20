@@ -12,19 +12,20 @@ from data_loader import DataCollatorForChatML, prepare_dataset
 
 dotenv.load_dotenv()  # Load environment variables from .env file
 os.environ["HF_TOKEN"] = os.getenv("HF_TOKEN") 
-model_id = "Qwen/Qwen3-0.6B"
-
+# model_id = "Qwen/Qwen3-0.6B"
+model_id = "unsloth/functiongemma-270m-it"
+model_type = "functiongemma"  # Change to functiongemma or qwen3 
 
 # Load tool descriptions from JSON file
 try:
-    with open(os.path.join("../data", "tool_descriptions.json"), "r", encoding="utf-8") as f:
+    with open(os.path.join("../data", "domotic_tools.json"), "r", encoding="utf-8") as f:
         bt_tool = json.load(f)
-    print(f"Loaded {len(bt_tool)} tool(s) from tool_descriptions.json")
+    print(f"Loaded {len(bt_tool)} tool(s) from domotic_tools.json")
 except FileNotFoundError:
-    raise FileNotFoundError("tool_descriptions.json not found at ../data/tool_descriptions.json. "
+    raise FileNotFoundError("domotic_tools.json not found at ../data/domotic_tools.json. "
                             "Please create it before running training.")
 except json.JSONDecodeError as e:
-    raise ValueError(f"tool_descriptions.json contains invalid JSON: {e}")
+    raise ValueError(f"domotic_tools.json contains invalid JSON: {e}")
 
 
 class EarlyStoppingCallback(TrainerCallback):
@@ -119,18 +120,18 @@ def train():
     processor = AutoProcessor.from_pretrained(model_id)
 
     # Load custom chat template from .jinja file
-    with open(os.path.join("../templates", "qwen3.jinja"), "r", encoding="utf-8") as f:
+    with open(os.path.join("../templates", "functiongemma.jinja"), "r", encoding="utf-8") as f:
         custom_template = f.read()
     processor.chat_template = custom_template
     
     # Prepare dataset
     train_dataset, eval_dataset, raw_eval_data = prepare_dataset(
-        json_path=os.path.join("../data", "train_dataset.json"),  
-        system_prompt_path=os.path.join("../data", "system_prompt.txt"),  
+        json_path=os.path.join("../data", "domotic_dataset.json"),  
+        system_prompt_path=os.path.join("../data", "system_prompt_domotic.jinja"),  
         processor=processor,
         tools=bt_tool,
         train_split=0.8,
-        max_length=3072
+        max_length=1024
     )
 
     model = AutoModelForCausalLM.from_pretrained(
@@ -153,6 +154,7 @@ def train():
     
     model = get_peft_model(model, lora_config)
     model.print_trainable_parameters()
+    model.enable_input_require_grads()
     
     output_dir = os.path.join("../checkpoints", wandb.run.name)
     # Training arguments with sweep hyperparameters
@@ -188,7 +190,7 @@ def train():
     data_collator = DataCollatorForChatML(
         processor=processor,
         padding=True,
-        max_length=3072, # Inspect some examples to set this appropriately based on your data and model context window
+        max_length=1024, # Inspect some examples to set this appropriately based on your data and model context window
         pad_to_multiple_of=8
     )
     # Trainer
@@ -233,7 +235,8 @@ def train():
             trainer.model, 
             raw_eval_data,
             processor,
-            tools=bt_tool
+            tools=bt_tool,
+            model_type=model_type
         )
         
         # Log custom metrics
@@ -244,7 +247,7 @@ def train():
         })
     
     # Save the best model
-    best_model_path = os.path.join("../adapters", f"{wandb.run.name}_best")
+    best_model_path = os.path.join("../adapters", f"{model_type}_{wandb.run.name}_best")
     trainer.save_model(best_model_path)
     print(f"\n Best model saved at: {best_model_path}")
     print("Deleting checkpoints to save space ...")

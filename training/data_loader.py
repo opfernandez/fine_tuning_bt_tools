@@ -68,9 +68,9 @@ class DataCollatorForChatML:
             "labels": torch.tensor(batch["labels"], dtype=torch.long)
         }
 
-def load_custom_system_prompt(txt_path: str) -> str:
-    """Loads a custom system prompt from a .txt file"""
-    with open(txt_path, 'r', encoding='utf-8') as f:
+def load_custom_system_prompt(template_path: str) -> str:
+    """Loads a custom system prompt from a template file"""
+    with open(template_path, 'r', encoding='utf-8') as f:
         return f.read().strip()
 
 def replace_system_prompt(messages: List[Dict], new_system_prompt: str) -> List[Dict]:
@@ -99,7 +99,7 @@ def prepare_dataset(
     
     Args:
         json_path: Path to the JSON with the data
-        system_prompt_path: Path to the .txt with the system prompt
+        system_prompt_path: Path to the template file with the system prompt
         processor: Processor of the model
         tools: List of tools to pass to the processor for tokenization
         train_split: Proportion for train (0.8 = 80% train, 20% eval)
