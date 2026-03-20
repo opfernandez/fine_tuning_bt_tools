@@ -1,0 +1,34 @@
+[
+{
+  "function": 
+    {
+      "description": "Controls the lights in a specified room.\nInput: room (string) - Room location.\n       action (string) - Action to perform (\"on\", \"off\")\nOutput: status (string) - Light control confirmation", 
+      "name": "lights_control"
+    }, 
+  "type": "function"
+},
+{
+  "function": 
+    {
+      "description": "Controls the blinds in a specified room.\nInput: room (string) - Room location.\n       action (string) - Action to perform (\"raise\", \"lower\", \"stop\")\nOutput: status (string) - Blind control confirmation", 
+      "name": "blind_control"
+    }, 
+  "type": "function"
+},
+{
+  "function": 
+    {
+      "description": "Controls a specified device.\nInput: device (string) - Device name.\n       action (string) - Action to perform (\"on\", \"off\")\nOutput: status (string) - Device control confirmation", 
+      "name": "device_control"
+    }, 
+  "type": "function"
+},
+{
+  "function": 
+    {
+      "description": "Controls a specified mode.\nInput: mode (string) - Mode name.\n       action (string) - Action to perform (\"on\", \"off\")\nOutput: status (string) - Mode control confirmation", 
+      "name": "mode_control"
+    }, 
+  "type": "function"
+}
+]
