@@ -1,20 +1,24 @@
+from pathlib import Path
 import torch
 import wandb
 import dotenv
 import json
 import os
 import shutil
-from transformers import (Trainer, TrainingArguments, AutoModelForCausalLM,
-    AutoProcessor, TrainerCallback, TrainerControl, TrainerState)
-from peft import LoraConfig, get_peft_model
+import unsloth
+from transformers import Trainer, TrainerCallback, TrainerControl, TrainerState, TrainingArguments,  AutoTokenizer
+from unsloth import FastLanguageModel
+from trl import SFTTrainer
+from peft import LoraConfig
 from eval import evaluate_tool_calling_accuracy
 from data_loader import DataCollatorForChatML, prepare_dataset
 
-dotenv.load_dotenv()  # Load environment variables from .env file
-os.environ["HF_TOKEN"] = os.getenv("HF_TOKEN") 
-# model_id = "Qwen/Qwen3-0.6B"
-model_id = "unsloth/functiongemma-270m-it"
-model_type = "functiongemma"  # Change to functiongemma or qwen3 
+dotenv.load_dotenv()
+os.environ["HF_TOKEN"] = os.getenv("HF_TOKEN")
+
+# model_id = "unsloth/Qwen3-0.6B"
+model_id = "Qwen/Qwen3-0.6B"
+model_type = "qwen3"  # for logging and naming purposes, e.g. "qwen3" or "functiongemma"
 
 # Load tool descriptions from JSON file
 try:
@@ -27,20 +31,14 @@ except FileNotFoundError:
 except json.JSONDecodeError as e:
     raise ValueError(f"domotic_tools.json contains invalid JSON: {e}")
 
-
 class EarlyStoppingCallback(TrainerCallback):
     """
-    Early stopping callback stops training if eval loss does not improve for a 
-    specified number of evaluations (patience) by a certain threshold. 
+    Early stopping callback stops training if eval loss does not improve for a
+    specified number of evaluations (patience) by a certain threshold.
     It also marks the run as preempting in wandb to signal that the run was stopped early.
     """
 
     def __init__(self, patience: int = 2, threshold: float = 0.05):
-        """
-        Args:
-            patience:  Number of evaluations to wait for improvement before stopping.
-            threshold: Minimum relative improvement in eval loss to reset patience (e.g., 0.05 for 5% improvement).
-        """
         self.patience = patience
         self.threshold = threshold
         self.best_loss = float("inf")
@@ -57,11 +55,9 @@ class EarlyStoppingCallback(TrainerCallback):
     ) -> TrainerControl:
 
         current_loss = metrics.get("eval_loss")
-
         if current_loss is None:
             return control
 
-        # Use relative improvement: current must be at least (1 - threshold) * best_loss
         improvement_threshold = self.best_loss * (1 - self.threshold)
         if current_loss < improvement_threshold:
             self.best_loss = current_loss
@@ -91,79 +87,84 @@ class EarlyStoppingCallback(TrainerCallback):
 
 def train():
     """Main training function with wandb sweep integration"""
-    # Initialize wandb sweep
     wandb.init(
         entity=os.getenv("WANDB_ENTITY"),
         project=os.getenv("WANDB_PROJECT"),
-        mode="online", # Change to "online" when you want to log to the cloud
+        mode="online",
     )
-    config = wandb.config  # get sweep hyperparameters
-
-    # Create a unique run name based on hyperparameters for better tracking
+    config = wandb.config
+    bs = config.gradient_accumulation_steps if config.gradient_accumulation_steps > config.per_device_train_batch_size else config.per_device_train_batch_size
     run_name = (
         f"ep{config.num_train_epochs}"
         f"_r{config.lora_r}"
         f"_a{config.lora_alpha}"
         f"_lr{config.learning_rate:.0e}"
-        f"_bs{config.gradient_accumulation_steps}"
+        f"_bs{bs}"
     )
     wandb.run.name = run_name
 
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("SWEEP CONFIGURATION:")
-    print("="*60)
+    print("=" * 60)
     for key, value in config.items():
         print(f"{key}: {value}")
-    print("="*60 + "\n")
+    print("=" * 60 + "\n")
 
-    # Load tokenizer
-    processor = AutoProcessor.from_pretrained(model_id)
+    # Load model + tokenizer via Unsloth 
+    model, processor = FastLanguageModel.from_pretrained(
+        model_name=model_id,
+        max_seq_length=1024,          # must match DataCollator / prepare_dataset
+        dtype=torch.bfloat16,         # None lets Unsloth auto-detect
+        load_in_4bit=False,
+        load_in_8bit=False,
+        load_in_16bit=True,
+        token=os.getenv("HF_TOKEN"),
+    )
 
     # Load custom chat template from .jinja file
-    with open(os.path.join("../templates", "functiongemma.jinja"), "r", encoding="utf-8") as f:
+    with open(os.path.join("../templates", f"{model_type}.jinja"), "r", encoding="utf-8") as f:
         custom_template = f.read()
     processor.chat_template = custom_template
-    
+
     # Prepare dataset
     train_dataset, eval_dataset, raw_eval_data = prepare_dataset(
-        json_path=os.path.join("../data", "domotic_dataset.json"),  
-        system_prompt_path=os.path.join("../data", "system_prompt_domotic.jinja"),  
+        json_path=os.path.join("../data", "domotic_dataset.json"),
+        system_prompt_path=os.path.join("../data", "system_prompt_domotic.jinja"),
         processor=processor,
         tools=bt_tool,
         train_split=0.8,
-        max_length=1024
+        max_length=1024,
     )
 
-    model = AutoModelForCausalLM.from_pretrained(
-        model_id,
-        dtype=torch.bfloat16,
-        device_map="auto",
-        # attn_implementation="flash_attention_2"
-    )
-    # print(f"\nModel loaded: {model}")
-    # LoRA config with sweep hyperparameters
-    lora_config = LoraConfig(
+    # Wrap model with LoRA via Unsloth
+    model = FastLanguageModel.get_peft_model(
+        model,
         r=config.lora_r,
         lora_alpha=config.lora_alpha,
         lora_dropout=config.lora_dropout,
-        target_modules=["q_proj", "k_proj", "v_proj", "o_proj", 
-                       "gate_proj", "up_proj", "down_proj"],
+        target_modules=["q_proj", "k_proj", "v_proj", "o_proj",
+                        "gate_proj", "up_proj", "down_proj"],
         bias="none",
-        task_type="CAUSAL_LM"
+        # use_gradient_checkpointing="unsloth",   # Unsloth's memory-efficient variant
+        random_state=42,
+        use_rslora=False,   # set True to use Rank-Stabilised LoRA
+        loftq_config=None,
     )
-    
-    model = get_peft_model(model, lora_config)
     model.print_trainable_parameters()
-    model.enable_input_require_grads()
-    
+
     output_dir = os.path.join("../checkpoints", wandb.run.name)
-    # Training arguments with sweep hyperparameters
+
+    # compute gradient_accumulation_steps based on batch size and desired effective batch size
+    gradient_accumulation_steps = config.gradient_accumulation_steps // config.per_device_train_batch_size  # this gives the number of steps to accumulate to reach the effective batch size
+    if gradient_accumulation_steps < 1:
+        gradient_accumulation_steps = 1
+
     training_args = TrainingArguments(
         output_dir=output_dir,
-        num_train_epochs=config.num_train_epochs,
-        per_device_train_batch_size=1,  # Keep this fixed to lower value and use gradient accumulation so vram does not explode
+        num_train_epochs=1,
+        per_device_train_batch_size=config.per_device_train_batch_size,
         per_device_eval_batch_size=1,
-        gradient_accumulation_steps=config.gradient_accumulation_steps,
+        gradient_accumulation_steps=gradient_accumulation_steps,
         learning_rate=config.learning_rate,
         warmup_ratio=config.warmup_ratio,
         lr_scheduler_type="cosine",
@@ -176,26 +177,22 @@ def train():
         metric_for_best_model="eval_loss",
         report_to="wandb",
         bf16=True,
-        gradient_checkpointing=True,  # Enabled to save VRAM (trades compute for memory)
-        optim="adamw_torch_fused",
+        fp16=False,
+        # gradient_checkpointing is handled by Unsloth above
+        gradient_checkpointing=False,
+        optim="adamw_8bit",          
         weight_decay=0.01,
         max_grad_norm=1.0,
-        # dataset_text_field="messages",
-        # assistant_only_loss=True,
-        # packing=False,
-        # remove_unused_columns=False,
     )
-    
-    # Create data collator instance
+
     data_collator = DataCollatorForChatML(
         processor=processor,
         padding=True,
-        max_length=1024, # Inspect some examples to set this appropriately based on your data and model context window
-        pad_to_multiple_of=8
+        max_length=1024,
+        pad_to_multiple_of=8,
     )
+
     # Trainer
-    # print("\n Setting up trainer...")
-    # print(train_dataset)
     trainer = Trainer(
         model=model,
         args=training_args,
@@ -203,54 +200,80 @@ def train():
         eval_dataset=eval_dataset,
         data_collator=data_collator,
         processing_class=processor,
-        callbacks=[EarlyStoppingCallback(patience=2, threshold=0.05)]
+        callbacks=[EarlyStoppingCallback(patience=2, threshold=0.05)],
     )
-    
-    # Train
+
     print("\n Training is about to start!...\n")
     trainer.train()
-    
-    # Custom evaluation for tool calling accuracy
-    # Check if early stopping was triggered and if loss is below threshold
-    early_stopping_callback = None
-    for callback in trainer.callback_handler.callbacks:
-        if isinstance(callback, EarlyStoppingCallback):
-            early_stopping_callback = callback
-            break
-    
+
+    # Post-training evaluation
+    early_stopping_callback = next(
+        (cb for cb in trainer.callback_handler.callbacks
+         if isinstance(cb, EarlyStoppingCallback)),
+        None,
+    )
+
     should_evaluate = True
-    eval_loss_threshold = 0.35  # Threshold to decide whether to perform final evaluation
-    
+    eval_loss_threshold = 0.25
+
     if early_stopping_callback:
         print(f"\n Training stopped early with best loss: {early_stopping_callback.best_loss:.4f}")
         if early_stopping_callback.best_loss > eval_loss_threshold:
-            print(f" Loss {early_stopping_callback.best_loss:.4f} is above threshold {eval_loss_threshold:.4f}, skipping final evaluation")
+            print(f" Loss {early_stopping_callback.best_loss:.4f} > threshold {eval_loss_threshold:.4f}, skipping final evaluation")
             should_evaluate = False
         else:
-            print(f" Loss {early_stopping_callback.best_loss:.4f} is below threshold {eval_loss_threshold:.4f}, proceeding with final evaluation")
-    
+            print(f" Loss {early_stopping_callback.best_loss:.4f} <= threshold {eval_loss_threshold:.4f}, proceeding with final evaluation")
+
+    # Only save and evaluate the model if it achieved a reasonable eval loss (to avoid wasting resources on very bad models)
     if should_evaluate:
-        # print("\n Evaluating tool calling accuracy...")
+        model_eval = FastLanguageModel.for_inference(trainer.model)
+        # Save adapter
+        best_model_path = os.path.join("../adapters", f"{model_type}_{wandb.run.name}_best")
+        # Save only the LoRA adapter weights (small, portable)
+        trainer.model.save_pretrained(best_model_path)
+        # Load base template from Hugging Face Hub and save it to the same directory (for easy loading with from_pretrained)
+        base_processor = AutoTokenizer.from_pretrained(model_id)
+        processor.chat_template = base_processor.chat_template
+        processor.save_pretrained(best_model_path)
+        print(f"\n Best model saved at: {best_model_path}")
+        # Save GGUF
+        best_gguf_path = os.path.join("../adapters", f"{model_type}_{wandb.run.name}_best_gguf")
+        if config.export_to_q8:
+            try:
+                trainer.model.save_pretrained_gguf(
+                    best_gguf_path,
+                    processor,
+                    quantization_method="q8_0",  # options: q4_k_m, q8_0, f16, …
+                )
+                print(f" Best Q8 GGUF saved at: {best_gguf_path}")
+            except Exception as e:
+                print(f"Error exporting to Q8 GGUF: {e}")
+        if config.export_to_q4:
+            try:
+                trainer.model.save_pretrained_gguf(
+                    best_gguf_path,
+                    processor,
+                    quantization_method="q4_k_m",  # options: q4_k_m, q8_0, f16, …
+                )
+                print(f" Best Q4 GGUF saved at: {best_gguf_path}_q4")
+            except Exception as e:
+                print(f"Error exporting to Q4 GGUF: {e}")
+
+        # Final evaluation of tool-calling accuracy on the raw eval data using the best model
         eval_results = evaluate_tool_calling_accuracy(
-            trainer.model, 
-            raw_eval_data,
-            processor,
+            model=model_eval,
+            eval_dataset=raw_eval_data,
+            processor=processor,
             tools=bt_tool,
             model_type=model_type,
-            batch_size=32  # Use larger batch size for faster evaluation if VRAM allows
+            batch_size=32,
         )
-        
-        # Log custom metrics
         wandb.log({
             "final/tool_name_accuracy": eval_results["tool_name_acc"],
             "final/arg_exact_match": eval_results["arg_exact"],
-            "final/valid_json_rate": eval_results["valid_json"]
+            "final/valid_json_rate": eval_results["valid_json"],
         })
-    
-    # Save the best model
-    best_model_path = os.path.join("../adapters", f"{model_type}_{wandb.run.name}_best")
-    trainer.save_model(best_model_path)
-    print(f"\n Best model saved at: {best_model_path}")
+
     print("Deleting checkpoints to save space ...")
     try:
         shutil.rmtree(output_dir)
@@ -258,8 +281,9 @@ def train():
     except OSError as error:
         print(error)
         print("Folder can not be removed")
-    
+
     wandb.finish()
+
 
 if __name__ == "__main__":
     train()

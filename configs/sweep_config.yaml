@@ -5,7 +5,7 @@ metric:
   name: eval/loss
   goal: minimize
 
-name: qwen-toolcalling-lora
+name: qwen3-toolcalling-lora
 
 parameters:
   # Learning rate 
@@ -27,7 +27,10 @@ parameters:
     values: [1, 2, 3]
   
   gradient_accumulation_steps:
-    values: [8, 16, 24, 32]
+    values: [8, 16, 32, 64]
+  
+  per_device_train_batch_size:
+    value: 8
   
   # Dropout
   lora_dropout:
@@ -39,4 +42,10 @@ parameters:
   warmup_ratio:
     values: [0.05, 0.1, 0.15]
 
-run_cap: 40
+  # Export options
+  export_to_q8:
+    value: true # Whether to export the best model to 8-bit GGUF format 
+  export_to_q4:
+    value: false  # Whether to export the best model to 4-bit GGUF format 
+
+run_cap: 15
