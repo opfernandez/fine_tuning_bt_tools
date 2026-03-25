@@ -10,6 +10,7 @@ import json
 from pathlib import Path
 from typing import List, Dict
 import torch
+from unsloth import FastLanguageModel
 
 # ==================== TOOL CALL PARSING ====================
 
@@ -226,7 +227,9 @@ def evaluate_tool_calling_accuracy(
     print("=" * 60)
  
     prompts = [s[0] for s in samples]
- 
+
+    use_cache = True  # Start with cache enabled; will disable if generation errors occur
+    
     for batch_start in range(0, len(prompts), batch_size):
         batch_prompts = prompts[batch_start : batch_start + batch_size]
  
@@ -241,14 +244,26 @@ def evaluate_tool_calling_accuracy(
         input_lengths = inputs["input_ids"].shape[1]  # same for all after padding
  
         with torch.inference_mode():
-            outputs = model.generate(
-                **inputs,
-                max_new_tokens=128,
-                do_sample=False,
-                pad_token_id=processor.pad_token_id,
-                max_token_length=None,
-                use_cache=False,
-            )
+            try:
+                outputs = model.generate(
+                    **inputs,
+                    max_new_tokens=128,
+                    do_sample=False,
+                    pad_token_id=processor.pad_token_id,
+                    max_token_length=None,
+                    use_cache=use_cache,
+                )
+            except Exception as e:
+                print(f"[Warning] Generation error during evaluation, switching to no cahe mode (slower) : {e}")
+                use_cache = False
+                outputs = model.generate(
+                    **inputs,
+                    max_new_tokens=128,
+                    do_sample=False,
+                    pad_token_id=processor.pad_token_id,
+                    max_token_length=None,
+                    use_cache=use_cache,
+                )
  
         # Decode only the newly generated tokens for each item in the batch
         for i, output_ids in enumerate(outputs):

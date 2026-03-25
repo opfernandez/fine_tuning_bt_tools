@@ -16,7 +16,7 @@ from data_loader import DataCollatorForChatML, prepare_dataset
 dotenv.load_dotenv()
 os.environ["HF_TOKEN"] = os.getenv("HF_TOKEN")
 
-# model_id = "unsloth/Qwen3-0.6B"
+# model_id = "unsloth/functiongemma-270m-it"
 model_id = "Qwen/Qwen3-0.6B"
 model_type = "qwen3"  # for logging and naming purposes, e.g. "qwen3" or "functiongemma"
 
@@ -93,13 +93,12 @@ def train():
         mode="online",
     )
     config = wandb.config
-    bs = config.gradient_accumulation_steps if config.gradient_accumulation_steps > config.per_device_train_batch_size else config.per_device_train_batch_size
     run_name = (
         f"ep{config.num_train_epochs}"
         f"_r{config.lora_r}"
         f"_a{config.lora_alpha}"
         f"_lr{config.learning_rate:.0e}"
-        f"_bs{bs}"
+        f"_bs{config.gradient_accumulation_steps}"
     )
     wandb.run.name = run_name
 
@@ -155,14 +154,18 @@ def train():
     output_dir = os.path.join("../checkpoints", wandb.run.name)
 
     # compute gradient_accumulation_steps based on batch size and desired effective batch size
-    gradient_accumulation_steps = config.gradient_accumulation_steps // config.per_device_train_batch_size  # this gives the number of steps to accumulate to reach the effective batch size
-    if gradient_accumulation_steps < 1:
+    if config.gradient_accumulation_steps <= config.max_batch_size:
+        bs = config.gradient_accumulation_steps
         gradient_accumulation_steps = 1
+    else:
+        bs = config.max_batch_size
+        gradient_accumulation_steps = config.gradient_accumulation_steps // bs  # this gives the number of steps to accumulate to reach the effective batch size
+    print(f"Using per_device_train_batch_size={bs} with gradient_accumulation_steps={gradient_accumulation_steps} to achieve effective batch size of {config.gradient_accumulation_steps}")
 
     training_args = TrainingArguments(
         output_dir=output_dir,
         num_train_epochs=1,
-        per_device_train_batch_size=config.per_device_train_batch_size,
+        per_device_train_batch_size=bs,
         per_device_eval_batch_size=1,
         gradient_accumulation_steps=gradient_accumulation_steps,
         learning_rate=config.learning_rate,
@@ -214,7 +217,7 @@ def train():
     )
 
     should_evaluate = True
-    eval_loss_threshold = 0.25
+    eval_loss_threshold = 0.5
 
     if early_stopping_callback:
         print(f"\n Training stopped early with best loss: {early_stopping_callback.best_loss:.4f}")
