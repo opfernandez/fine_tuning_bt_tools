@@ -1,82 +1,84 @@
-# Fine-Tuning LLMs for Behavior Tree Tool Calling
+# Fine-Tuning LLMs for Tool Calling
 
-This project provides a framework for fine-tuning Large Language Models (LLMs) to generate tool calls that execute Behavior Trees (BTs). It uses LoRA (Low-Rank Adaptation) for efficient fine-tuning and Weights & Biases (W&B) for hyperparameter sweeps and experiment tracking.
+A framework for fine-tuning Large Language Models to generate structured tool calls using [Unsloth](https://github.com/unslothai/unsloth) and LoRA. It integrates with Weights & Biases for hyperparameter sweeps and experiment tracking.
 
 ## Overview
 
-The goal is to train models that can:
-1. Understand natural language commands
-2. Select the appropriate Behavior Tree to execute
-3. Generate correctly formatted tool calls with proper arguments
+The goal is to train small LLMs that can:
 
-The trained model outputs structured tool calls in the format:
-```json
-{
-  "name": "execute_behavior_tree",
-  "arguments": {
-    "bt_xml_filename": "<behavior_tree>.xml",
-    "execution_id": "<agent_id>",
-    "input_parameters": { "param1": "value1" }
-  }
-}
+1. Understand natural language commands (possibly multilingual).
+2. Select the appropriate tool to invoke.
+3. Generate correctly formatted tool calls with precise arguments.
+
+The framework is domain-agnostic. Current datasets include **domotic control** (lights, blinds, devices, modes) and **Behavior Tree execution** for robotics, but any tool-calling schema can be used.
+
+Example output (Qwen3 format):
+
+```xml
+<tool_call>
+{"name": "lights_control", "arguments": {"room": "kitchen", "action": "on"}}
+</tool_call>
 ```
+
+## Supported Models
+
+Any causal LM loadable through Unsloth's `FastLanguageModel` is supported. Models tested so far:
+
+| Model | Identifier |
+|-------|-----------|
+| Qwen3 0.6B | `Qwen/Qwen3-0.6B` / `unsloth/Qwen3-0.6B` |
+| FunctionGemma 270M | `unsloth/functiongemma-270m-it` |
+| Mistral / Ministral | Via custom chat template |
+
+Adding a new model requires providing a matching Jinja chat template under `templates/`.
 
 ## Project Structure
 
 ```
 fine_tuning_bt_tools/
-├── adapters/              # Saved LoRA adapters from training runs
-├── checkpoints/           # Training checkpoints
+├── adapters/                # Saved LoRA adapters (and optional GGUF exports)
+├── checkpoints/             # Intermediate training checkpoints (auto-cleaned)
 ├── configs/
-│   └── sweep_config.yaml  # W&B sweep configuration
-├── convert_model_to_gguf/
-│   └── merge_model.py     # Merge LoRA adapters with base model
+│   └── sweep_config.yaml   # W&B sweep hyperparameter search space
 ├── data/
-│   ├── train_dataset.json # Training data in ChatML format
-│   ├── system_prompt.txt  # System prompt with BT descriptions
-│   └── test_data.json     # Test dataset
+├── doc/
 ├── notebooks/
-│   └── try_adapters.ipynb # Notebook for testing trained adapters
+│   └── try_adapters.ipynb   # Interactive adapter testing
 ├── templates/
-│   ├── qwen3.jinja        # Chat template for Qwen models
-│   └── mistral.jinja      # Chat template for Mistral models
+│   ├── qwen3.jinja          # Chat template for Qwen3 models
+│   ├── functiongemma.jinja  # Chat template for FunctionGemmaa
 └── training/
-    ├── fine_tuning.py     # Main training script with W&B integration
-    ├── data_loader.py     # Dataset preparation and collation
-    ├── eval.py            # Tool calling evaluation metrics
-    └── .env               # Environment variables (HF_TOKEN, WANDB_*)
+    ├── fine_tuning.py       # Main training script (W&B sweep integration)
+    ├── data_loader.py       # Dataset tokenization and collation
+    ├── eval.py              # Tool-calling evaluation metrics
+    └── .env.example         # Environment variable template
 ```
 
 ## Installation
 
-### Option 1: Using pip with requirements.txt
+### Using uv (recommended)
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+uv sync
+
+# With Jupyter / notebook support
+uv sync --extra dev
+```
+
+### Using pip
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### Option 2: Using uv (recommended for faster installation)
-
-```bash
-# Install uv if you don't have it
-curl -LsSf https://astral.sh/uv/install.sh | sh
-
-# Install dependencies
-uv sync
-
-# Or for development with Jupyter notebook support
-uv sync --extra dev
-```
-
 ### Environment Setup
-
-Create a `.env` file in the `training/` directory:
 
 ```bash
 cp training/.env.example training/.env
 ```
 
-Edit the `.env` file with your credentials:
+Edit `training/.env`:
 
 ```
 HF_TOKEN=your_hugging_face_token_here
@@ -86,224 +88,224 @@ WANDB_PROJECT=your_wandb_project_here
 
 ## Data Format
 
-The training data follows the ChatML format with tool calls. Each example is a conversation with system prompt, user messages, assistant tool calls, and tool responses:
+Training data uses the ChatML conversation format. Each example contains a system prompt, a user request, an assistant tool call, and a tool response:
 
 ```json
 {
   "train": [
     {
       "messages": [
-        {
-          "role": "system",
-          "content": "You are a robot control assistant."
-        },
-        {
-          "role": "user",
-          "content": "Your assigned agent ID is 1. And your task is: Navigate to the kitchen."
-        },
+        { "role": "system", "content": "You are a home assistant." },
+        { "role": "user", "content": "Turn on the kitchen light." },
         {
           "role": "assistant",
           "content": "",
           "tool_calls": [
             {
-              "name": "execute_behavior_tree",
-              "arguments": {
-                "bt_xml_filename": "move.xml",
-                "execution_id": "1",
-                "input_parameters": {
-                  "region": "kitchen"
-                }
-              }
+              "name": "lights_control",
+              "arguments": { "room": "kitchen", "action": "on" }
             }
           ]
         },
-        {
-          "role": "tool",
-          "content": "The execution of the Behavior Tree with filename move.xml (ID: 1) has been successful."
-        },
-        {
-          "role": "assistant",
-          "content": "Successfully navigated to the kitchen."
-        }
+        { "role": "tool", "content": "Light turned on in kitchen." },
+        { "role": "assistant", "content": "Done, the kitchen light is now on." }
       ]
     }
   ]
 }
 ```
 
-## W&B Sweeps
+Tool schemas are defined in a separate JSON file following the standard function-calling format:
 
-![W&B Sweep Results](doc/w&b.png)
+```json
+[
+  {
+    "type": "function",
+    "function": {
+      "name": "lights_control",
+      "description": "Controls the lights in a specified room.\nInput: room (string), action (string: on/off)"
+    }
+  }
+]
+```
 
-*Visualization of hyperparameter sweep results showing the relationship between different configurations and model performance.*
+## Sweep Configuration
 
-### Sweep Configuration
-
-The sweep configuration file (`configs/sweep_config.yaml`) defines the hyperparameter search space:
+The sweep config (`configs/sweep_config.yaml`) defines the hyperparameter search space:
 
 ```yaml
 program: fine_tuning.py
-method: random  # Options: bayes, random, grid
+method: random          # bayes, random, or grid
 metric:
   name: eval/loss
   goal: minimize
 
-name: qwen-toolcalling-lora
+name: qwen3-toolcalling-lora
 
 parameters:
   learning_rate:
     distribution: log_uniform_values
-    min: 1e-5
+    min: 1e-4
     max: 1e-3
-  
+
   lora_r:
     values: [8, 16, 32]
-  
+
   lora_alpha:
     values: [16, 32, 64]
-  
+
   num_train_epochs:
     values: [1, 2, 3]
-  
+
   gradient_accumulation_steps:
-    values: [8, 16, 32, 64]
-  
+    values: [8, 16, 32]
+
+  max_batch_size:
+    value: 32
+
   lora_dropout:
     distribution: uniform
-    min: 0.0
-    max: 0.1
-  
+    min: 0.05
+    max: 0.15
+
   warmup_ratio:
     values: [0.05, 0.1, 0.15]
 
-run_cap: 10  # Maximum number of runs
+  export_to_q8:
+    value: true
+  export_to_q4:
+    value: false
 ```
 
-### Running Sweeps
+### Parameter Reference
 
-1. **Create a new sweep:**
-   ```bash
-   cd training
-   wandb sweep ../configs/sweep_config.yaml
-   ```
-   This will output a sweep ID like `username/project/abc123`.
+| Parameter | Description |
+|-----------|-------------|
+| `learning_rate` | Optimizer learning rate. Searched in log-uniform scale. |
+| `lora_r` | LoRA rank. Higher values increase capacity but also memory usage. |
+| `lora_alpha` | LoRA scaling factor. Commonly set to 1--2x `lora_r`. |
+| `num_train_epochs` | Number of full passes over the training set. |
+| `gradient_accumulation_steps` | **Effective batch size.** The total number of samples whose gradients are accumulated before a weight update. |
+| `max_batch_size` | Maximum micro-batch size that fits in GPU memory. The trainer computes `per_device_train_batch_size` and the actual accumulation steps from these two values. |
+| `lora_dropout` | Dropout probability applied to LoRA layers. |
+| `warmup_ratio` | Fraction of total training steps used for learning rate warmup. |
+| `export_to_q8` | Export the best adapter to GGUF Q8_0 format after training. |
+| `export_to_q4` | Export the best adapter to GGUF Q4_K_M format after training. |
 
-2. **Start sweep agents:**
-   ```bash
-   # Run a single agent
-   wandb agent username/project/abc123
-   
-   # Run multiple agents in parallel (different terminals)
-   wandb agent username/project/abc123 --count 5
-   ```
+### Understanding `max_batch_size` and `gradient_accumulation_steps`
 
-3. **Resume an existing sweep:**
-   ```bash
-   wandb agent username/project/abc123
-   ```
+The `gradient_accumulation_steps` parameter in the sweep config represents the **desired effective batch size**, not the raw number of accumulation steps. The training script divides this value by `max_batch_size` to compute the actual per-device batch size and gradient accumulation steps:
 
-4. **Monitor sweeps:**
-   - Go to your W&B dashboard: `https://wandb.ai/username/project`
-   - View real-time metrics, compare runs, and analyze results
+```
+effective_batch_size = gradient_accumulation_steps  (from config)
+per_device_batch_size = min(effective_batch_size, max_batch_size)
+actual_accumulation  = effective_batch_size / per_device_batch_size
+```
 
-### Common Commands
+Setting `max_batch_size` correctly is critical: it should be the largest micro-batch your GPU can handle without running out of memory. A value too low wastes throughput; a value too high causes OOM errors. The effective batch size remains the same regardless of `max_batch_size` -- only training speed changes.
+
+## Training
+
+### W&B Sweeps
 
 ```bash
-# Create sweep and get sweep ID
-wandb sweep configs/sweep_config.yaml
-
-# Start agent with specific sweep
-wandb agent username/project/sweep_id
-
-# Run single training (without sweep)
+# Create a sweep
 cd training
-python fine_tuning.py
+wandb sweep ../configs/sweep_config.yaml
 
-# List all sweeps in project
-wandb sweep --list
+# Start an agent (the output provides the sweep ID)
+wandb agent <entity>/<project>/<sweep_id>
 
-# Stop a sweep
-wandb sweep --stop username/project/sweep_id
+# Run multiple agents in parallel (separate terminals)
+wandb agent <entity>/<project>/<sweep_id> --count 5
 ```
 
-## Training Details
+### Model Loading with Unsloth
 
-### LoRA Configuration
-
-The training uses LoRA to efficiently fine-tune the model by targeting attention and MLP layers:
+The training script loads models through Unsloth's `FastLanguageModel`, which provides optimized kernels and memory-efficient LoRA patching:
 
 ```python
-lora_config = LoraConfig(
-    r=config.lora_r,              # Rank (8, 16, or 32)
-    lora_alpha=config.lora_alpha, # Scaling factor
-    lora_dropout=config.lora_dropout,
-    target_modules=["q_proj", "k_proj", "v_proj", "o_proj", 
-                   "gate_proj", "up_proj", "down_proj"],
-    bias="none",
-    task_type="CAUSAL_LM"
+model, processor = FastLanguageModel.from_pretrained(
+    model_name="Qwen/Qwen3-0.6B",
+    max_seq_length=1024,
+    dtype=torch.bfloat16,
+    load_in_4bit=False,
+    load_in_8bit=False,
+    load_in_16bit=True,
 )
 ```
 
+Quantized loading is available via `load_in_4bit` or `load_in_8bit` flags to reduce memory usage during training.
+
+### LoRA Configuration
+
+LoRA adapters target attention and MLP projection layers:
+
+```python
+model = FastLanguageModel.get_peft_model(
+    model,
+    r=16,
+    lora_alpha=32,
+    lora_dropout=0.05,
+    target_modules=["q_proj", "k_proj", "v_proj", "o_proj",
+                    "gate_proj", "up_proj", "down_proj"],
+)
+```
+
+### Training Callbacks
+
+- **Early stopping**: Training halts if eval loss does not improve by a configurable threshold for a set number of evaluations (default: patience=2, threshold=5%).
+- **Checkpoint cleanup**: Intermediate checkpoints are deleted after training to save disk space. Only the best adapter is kept.
+
 ### Training Output
 
-After each run, the following are saved:
-- **Checkpoints:** `checkpoints/{run_name}/` - intermediate checkpoints
-- **Best Adapter:** `adapters/{run_name}_best/` - final LoRA adapter
+After each run the following are saved:
 
-Run naming convention: `r{lora_r}_a{lora_alpha}_lr{learning_rate}_bs{batch_size}`
+- **Best adapter**: `adapters/{model_type}_{run_name}_best/`
+- **GGUF exports** (optional): saved alongside the adapter when `export_to_q8` or `export_to_q4` are enabled.
 
-Example: `r32_a64_lr2e-04_bs8_best`
+Run naming convention: `ep{epochs}_r{lora_r}_a{lora_alpha}_lr{learning_rate}_bs{effective_batch_size}`
+
+## GGUF Export
+
+Unsloth handles GGUF conversion directly -- no separate merge or conversion step is needed. After training, the best adapter can be exported to GGUF format in-place:
+
+```python
+model.save_pretrained_gguf(
+    output_path,
+    processor,
+    quantization_method="q8_0",   # Options: q4_k_m, q8_0, f16
+)
+```
+
+This is controlled by the `export_to_q8` and `export_to_q4` sweep parameters. Both can be enabled simultaneously to produce multiple quantized variants. The exported GGUF files are saved alongside the LoRA adapter in the `adapters/` directory and are ready for use with llama.cpp or Ollama.
 
 ## Evaluation Metrics
 
-The evaluation module (`training/eval.py`) computes three metrics:
+The evaluation module (`training/eval.py`) runs inference on held-out data and computes:
 
 | Metric | Description |
 |--------|-------------|
-| `tool_name_acc` | Percentage of correct tool name predictions |
-| `arg_exact` | Percentage of exact argument matches |
-| `valid_json` | Percentage of valid JSON outputs |
+| `tool_name_acc` | Fraction of predictions with the correct tool name. |
+| `arg_exact` | Fraction of predictions with exactly matching arguments. |
+| `valid_json` | Fraction of predictions that produce valid JSON arguments. |
+| `generated_tool_calls_ratio` | Ratio of generated tool calls to expected tool calls. |
 
-These metrics are logged to W&B under `final/tool_name_accuracy`, `final/arg_exact_match`, and `final/valid_json_rate`.
+Results are logged to W&B under the `final/` prefix.
 
 ## Using Trained Adapters
 
-### Testing with Notebook
+The notebook `notebooks/try_adapters.ipynb` provides interactive testing of trained adapters: load a base model, apply the LoRA weights, run inference on test prompts, and compare against expected outputs.
 
-Use `notebooks/try_adapters.ipynb` to interactively test trained adapters:
+## W&B Sweep Results
 
-1. Load the model and processor
-2. Prepare the evaluation dataset
-3. Run inference and compare with expected outputs
-4. Evaluate tool calling accuracy
+![W&B Sweep Results](doc/w&b.png)
 
-## Merging LoRA Adapters with Base Model
+## Adding a New Domain
 
-To merge a trained LoRA adapter with the base model for deployment or further conversion:
-
-1. **Edit the configuration** in `convert_model_to_gguf/merge_model.py`:
-
-```python
-base_model = "Qwen/Qwen3-0.6B"  # Your base model
-lora_checkpoint = "r32_a32_lr2e-04_bs8_best"  # Your trained adapter
-```
-
-2. **Run the merge script**:
-
-```bash
-cd convert_model_to_gguf
-python merge_model.py
-```
-
-The merged model will be saved in `./merged_models/{lora_checkpoint}_merged/` with both the model weights and tokenizer.
-
-3. **Convert to GGUF** (optional, for llama.cpp):
-
-```bash
-# From the llama.cpp repository
-python convert_hf_to_gguf.py \
-  /path/to/merged_models/r32_a32_lr2e-04_bs8_best_merged \
-  --outfile model.gguf \
-  --outtype q8_0
-```
+1. Create a tool schema JSON file in `data/` following the function-calling format.
+2. Create a training dataset JSON file with ChatML conversations that exercise those tools.
+3. Write a system prompt template (plain text or Jinja) in `data/`.
+4. If needed, add a Jinja chat template under `templates/` for the target model family.
+5. Update the file paths in `fine_tuning.py` (or `train_no_wandb.py`) and run a sweep.
 
