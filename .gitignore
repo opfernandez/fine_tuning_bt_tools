@@ -46,3 +46,4 @@ convert_model_to_gguf/merged_models/*
 !checkpoints/.gitkeep
 results/*
 training/wandb/*
+training/unsloth_compiled_cache/*

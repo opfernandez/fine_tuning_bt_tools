@@ -27,7 +27,7 @@ parameters:
     values: [1, 2, 3]
   
   gradient_accumulation_steps:
-    values: [8, 16, 32, 64]
+    values: [8, 16, 32]
   
   max_batch_size:
     value: 32
