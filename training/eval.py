@@ -285,9 +285,11 @@ def evaluate_tool_calling_accuracy(
     exact_arg_matches = 0
     valid_json_count = 0
     total_tool_calls = 0
+    total_generated_tool_calls = 0
  
     for (_, expected_tool_calls), generated_text in zip(samples, all_generated_texts):
         predicted_tool_calls = extract_tool_calls_from_text(generated_text)
+        total_generated_tool_calls += len(predicted_tool_calls)
  
         for expected_tc in expected_tool_calls:
             total_tool_calls += 1
@@ -324,6 +326,7 @@ def evaluate_tool_calling_accuracy(
         "tool_name_acc": correct_tool_names / total_tool_calls if total_tool_calls > 0 else 0,
         "arg_exact": exact_arg_matches / total_tool_calls if total_tool_calls > 0 else 0,
         "valid_json": valid_json_count / total_tool_calls if total_tool_calls > 0 else 0,
+        "generated_tool_calls_ratio": total_generated_tool_calls / total_tool_calls if total_tool_calls > 0 else 0,
         "total_evaluated": total_tool_calls,
     }
  
@@ -333,6 +336,7 @@ def evaluate_tool_calling_accuracy(
     print(f"Tool Name Accuracy:    {results['tool_name_acc']:.2%}")
     print(f"Argument Exact Match:  {results['arg_exact']:.2%}")
     print(f"Valid JSON Rate:       {results['valid_json']:.2%}")
+    print(f"Generated calls Rate:       {results['generated_tool_calls_ratio']:.2%}")
     print(f"Total tool calls evaluated: {results['total_evaluated']}")
     print("=" * 60 + "\n")
  

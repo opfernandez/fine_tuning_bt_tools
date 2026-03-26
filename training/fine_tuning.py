@@ -217,7 +217,7 @@ def train():
     )
 
     should_evaluate = True
-    eval_loss_threshold = 0.5
+    eval_loss_threshold = 0.3
 
     if early_stopping_callback:
         print(f"\n Training stopped early with best loss: {early_stopping_callback.best_loss:.4f}")
@@ -275,6 +275,7 @@ def train():
             "final/tool_name_accuracy": eval_results["tool_name_acc"],
             "final/arg_exact_match": eval_results["arg_exact"],
             "final/valid_json_rate": eval_results["valid_json"],
+            "final/generated_tool_calls_ratio": eval_results["generated_tool_calls_ratio"],
         })
 
     print("Deleting checkpoints to save space ...")
