@@ -47,3 +47,4 @@ convert_model_to_gguf/merged_models/*
 results/*
 training/wandb/*
 training/unsloth_compiled_cache/*
+notebooks/unsloth_compiled_cache/*
