@@ -116,14 +116,42 @@ def _lfm_tool_call_parser(raw_output: str) -> list[dict]:
             name     = func_match.group(1)
             args_str = func_match.group(2).strip()
             if args_str:
-                try:
-                    arguments = ast.literal_eval(f"dict({args_str})")
-                except (ValueError, SyntaxError):
-                    arguments = {"_raw": args_str}
+                arguments = _parse_lfm_kwargs(args_str)
             else:
                 arguments = {}
             tool_calls.append({"name": name, "arguments": arguments})
     return tool_calls
+
+
+def _parse_lfm_kwargs(args_str: str) -> dict:
+    """Parse ``key="value", key2="value2"`` style kwargs into a dict.
+
+    Each value is attempted as a JSON literal first; if that fails the raw
+    string (without surrounding quotes) is kept.
+
+    Args:
+        args_str: Raw keyword-argument string, e.g.
+            ``room="kitchen", action="on"``.
+
+    Returns:
+        A dictionary of parsed argument names and values.
+    """
+    arguments: dict = {}
+    # Match key=value pairs where value can be quoted or unquoted
+    pattern = r'(\w+)\s*=\s*("(?:[^"\\]|\\.)*"|\'(?:[^\'\\]|\\.)*\'|[^,\s]+)'
+    for match in re.finditer(pattern, args_str):
+        key = match.group(1)
+        raw_value = match.group(2)
+        # Strip surrounding quotes if present
+        if (raw_value.startswith('"') and raw_value.endswith('"')) or \
+           (raw_value.startswith("'") and raw_value.endswith("'")):
+            raw_value = raw_value[1:-1]
+        # Try JSON parse for numbers, booleans, etc.
+        try:
+            arguments[key] = json.loads(raw_value)
+        except (json.JSONDecodeError, ValueError):
+            arguments[key] = raw_value
+    return arguments
 
 
 def _functiongemma_tool_call_parser(raw_output: str) -> list[dict]:
