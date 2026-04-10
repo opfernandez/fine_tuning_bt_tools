@@ -77,7 +77,7 @@ def replace_system_prompt(messages: List[Dict], new_system_prompt: str) -> List[
     """Replaces the system prompt in the conversation with the new one"""
     modified_messages = []
     for msg in messages:
-        if msg["role"] == "system":
+        if msg["role"] == "system" and new_system_prompt is not None:
             modified_messages.append({
                 "role": "system",
                 "content": new_system_prompt
@@ -109,7 +109,9 @@ def prepare_dataset(
         train_dataset, eval_dataset
     """
     # Load custom system prompt
-    custom_system_prompt = load_custom_system_prompt(system_prompt_path)
+    if system_prompt_path is not None:
+        print(f"Loading custom system prompt from {system_prompt_path}...")
+        custom_system_prompt = load_custom_system_prompt(system_prompt_path)
     # print(f"System prompt loaded from {system_prompt_path}")
     # print(f"Preview: {custom_system_prompt[:100]}...")
     
@@ -124,9 +126,12 @@ def prepare_dataset(
     tokenized_data = []
     processed_data = []  # To keep the raw eval data for custom evaluation later
     
+    max_tokens_length = 0
     for idx, example in enumerate(data):
+        messages = example["messages"]
         # Replace system prompt and store the messages structure
-        messages = replace_system_prompt(example["messages"], custom_system_prompt)
+        if system_prompt_path is not None:
+            messages = replace_system_prompt(example["messages"], custom_system_prompt)
         # Apply chat template 
         tokenized = processor.apply_chat_template(
             messages,  
@@ -141,6 +146,9 @@ def prepare_dataset(
             enable_thinking=False,
         )
         if idx == 0:
+            # print("\n" + "="*60)
+            # print("PROCESSOR OUTPUT EXAMPLE:")
+            # print(tokenized)
             print("\n" + "="*60)
             print("CHAT TEMPLATE APPLICATION EXAMPLE:")
             print("="*60)
@@ -166,12 +174,14 @@ def prepare_dataset(
             else:
                 print(Warning("Could not compute labels from input_ids and assistant_masks because one of them is missing. Check the processor output."))
                 continue
+        max_tokens_length = max(max_tokens_length, len(tokenized["input_ids"]))
         
         # Print progress
         if idx == 0 or (idx + 1) % 50 == 0:
             print(f"Processed {idx + 1}/{len(data)} examples")
     
     print(f"\nTokenization complete!")
+    print(f"Max sequence length after tokenization: {max_tokens_length}")
     
     # Verify first example
     # print("\n" + "="*60)
