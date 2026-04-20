@@ -20,18 +20,6 @@ Example output (Qwen3 format):
 </tool_call>
 ```
 
-## Supported Models
-
-Any causal LM loadable through Unsloth's `FastLanguageModel` is supported. Models tested so far:
-
-| Model | Identifier |
-|-------|-----------|
-| Qwen3 0.6B | `Qwen/Qwen3-0.6B` / `unsloth/Qwen3-0.6B` |
-| FunctionGemma 270M | `unsloth/functiongemma-270m-it` |
-| Mistral / Ministral | Via custom chat template |
-
-Adding a new model requires providing a matching Jinja chat template under `templates/`.
-
 ## Project Structure
 
 ```
@@ -44,9 +32,7 @@ fine_tuning_bt_tools/
 ├── doc/
 ├── notebooks/
 │   └── try_adapters.ipynb   # Interactive adapter testing
-├── templates/
-│   ├── qwen3.jinja          # Chat template for Qwen3 models
-│   ├── functiongemma.jinja  # Chat template for FunctionGemmaa
+├── templates/               # Chat templates for different models
 └── training/
     ├── fine_tuning.py       # Main training script (W&B sweep integration)
     ├── data_loader.py       # Dataset tokenization and collation
@@ -128,6 +114,19 @@ Tool schemas are defined in a separate JSON file following the standard function
   }
 ]
 ```
+
+## Hyperparameter hard coded in `fine_tuning.py`:
+| Parameter | Description |
+|-----------|-------------|
+| `model_id` | The base model to fine-tune (e.g., "Qwen/Qwen3-0.6B"). |
+| `model_type` | The type of the base model (e.g., "qwen3" or "functiongemma") must be the same name as the model's jinja template. |
+| `tools` | Path to the tool schema JSON file. |
+| `system_prompt_path` | Path to the system prompt file if set to none the default system prompt in dataset is used. |
+| `json_path` | Path to the dataset JSON file (ChatML format). |
+| `threshold` | Early stopping threshold for evaluation loss improvement (default: 0.05 for 5%). |
+| `patience` | Early stopping patience in number of evaluations (default: 2). |
+| `eval_loss_threshold` | Maximum evaluation loss threshold allowed for evaluating and saving the model (should be set based on your desired performance). |
+|`max_seq_length / max_length` | Maximum sequence length for training and evaluation. Default is 1024, if too short, longer sequences are truncated, but if too long, it may cause out-of-memory errors. |
 
 ## Sweep Configuration
 
